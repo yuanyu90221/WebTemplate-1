@@ -3,6 +3,8 @@ package com.exfantasy.template.security.service;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import com.google.common.cache.LoadingCache;
  */
 @Service
 public class LoginAttemptService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LoginAttemptService.class);
 
     private CustomConfig customConfig;
 	
@@ -55,11 +59,19 @@ public class LoginAttemptService {
         }
         attempts++;
         blockList.put(key, attempts);
+        
+        logger.warn("Increase [{}] login failed count to: [{}]", key, attempts);
     }
 
     public boolean isBlocked(String key) {
         try {
-            return blockList.get(key) > customConfig.getLoginMaxAttempt();
+            Integer totalLoginFailed = blockList.get(key);
+            
+            boolean isBlocked = totalLoginFailed >= customConfig.getLoginMaxAttempt(); 
+            if (isBlocked) {
+            	logger.warn("Block [{}] login failed count: [{}]", key, totalLoginFailed);
+            }
+			return isBlocked;
         } catch (ExecutionException e) {
             return false;
         }
