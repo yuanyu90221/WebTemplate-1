@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- http://bootsnipp.com/snippets/featured/google-style-login-extended-with-html5-localstorage -->
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <head>
@@ -15,10 +14,11 @@
 	<!-- Specific -->
 	<link href="css/style/login/login.css" rel="stylesheet" />
   </head>
+  
+  <!-- 參考 http://bootsnipp.com/snippets/featured/google-style-login-extended-with-html5-localstorage -->
   <body>
 	<div class="container">
         <div class="card card-container">
-            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
             <img id="profile-img" class="profile-img-card" src="images/login/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" th:action="@{/login}" method="post">
@@ -35,13 +35,10 @@
             <a href="#" class="forgot-password">
                 Forgot the password?
             </a>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+        </div>	<!-- /card-container -->
+    </div>	<!-- /container -->
 
-	<!-- jQuery (Bootstrap 所有外掛均需要使用) -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 	<script src="js/lib/jquery/jquery-3.1.0.min.js"></script>
-    <!-- 依需要參考已編譯外掛版本（如下），或各自獨立的外掛版本 -->
     <script src="js/lib/bootstrap/bootstrap.min.js"></script>
   </body>
 </html>
