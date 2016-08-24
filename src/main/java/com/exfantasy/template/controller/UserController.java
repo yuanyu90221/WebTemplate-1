@@ -3,7 +3,6 @@ package com.exfantasy.template.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,13 +29,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String returnUserPage(Model model) {
-		model.addAttribute("registerVo", new RegisterVo());
-		return "register";
-	}
+//	@RequestMapping(value = "/register", method = RequestMethod.GET)
+//	public String returnUserPage(Model model) {
+//		model.addAttribute("registerVo", new RegisterVo());
+//		return "register";
+//	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/do_register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseVo register(@Validated @RequestBody final RegisterVo registerVo, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
