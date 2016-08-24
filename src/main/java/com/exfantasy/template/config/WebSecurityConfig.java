@@ -36,8 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
         	.authorizeRequests()
             	.antMatchers("/", "/home").permitAll()
-            	.antMatchers("/css/**", "/images/**", "/js/**").permitAll() // 讓這些 static content 可以被讀取
-            	.antMatchers("/user/register").permitAll() // for api do register
+            	.antMatchers("/css/**", "/images/**", "/js/**", "/fonts/**").permitAll() // 讓這些 static content 可以被讀取, PS: 一定要兩個 *, 因為有子目錄
+            	.antMatchers("/user/register").permitAll() // 允許存取註冊頁面
             	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
             	.and()
             .formLogin()
