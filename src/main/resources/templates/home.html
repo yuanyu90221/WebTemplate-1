@@ -1,61 +1,13 @@
 <!DOCTYPE html>
-<html class="login-bg">
-  <head>
-    <title>My HYIP</title>
-    
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="renderer" content="webkit" />
-	
-    <!-- libraries -->
-    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/lib/font-awesome/font-awesome.css" />
-
-    <!-- global styles -->
-    <link rel="stylesheet" type="text/css" href="css/style/global/layout.css" />
-    <link rel="stylesheet" type="text/css" href="css/style/global/elements.css" />
-    <link rel="stylesheet" type="text/css" href="css/style/global/icons.css" />
-   
-    <!-- this page specific styles -->
-    <link rel="stylesheet" type="text/css" href="css/style/login/test_login.css" media="screen" />
-    
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  </head>
-  <body>
-    
-    <!-- background switcher -->
-    <div class="row-fluid login-wrapper">
-        <a href="index.html">
-            <img class="logo" src="images/login/logo-white.png" />
-        </a>
-        <div class="span4 box">
-		
-            <div class="content-wrap">
-                <h6>會員登錄</h6>
-				<form name="login_form" action="" method="post">
-                <input class="span12" type="text" name="account" id="username" placeholder="登錄賬號" />
-                <input class="span12" type="password"  name="password" id="password" placeholder="登錄密碼" />
-				<span style="width:40%;float:left;"><input class="span12" type="text"  name="mycode" id="mycode" placeholder="驗證碼"/></span>
-				<span style="width:60%;"><img src="/Home/login/verify.html"  height="40"  onClick="this.src='/Home/login/verify?'+Math.random();" /></span>
-				<a href="/home/login/forgot" class="forgot">忘記密碼?</a>
-                <div class="remember">
-                    <input id="remember-me" type="checkbox" />
-                    <label for="remember-me">記住賬號</label>
-                </div>
-				<input class="btn-glow primary login"  type="button" name="submit" id="login_btn" value="登錄"/>
-				<input class="btn-glow primary login"  type="button" onclick="fix_btn()" value="解鎖帳戶"/>
-				</form>
-            </div>
-			
-        </div>
-        <div class="span4 no-account">
-            <p>Copyright c 2016.黃金樹國際金融互助 All rights reserved.</p>
-        </div>
-    </div>
-
-    <!-- jQuery (Bootstrap 所有外掛均需要使用) -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-	<script src="js/jquery/jquery-3.1.0.min.js"></script>
-    <!-- 依需要參考已編譯外掛版本（如下），或各自獨立的外掛版本 -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>My HYIP</title>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        
+        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+    </body>
 </html>
