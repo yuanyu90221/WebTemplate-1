@@ -1,12 +1,18 @@
-因為現在有 Spring Security 機制, 所以 login.html 的 css 要登入才取得到!?!?!?
+1. 
+	因為現在有 Spring Security 機制, 所以 login.html 的 css 要登入才取得到!?!?!?
 
-測試問題方法:
-	把 WebSecurityConfig 的 @EnableWebSecurity mark 掉可以知道結果
-
-目前解法: 
-	在 WebSecurityConfig 加上 
-		.authorizeRequests()
-            	.antMatchers("/", "/home").permitAll()
-            	.antMatchers("/css/**", "/images/**", "/js/**").permitAll() // 讓這些 static content 可以被讀取
-            	.antMatchers("/user/register").permitAll() // 允許存取註冊頁面
+	解法: 
+		在 WebSecurityConfig 加上 
+			.authorizeRequests()
+            	.antMatchers("/", "/home", "/examples").permitAll() // 允許未經過登入可存取的路徑
+            	.antMatchers("/css/**", "/images/**", "/js/**", "/fonts/**").permitAll() // 讓這些 static content 可以被讀取, PS: 一定要兩個 *, 因為有子目錄
+            	.antMatchers("/user/register").permitAll() // 允許未經過登入存取註冊頁面
             	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
+-----------------------------------------------------------------------------------------------------------------------------------------------            	
+2. 
+	如果不透過 home.html 去因為沒有驗證跑到 login, 然後登入成功跑到 /hello, 要怎麼直接登入成功後導到正確頁面?
+	
+	解法:
+		http://stackoverflow.com/questions/36243352/how-to-set-redirection-after-successful-login
+		
+-----------------------------------------------------------------------------------------------------------------------------------------------
