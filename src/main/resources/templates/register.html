@@ -31,13 +31,14 @@
 		<div class="row main">
 			<div class="panel-heading">
 				<div class="panel-title text-center">
-					<h1 class="title">Company Name</h1>
+					<h1 class="title">註冊資訊</h1>
 					<hr />
 				</div>
 			</div>
 
 			<div class="main-login main-center">
 				<form class="form-horizontal" method="post" action="#">
+					<!-- 
 					<div class="form-group">
 						<label for="name" class="cols-sm-2 control-label">Your Name</label>
 						<div class="cols-sm-10">
@@ -47,19 +48,33 @@
 							</div>
 						</div>
 					</div>
+ 					-->
 
 					<div class="form-group">
-						<label for="email" class="cols-sm-2 control-label">Your Email</label>
+						<label for="email" class="cols-sm-2 control-label">Email</label>
 						<div class="cols-sm-10">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-envelope fa" aria-hidden="true"></i>
 								</span>
-								<input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
+								<input type="text" class="form-control" name="email" id="email" placeholder="請輸入您的 Email" />
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="mobileNo" class="cols-sm-2 control-label">手機號碼</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-phone fa" aria-hidden="true"></i>
+								</span>
+								<input type="text" class="form-control" name="mobileNo" id="mobileNo" placeholder="請輸入您的手機號碼" />
 							</div>
 						</div>
 					</div>
 
+					<!-- 
 					<div class="form-group">
 						<label for="username" class="cols-sm-2 control-label">Username</label>
 						<div class="cols-sm-10">
@@ -70,38 +85,39 @@
 								<input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" />
 							</div>
 						</div>
-					</div>
+					</div> 
+					-->
 
 					<div class="form-group">
-						<label for="password" class="cols-sm-2 control-label">Password</label>
+						<label for="password" class="cols-sm-2 control-label">登入密碼</label>
 						<div class="cols-sm-10">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-lock fa-lg" aria-hidden="true"></i>
 								</span>
-								<input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
+								<input type="password" class="form-control" name="password" id="password" placeholder="請輸入您的登入密碼" />
 							</div>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+						<label for="confirm" class="cols-sm-2 control-label">密碼確認</label>
 						<div class="cols-sm-10">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-lock fa-lg" aria-hidden="true"></i>
 								</span>
-								<input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
+								<input type="password" class="form-control" name="confirm" id="confirm" placeholder="請再次輸入您的登入密碼" />
 							</div>
 						</div>
 					</div>
 
 					<div class="form-group ">
-						<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+						<button type="button" class="btn btn-primary btn-lg btn-block login-button">註冊</button>
 					</div>
 
 					<div class="login-register">
-						<a th:href="@{/home}">Login</a>
+						<a th:href="@{/home}">登入</a>
 					</div>
 				</form>
 			</div>
