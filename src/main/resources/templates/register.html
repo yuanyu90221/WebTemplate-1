@@ -126,29 +126,6 @@
 
 	<script src="js/lib/jquery/jquery-3.1.0.min.js"></script>
 	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#registerBtn").on("click", handleSubmitForm);
-		});
-		
-		var handleSubmitForm = function() {
-			$.ajax({
-				url: "/user/do_register",
-				type: "POST",
-				contentType: "application/json",
-				dataType: "json",
-				data: JSON.stringify({
-					"email": $("#email").val(),
-					"password": $("#password").val()
-				}),
-				success:function(JR) {
-					alert('success');
-				},
-				error:function(JR) {
-					alert('error');				
-				}
-			});
-		}
-	</script>
+	<script src="js/specific/register.js"></script>
 </body>
 </html>
