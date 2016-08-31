@@ -6,10 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
 	<!-- Bootstrap -->
-	<link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/style/specific/main.css" rel="stylesheet" />
 	<title>Home Page</title>
 	<script src="js/lib/jquery/jquery-3.1.0.min.js"></script>
 	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
+	<link href="css/font-awesome.min.css" rel="stylesheet" />
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" /> -->
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -30,7 +37,7 @@
 						
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li id="userEdit_nav"><a href="#"><span class="glyphicon glyphicon-user"></span>${remoteUser}</a></li>
+						<li id="userEdit_nav" th:inline="text"><a href="#"><span class="glyphicon glyphicon-user"></span>[[${#httpServletRequest.remoteUser}]]</a></li>
 						<li id="logout_nav"><a href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
 					</ul>
 				</div>
