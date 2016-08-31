@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
         	.authorizeRequests()
-            	.antMatchers("/", "/home", "/examples").permitAll() // 允許未經過登入可存取的路徑
+            	.antMatchers("/", "/home", "/examples","/main").permitAll() // 允許未經過登入可存取的路徑
             	.antMatchers("/css/**", "/images/**", "/js/**", "/fonts/**").permitAll() // 讓這些 static content 可以被讀取, PS: 一定要兩個 *, 因為有子目錄
             	.antMatchers("/register").permitAll() // 允許未經過登入存取註冊頁面
             	.antMatchers("/user/do_register").permitAll() // 允許未經過登入透過 api 註冊
@@ -43,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.and()
             .formLogin()
             	.loginPage("/login").permitAll()
-            	.defaultSuccessUrl("/hello", true) // 登入成功後導向
+            	//.defaultSuccessUrl("/hello", true) // 登入成功後導向
+            	.defaultSuccessUrl("/main",true)
             	.failureHandler(myAuthenticationFailureHandler) // 登入失敗處理
             	.and()
             .logout().permitAll()

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<!-- Bootstrap -->
+	<link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
+	<title>Home Page</title>
+	<script src="js/lib/jquery/jquery-3.1.0.min.js"></script>
+	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" /> -->
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li id="first_page_nav"><a href="#">main page</a></li>
+						<li id="import_file_nav"><a href="#">function 1</a></li>
+						<li id="recovery_file_nav"><a href="#">function 2</a></li>
+						
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li id="userEdit_nav" th:inline="text"><a href="#"><span class="glyphicon glyphicon-user"></span>[[${#httpServletRequest.remoteUser}]]</a></li>
+						<li id="logout_nav"><a href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		  
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav">
+					<p><a href="#">Pcap1</a></p>
+					<p><a href="#">Pcap2</a></p>
+					<p><a href="#">Pcap3</a></p>
+				</div>
+				<div class="col-sm-8 text-left">
+					<div id="content">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer class="container-fluid text-center">
+			<p>Copyright&copy; 2015 Tommy Technology, All Rights Reserved.</p>
+		</footer>
+		
+</body>
+</html>

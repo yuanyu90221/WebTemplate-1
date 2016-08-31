@@ -1,8 +1,8 @@
 spring:
     datasource:
         url: jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8
-        username: tommy
-        password: 7Kcr4iv3
+        username: root
+        password: dob770407
         connection-test-query: "SELECT 1"
         test-while-idle: true
         test-on-borrow: false
