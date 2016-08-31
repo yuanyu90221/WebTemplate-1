@@ -1,0 +1,17 @@
+1. 
+	MvcConfig:
+    	 registry.addViewController("/").setViewName("login");
+     	registry.addViewController("/home").setViewName("login");
+	輸入 http://locahost:8080 或 http://localhost:8080/home 會導向 login.html
+
+2. 
+	<form class="form-signin" th:action="@{/login}" method="post">
+	會因為 WebSecurityConfig 的 auth.authenticationProvider(myAuthenticationProvider);
+	跑到 MyAuthenticationProvider 的 authenticate
+
+3. 	
+	成功後會因為 WebSecurityConfig 的
+	.defaultSuccessUrl("/hello", true)
+	導向 http://localhost:8080/hello
+	再因為 MvcConfig 的 registry.addViewController("/hello").setViewName("examples/hello");
+	找到 examples/hello.html
