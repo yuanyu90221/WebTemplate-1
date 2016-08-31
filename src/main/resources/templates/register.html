@@ -38,9 +38,12 @@
 
 			<div class="main-login main-center">
 				<form class="form-horizontal" id="registerForm" method="post">
+					<!-- 成功訊息 -->
 					<div class="alert alert-success" role="alert" align="center" style="display: none" id="successMessage"></div>
+					<!-- 錯誤訊息 -->
 					<div class="alert alert-danger"  role="alert" align="center" style="display: none" id="errorMessage"></div>
 				
+					<!-- Email -->
 					<div class="form-group">
 						<label for="email" class="cols-sm-2 control-label">Email</label>
 						<div class="cols-sm-10">
@@ -53,6 +56,7 @@
 						</div>
 					</div>
 					
+					<!-- 手機號碼 -->
 					<div class="form-group">
 						<label for="mobileNo" class="cols-sm-2 control-label">手機號碼</label>
 						<div class="cols-sm-10">
@@ -65,6 +69,7 @@
 						</div>
 					</div>
 
+					<!-- 登入密碼 -->
 					<div class="form-group">
 						<label for="password" class="cols-sm-2 control-label">登入密碼</label>
 						<div class="cols-sm-10">
@@ -76,7 +81,8 @@
 							</div>
 						</div>
 					</div>
-
+					
+					<!-- 確認密碼 -->
 					<div class="form-group">
 						<label for="confirmPassword" class="cols-sm-2 control-label">密碼確認</label>
 						<div class="cols-sm-10">
@@ -89,10 +95,12 @@
 						</div>
 					</div>
 
+					<!-- 註冊按鈕 -->
 					<div class="form-group ">
 						<button type="button" class="btn btn-primary btn-lg btn-block login-button" id="registerBtn">註冊</button>
 					</div>
 
+					<!-- 回登入頁面 -->
 					<div class="login-register">
 						<a th:href="@{/home}">登入</a>
 					</div>
