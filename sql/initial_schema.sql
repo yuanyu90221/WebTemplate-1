@@ -3,6 +3,8 @@ CREATE TABLE `user` (
   `user_id` int(10) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL UNIQUE,
   `password` varchar(100) NOT NULL,
+  `mobile_no` varchar(10) NOT NULL,
+  `line_id` varchar(50) NOT NULL,
   `enabled` char(1) NOT NULL,
   `create_time` date NOT NULL,
   `last_signin_time` datetime DEFAULT NULL,

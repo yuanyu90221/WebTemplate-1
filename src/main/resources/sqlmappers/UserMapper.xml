@@ -5,6 +5,8 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="mobile_no" jdbcType="VARCHAR" property="mobileNo" />
+    <result column="line_id" jdbcType="VARCHAR" property="lineId" />
     <result column="enabled" jdbcType="CHAR" property="enabled" typeHandler="com.exfantasy.template.typehandler.BooleanTypeHandler" />
     <result column="create_time" jdbcType="DATE" property="createTime" />
     <result column="last_signin_time" jdbcType="TIMESTAMP" property="lastSigninTime" />
@@ -58,7 +60,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, email, password, enabled, create_time, last_signin_time
+    user_id, email, password, mobile_no, line_id, enabled, create_time, last_signin_time
   </sql>
   <select id="selectByExample" parameterType="com.exfantasy.template.mybatis.model.UserExample" resultMap="BaseResultMap">
     select
@@ -89,9 +91,11 @@
     <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (email, password, enabled, 
+    insert into user (email, password, mobile_no, 
+      line_id, enabled, 
       create_time, last_signin_time)
-    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}, 
+    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR}, 
+      #{lineId,jdbcType=VARCHAR}, #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}, 
       #{createTime,jdbcType=DATE}, #{lastSigninTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.exfantasy.template.mybatis.model.User">
@@ -105,6 +109,12 @@
       </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="mobileNo != null">
+        mobile_no,
+      </if>
+      <if test="lineId != null">
+        line_id,
       </if>
       enabled,
       <if test="createTime != null">
@@ -120,6 +130,12 @@
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null">
+        #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lineId != null">
+        #{lineId,jdbcType=VARCHAR},
       </if>
       #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler},
       <if test="createTime != null">
@@ -139,6 +155,12 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="mobileNo != null">
+        mobile_no = #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lineId != null">
+        line_id = #{lineId,jdbcType=VARCHAR},
+      </if>
       <if test="enabled != null">
         enabled = #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler},
       </if>
@@ -155,6 +177,8 @@
     update user
     set email = #{email,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      mobile_no = #{mobileNo,jdbcType=VARCHAR},
+      line_id = #{lineId,jdbcType=VARCHAR},
       enabled = #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler},
       create_time = #{createTime,jdbcType=DATE},
       last_signin_time = #{lastSigninTime,jdbcType=TIMESTAMP}

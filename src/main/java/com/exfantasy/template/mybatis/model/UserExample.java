@@ -363,6 +363,146 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andMobileNoIsNull() {
+            addCriterion("mobile_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoIsNotNull() {
+            addCriterion("mobile_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoEqualTo(String value) {
+            addCriterion("mobile_no =", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoNotEqualTo(String value) {
+            addCriterion("mobile_no <>", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoGreaterThan(String value) {
+            addCriterion("mobile_no >", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoGreaterThanOrEqualTo(String value) {
+            addCriterion("mobile_no >=", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoLessThan(String value) {
+            addCriterion("mobile_no <", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoLessThanOrEqualTo(String value) {
+            addCriterion("mobile_no <=", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoLike(String value) {
+            addCriterion("mobile_no like", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoNotLike(String value) {
+            addCriterion("mobile_no not like", value, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoIn(List<String> values) {
+            addCriterion("mobile_no in", values, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoNotIn(List<String> values) {
+            addCriterion("mobile_no not in", values, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoBetween(String value1, String value2) {
+            addCriterion("mobile_no between", value1, value2, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileNoNotBetween(String value1, String value2) {
+            addCriterion("mobile_no not between", value1, value2, "mobileNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdIsNull() {
+            addCriterion("line_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdIsNotNull() {
+            addCriterion("line_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdEqualTo(String value) {
+            addCriterion("line_id =", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdNotEqualTo(String value) {
+            addCriterion("line_id <>", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdGreaterThan(String value) {
+            addCriterion("line_id >", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdGreaterThanOrEqualTo(String value) {
+            addCriterion("line_id >=", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdLessThan(String value) {
+            addCriterion("line_id <", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdLessThanOrEqualTo(String value) {
+            addCriterion("line_id <=", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdLike(String value) {
+            addCriterion("line_id like", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdNotLike(String value) {
+            addCriterion("line_id not like", value, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdIn(List<String> values) {
+            addCriterion("line_id in", values, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdNotIn(List<String> values) {
+            addCriterion("line_id not in", values, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdBetween(String value1, String value2) {
+            addCriterion("line_id between", value1, value2, "lineId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLineIdNotBetween(String value1, String value2) {
+            addCriterion("line_id not between", value1, value2, "lineId");
+            return (Criteria) this;
+        }
+
         public Criteria andEnabledIsNull() {
             addCriterion("enabled is null");
             return (Criteria) this;

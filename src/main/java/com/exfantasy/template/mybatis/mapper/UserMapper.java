@@ -1,10 +1,11 @@
 package com.exfantasy.template.mybatis.mapper;
 
-import com.exfantasy.template.mybatis.model.User;
-import com.exfantasy.template.mybatis.model.UserExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.exfantasy.template.mybatis.model.User;
+import com.exfantasy.template.mybatis.model.UserExample;
 
 @Mapper
 public interface UserMapper {

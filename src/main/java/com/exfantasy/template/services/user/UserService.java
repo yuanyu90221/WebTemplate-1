@@ -47,6 +47,8 @@ public class UserService {
     	User user = new User();
     	user.setEmail(registerVo.getEmail());
     	user.setPassword(Password.encrypt(registerVo.getPassword()));
+    	user.setMobileNo(registerVo.getMobileNo());
+    	user.setLineId(registerVo.getLineId());
     	user.setEnabled(true);
     	user.setCreateTime(new Date(System.currentTimeMillis()));
         userMapper.insert(user);

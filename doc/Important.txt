@@ -1,1 +1,17 @@
-用 mybatis generator 產生出來的 mapper, 上面都要手動加上 @Mapper
+1. 
+	當 table schema 改變, 
+	
+	先把 
+		src/main/java -> com.exfantasy.template.mybatis.mapper
+		src/main/java -> com.exfantasy.template.mybatis.model
+		src/main/resources -> sqlmappers
+	底下的東西全殺掉
+	
+2. 
+
+	到 config/mybatis_generator_config.xml 上面按右鍵 Generate
+
+3. 
+	到 src/main/java -> com.exfantasy.template.mybatis.mapper
+	
+	每隻加上 annotation @Mapper
