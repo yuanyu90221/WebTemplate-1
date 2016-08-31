@@ -64,11 +64,12 @@ function sendAjax() {
 			'email': $('#email').val(),
 			'password': $('#password').val()
 		}),
-		success:function(JR) {
+		success:function(response) {
 			showSuccessMessage('註冊成功');
 		},
-		error:function(JR) {
-			alert('error');				
+		error:function(response) {
+			var json = JSON.parse(response.responseText);
+			showErrorMessage(json.data);				
 		}
 	});
 }
