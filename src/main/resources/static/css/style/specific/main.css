@@ -5,7 +5,7 @@
 }
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-.row.content {height: 500px}
+.row.content {height: 800px}
 
 /* Set gray background color and 100% height */
 .sidenav {
@@ -37,4 +37,14 @@ footer {
 
 .pagebar {
 	display: -webkit-inline-box;
+}
+
+.main-block {
+	padding-bottom: 100px;
+}
+
+.footer-block {
+	height: 100px;
+	position: relative;
+	margin-top: -100px;
 }
