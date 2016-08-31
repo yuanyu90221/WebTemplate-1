@@ -1,6 +1,6 @@
 1. 
 	MvcConfig:
-    	 registry.addViewController("/").setViewName("login");
+		registry.addViewController("/").setViewName("login");
      	registry.addViewController("/home").setViewName("login");
 	輸入 http://locahost:8080 或 http://localhost:8080/home 會導向 login.html
 
