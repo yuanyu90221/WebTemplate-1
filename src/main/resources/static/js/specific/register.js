@@ -19,6 +19,10 @@ function checkInput() {
 		showErrorMessage('請輸入手機號碼');
 		return false;
 	}
+	if (lineId.value == '') {
+		showErrorMessage('請輸入 LINE ID');
+		return false;
+	}
 	if (password.value == '') {
 		showErrorMessage('請輸入登入密碼');
 		return false;
@@ -62,6 +66,8 @@ function sendAjax() {
 		dataType: 'json',
 		data: JSON.stringify({
 			'email': $('#email').val(),
+			'mobileNo': $('#mobileNo').val(),
+			'lineId': $('#lineId').val(),
 			'password': $('#password').val()
 		}),
 		success:function(response) {

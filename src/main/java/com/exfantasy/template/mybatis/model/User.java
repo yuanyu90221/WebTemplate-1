@@ -9,6 +9,10 @@ public class User {
 
     private String password;
 
+    private String mobileNo;
+
+    private String lineId;
+
     private boolean enabled;
 
     private Date createTime;
@@ -37,6 +41,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo == null ? null : mobileNo.trim();
+    }
+
+    public String getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(String lineId) {
+        this.lineId = lineId == null ? null : lineId.trim();
     }
 
     public boolean isEnabled() {
