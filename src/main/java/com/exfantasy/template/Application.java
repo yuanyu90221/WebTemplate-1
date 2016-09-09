@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 // 這邊使用 Java Class 作為設定，而非XML
 //@Configuration
 // 啟用 Spring Boot 自動配置，將自動判斷專案使用到的套件，建立相關的設定。
@@ -15,6 +17,7 @@ import org.springframework.context.ApplicationContext;
 // 自動掃描 Spring Bean 元件
 //@ComponentScan( basePackages = {"com.exfantasy.school"} )
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
+@EnableSwagger2 // 允許自動產生 api 
 public class Application {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);

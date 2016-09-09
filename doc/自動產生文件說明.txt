@@ -1,0 +1,10 @@
+使用套件:
+	swagger2
+
+參考網址:
+	http://heidloff.net/article/usage-of-swagger-2-0-in-spring-boot-applications-to-document-apis/
+	
+	http://blog.didispace.com/springbootswagger2/
+
+輸入網址即可瀏覽文件:
+	http://localhost:8080/swagger-ui.html

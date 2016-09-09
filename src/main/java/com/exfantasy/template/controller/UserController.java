@@ -19,6 +19,10 @@ import com.exfantasy.template.vo.request.QueryVo;
 import com.exfantasy.template.vo.request.RegisterVo;
 import com.exfantasy.template.vo.response.ResponseVo;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -36,6 +40,10 @@ public class UserController {
 //	}
 	
 	@RequestMapping(value = "/do_register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "do_register", nickname = "do_register")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "registerVo")
+	})
 	public @ResponseBody ResponseVo register(@Validated @RequestBody final RegisterVo registerVo, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);

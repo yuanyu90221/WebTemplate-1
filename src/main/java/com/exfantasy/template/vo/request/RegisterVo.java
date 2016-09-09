@@ -5,19 +5,25 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.exfantasy.template.constraint.Password;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class RegisterVo {
 	@NotEmpty(message = "Please input email")
 	@Email(message = "Invalid email format")
+	@ApiModelProperty(notes = "The account of user", required = true)
     private String email;
 	
 	@NotEmpty(message = "Please input mobile number")
+	@ApiModelProperty(notes = "The mobile numebr of user", required = true)
 	private String mobileNo;
 	
 	@NotEmpty(message = "Please input line id")
+	@ApiModelProperty(notes = "The line id of user", required = true)
 	private String lineId;
 
 	@NotEmpty(message = "Please input password")
 	@Password(message = "Invalid password")
+	@ApiModelProperty(notes = "The password of user", required = true)
     private String password;
 
 	public String getEmail() {
