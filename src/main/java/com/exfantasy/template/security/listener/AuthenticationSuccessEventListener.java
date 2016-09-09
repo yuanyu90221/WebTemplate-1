@@ -35,6 +35,6 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
         com.exfantasy.template.mybatis.model.User myUser = userService.queryUserByEmail(email);
         
         myUser.setLastSigninTime(new Date(System.currentTimeMillis()));
-        userService.updateSelective(myUser);
+        userService.updateUserSelective(myUser);
     }
 }

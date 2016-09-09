@@ -76,12 +76,12 @@ public class UserService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-    public int updateSelective(User user) {
+    public int updateUserSelective(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
     }
     
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-    public int updateByReplace(User user) {
+    public int updateUserByReplace(User user) {
         return userMapper.updateByPrimaryKey(user);
     }
     
