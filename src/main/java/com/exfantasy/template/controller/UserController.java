@@ -40,7 +40,7 @@ public class UserController {
 //	}
 	
 	@RequestMapping(value = "/do_register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "用戶註冊", notes = "就是給用戶註冊的呀")
+	@ApiOperation(value = "用戶註冊", notes = "給用戶輸入資料新增帳號用")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "registerVo", value = "用戶註冊需填入的資料", required = true, dataType = "RegisterVo")
 	})
