@@ -1,5 +1,13 @@
 package com.exfantasy.template.constant;
 
+/**
+ * <pre>
+ * 定義系統角色
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 public enum Role {
 	ADMIN("admin"),
 	USER("user");

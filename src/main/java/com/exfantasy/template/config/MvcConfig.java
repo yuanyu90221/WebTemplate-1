@@ -5,7 +5,12 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * Ref. https://spring.io/guides/gs/securing-web/
+ * <pre>
+ * Mvc 設定
+ * 
+ * 參考:
+ * 	<a href="https://spring.io/guides/gs/securing-web/">Spring Security 範例</a>
+ * </pre>
  * 
  * @author tommy.feng
  *

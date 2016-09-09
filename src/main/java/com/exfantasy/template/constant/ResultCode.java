@@ -1,7 +1,9 @@
 package com.exfantasy.template.constant;
 
 /**
+ * <pre>
  * 定義操作結果代碼
+ * </pre>
  * 
  * @author tommy.feng
  *

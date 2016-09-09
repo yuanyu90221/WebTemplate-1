@@ -24,9 +24,17 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * <pre>
+ * 使用者相關 API
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Controller
 @RequestMapping(value = "/user")
-@Api("UserController - 使用者相關api")
+@Api("UserController - 使用者相關 API")
 public class UserController {
 	
 //	@Autowired(required = true)

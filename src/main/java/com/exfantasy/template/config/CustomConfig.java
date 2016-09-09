@@ -6,6 +6,14 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * <pre>
+ * 客製化設定, 此處設定可參照 application.yaml
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Component
 @ConfigurationProperties(prefix = "custom")
 public class CustomConfig {

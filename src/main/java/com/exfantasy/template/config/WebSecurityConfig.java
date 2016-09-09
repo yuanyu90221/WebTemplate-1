@@ -14,7 +14,12 @@ import com.exfantasy.template.security.authentication.MyAuthenticationProvider;
 import com.exfantasy.template.security.service.MyUserDetailsService;
 
 /**
- * Ref. https://spring.io/guides/gs/securing-web/
+ * <pre>
+ * Spring Security 設定
+ * 
+ * 參考:
+ * 	<a href="https://spring.io/guides/gs/securing-web/">Spring Security 範例</a>
+ * </pre>
  * 
  * @author tommy.feng
  *
