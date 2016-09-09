@@ -36,9 +36,7 @@ public class TestController {
 	 * 
 	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 統一回應格式
 	 */
-	@PreAuthorize("hasAuthority('admin')")
-	// FIXME 使用變數無法正常運作, 再查看看為什麼
-	// @PreAuthorize("hasAuthority(' " + Role.ADMIN + "')") 
+	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')") 
 	@RequestMapping(value = "/authorities", method = RequestMethod.GET)
 	@ApiOperation(value = "測試權限用")
 	public @ResponseBody ResponseVo test() {
