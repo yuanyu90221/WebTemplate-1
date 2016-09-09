@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "custom")
 public class CustomConfig {
+	/**
+	 * 系統管理者名單
+	 */
 	private List<String> admins = new ArrayList<String>();
 	/**
 	 * 最高允許嘗試登入次數
