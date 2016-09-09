@@ -18,18 +18,18 @@ public enum ResultCode {
 	SYSTEM_EXCEPTION(9999, "");
 	
 	private final int code;
-	private final String errorMsg;
+	private final String message;
 	
-	private ResultCode(int code, String errorMsg) {
+	private ResultCode(int code, String message) {
 		this.code = code;
-		this.errorMsg = errorMsg;
+		this.message = message;
 	}
 	
 	public int getCode() {
 		return this.code;
 	}
 	
-	public String getErrorMsg() {
-		return this.errorMsg;
+	public String getMessage() {
+		return this.message;
 	}
 }

@@ -19,7 +19,7 @@ public class OperationException extends RuntimeException {
 	
 	public OperationException(ResultCode resultCode) {
 		this.resultCode = resultCode;
-		this.errorMessage = resultCode.getErrorMsg();
+		this.errorMessage = resultCode.getMessage();
 	}
 
 	public OperationException(ResultCode resultCode, String errorMessage) {
