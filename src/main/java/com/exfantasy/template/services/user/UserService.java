@@ -63,7 +63,7 @@ public class UserService {
         
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserId());
-        userRole.setRole(isAdminEmail(registerVo.getEmail()) ? Role.ADMIN.getRoleStr() : Role.USER.getRoleStr());
+        userRole.setRole(isAdminEmail(registerVo.getEmail()) ? Role.ADMIN : Role.USER);
 		userRoleMapper.insert(userRole);
 		
 		logger.info("User register with email: <{}> succeed", registerVo.getEmail());

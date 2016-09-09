@@ -3,6 +3,7 @@ package com.exfantasy.template.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,7 @@ import com.exfantasy.template.security.service.MyUserDetailsService;
  * 
  * 參考:
  * 	<a href="https://spring.io/guides/gs/securing-web/">Spring Security 範例</a>
+ * 	<a href="http://stackoverflow.com/questions/29643183/spring-security-preauthorize-not-working">允許 method 權限管控方式</a>
  * </pre>
  * 
  * @author tommy.feng
@@ -26,6 +28,7 @@ import com.exfantasy.template.security.service.MyUserDetailsService;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -42,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
         	.authorizeRequests()
             	.antMatchers("/", "/home", "/examples").permitAll() // 允許未經過登入可存取的路徑
-            	.antMatchers("/css/**", "/images/**", "/js/**", "/fonts/**").permitAll() // 讓這些 static content 可以被讀取, PS: 一定要兩個 *, 因為有子目錄
+            	.antMatchers("/test/**").permitAll() // 允許未經過登入測試程式
             	.antMatchers("/register").permitAll() // 允許未經過登入存取註冊頁面
             	.antMatchers("/user/do_register").permitAll() // 允許未經過登入透過 api 註冊
             	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
@@ -61,8 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
     	web
     		.ignoring()
-        	// http://stackoverflow.com/questions/37671125/how-to-configure-spring-security-to-allow-swagger-url-to-be-accessed-without-aut    		
-    		.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**");
+    		.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**") // http://stackoverflow.com/questions/37671125/how-to-configure-spring-security-to-allow-swagger-url-to-be-accessed-without-aut
+    		.antMatchers("/css/**", "/images/**", "/js/**", "/fonts/**"); // 讓這些 static content 可以被讀取, PS: 一定要兩個 *, 因為有子目錄
 	}
 
     @Override
