@@ -20,6 +20,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
 	/**
 	 * 設定輸入什麼網址會被導到哪個頁面
+	 * 
+	 * @param registry
 	 */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
