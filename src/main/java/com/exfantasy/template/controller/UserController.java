@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.constant.ResultCode;
@@ -15,16 +16,17 @@ import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
-import com.exfantasy.template.vo.request.QueryVo;
 import com.exfantasy.template.vo.request.RegisterVo;
 import com.exfantasy.template.vo.response.ResponseVo;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping(value = "/user")
+@Api("UserController - 使用者相關api")
 public class UserController {
 	
 //	@Autowired(required = true)
@@ -53,8 +55,13 @@ public class UserController {
 		return new ResponseVo(ResultCode.SUCCESS, "Register succeed");
 	}
 	
-	@RequestMapping(value = "/get_by_email", method = RequestMethod.POST)
-	public @ResponseBody User queryUserByEmail(@RequestBody final QueryVo<?> queryVo, BindingResult result) {
-		return userService.queryUserByEmail((String) queryVo.getCriteriaValue());
+	@RequestMapping(value = "/get_by_email", method = RequestMethod.GET)
+	@ApiOperation(value = "使用 email 查詢用戶")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "email", value = "註冊當時所使用的 email", required = true, dataType = "String")
+	})
+	public @ResponseBody User queryUserByEmail(@RequestParam(value = "email", required = true) String email) {
+		User user = userService.queryUserByEmail(email);
+		return user;
 	}
 }
