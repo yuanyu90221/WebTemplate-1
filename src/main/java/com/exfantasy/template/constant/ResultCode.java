@@ -1,5 +1,11 @@
 package com.exfantasy.template.constant;
 
+/**
+ * 定義操作結果代碼
+ * 
+ * @author tommy.feng
+ *
+ */
 public enum ResultCode {
 
 	/** 成功 */
