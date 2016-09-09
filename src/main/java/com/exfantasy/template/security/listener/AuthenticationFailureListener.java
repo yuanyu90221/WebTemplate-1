@@ -8,6 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.exfantasy.template.security.service.LoginAttemptService;
 
+/**
+ * <pre>
+ * Spring Security 驗證失敗 Listener
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Component
 public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 

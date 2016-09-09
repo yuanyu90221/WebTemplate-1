@@ -10,6 +10,14 @@ import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.vo.response.ResponseVo;
 
+/**
+ * <pre>
+ * 統一處理系統例外用
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @ControllerAdvice
 public class GenericExceptionHandler {
 	

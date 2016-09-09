@@ -4,6 +4,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * <pre>
+ * 加密及驗證工具
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 public class Password {
 	public static PasswordEncoder encoder = new BCryptPasswordEncoder();
 	private static final int workload = 8;

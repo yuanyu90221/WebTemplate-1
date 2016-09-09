@@ -2,6 +2,14 @@ package com.exfantasy.template.exception;
 
 import com.exfantasy.template.constant.ResultCode;
 
+/**
+ * <pre>
+ * 自訂操作系統產生的例外
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 public class OperationException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

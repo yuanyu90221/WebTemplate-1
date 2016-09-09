@@ -45,8 +45,8 @@ public class SessionUtil {
 	/**
 	 * 取ip
 	 * 
-	 * @param request
-	 * @return
+	 * @param request HttpServletRequest
+	 * @return 發送 request 的 IP
 	 */
 	public static String getRequestIp(HttpServletRequest request) {
 		if (null == request)

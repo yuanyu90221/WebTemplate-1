@@ -6,6 +6,14 @@ import com.exfantasy.template.exception.OperationException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * <pre>
+ * 統一回應前端格式 
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @ApiModel(description = "操作回應")
 public class ResponseVo {
 	@ApiModelProperty(notes = "操作代碼", required = true)

@@ -18,6 +18,14 @@ import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.security.service.LoginAttemptService;
 import com.exfantasy.template.security.service.MyUserDetailsService;
 
+/**
+ * <pre>
+ * 自訂 Spring Security 檢核 
+ * </pre>
+ *
+ * @author tommy.feng
+ *
+ */
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {
 

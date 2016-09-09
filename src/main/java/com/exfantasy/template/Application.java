@@ -10,6 +10,14 @@ import org.springframework.context.ApplicationContext;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * <pre>
+ * 程式啟動點 
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 // 這邊使用 Java Class 作為設定，而非XML
 //@Configuration
 // 啟用 Spring Boot 自動配置，將自動判斷專案使用到的套件，建立相關的設定。

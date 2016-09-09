@@ -7,6 +7,14 @@ import com.exfantasy.template.constraint.Password;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * <pre>
+ * 接收前端發送註冊資料用
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 public class RegisterVo {
 	@NotEmpty(message = "Please input email")
 	@Email(message = "Invalid email format")

@@ -21,6 +21,14 @@ import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.vo.request.RegisterVo;
 
+/**
+ * <pre>
+ * 處理使用者相關邏輯 
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserService {

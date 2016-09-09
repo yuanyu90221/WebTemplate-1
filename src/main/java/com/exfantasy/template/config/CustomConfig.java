@@ -18,9 +18,13 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "custom")
 public class CustomConfig {
 	private List<String> admins = new ArrayList<String>();
-
+	/**
+	 * 最高允許嘗試登入次數
+	 */
 	private int loginMaxAttempt;
-	
+	/**
+	 * 鎖定 IP 時間(分鐘)
+	 */
 	private int blockTimeMins;
 	
 	public void setAdmins(List<String> admins) {

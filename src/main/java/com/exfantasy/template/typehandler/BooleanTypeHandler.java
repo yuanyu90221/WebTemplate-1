@@ -11,7 +11,12 @@ import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 
 /**
- * https://gist.github.com/inancsevinc/2367218
+ * <pre>
+ * MyBatis 物件資料型態及 database 資料型態轉換
+ * 
+ * 參考:
+ * 	<a href="https://gist.github.com/inancsevinc/2367218">GitHub Example</a>
+ * </pre>
  * 
  * @author tommy.feng
  */

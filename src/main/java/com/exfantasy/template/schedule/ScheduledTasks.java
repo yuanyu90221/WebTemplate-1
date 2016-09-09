@@ -6,7 +6,12 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 /**
- * https://spring.io/guides/gs/scheduling-tasks/
+ * <pre>
+ * Spring Boot 內建排程
+ * 
+ * 參考:
+ * 	<a href="https://spring.io/guides/gs/scheduling-tasks/">Spring Boot 內建排程</a>
+ * </pre>
  * 
  * @author tommy.feng
  */

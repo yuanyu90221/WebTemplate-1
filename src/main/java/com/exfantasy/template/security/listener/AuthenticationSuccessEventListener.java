@@ -13,6 +13,14 @@ import org.springframework.stereotype.Component;
 import com.exfantasy.template.security.service.LoginAttemptService;
 import com.exfantasy.template.services.user.UserService;
 
+/**
+ * <pre>
+ * Spring Security 驗證成功 Listener
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Component
 public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
 

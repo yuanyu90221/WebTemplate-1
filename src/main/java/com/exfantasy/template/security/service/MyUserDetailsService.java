@@ -15,6 +15,14 @@ import com.exfantasy.template.services.user.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <pre>
+ * Spring Security 需要的 service
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service("MyUserDetailsImpl")
 public class MyUserDetailsService implements UserDetailsService {
 	@Autowired

@@ -13,9 +13,13 @@ import com.sun.mail.util.BASE64DecoderStream;
 import com.sun.mail.util.BASE64EncoderStream;
 
 /**
- * https://examples.javacodegeeks.com/core-java/crypto/encrypt-decrypt-string-with-des/
+ * <pre>
+ * 加密工具
  * 
- * http://doraprojects.net/blog/?p=1276
+ * 參考:
+ * 	<a href="https://examples.javacodegeeks.com/core-java/crypto/encrypt-decrypt-string-with-des/">Example 1</a>
+ * 	<a href="http://doraprojects.net/blog/?p=1276">Example 2</a>
+ * </pre>
  * 
  * @author tommy.feng
  */
