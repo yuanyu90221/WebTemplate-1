@@ -2,21 +2,31 @@ package com.exfantasy.template.mybatis.model;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class User {
+	@ApiModelProperty(notes = "使用者 ID", required = true)
     private Integer userId;
 
+	@ApiModelProperty(notes = "使用者註冊時使用的 email", required = true)
     private String email;
 
+	@ApiModelProperty(notes = "使用者密碼", required = true)
     private String password;
 
+	@ApiModelProperty(notes = "使用者手機號碼", required = true)
     private String mobileNo;
 
+	@ApiModelProperty(notes = "使用者 LINE ID", required = true)
     private String lineId;
 
+	@ApiModelProperty(notes = "帳號是否有效", required = true)
     private boolean enabled;
 
+	@ApiModelProperty(notes = "帳號建立時間", required = true)
     private Date createTime;
 
+	@ApiModelProperty(notes = "上次登入時間", required = true)
     private Date lastSigninTime;
 
     public Integer getUserId() {

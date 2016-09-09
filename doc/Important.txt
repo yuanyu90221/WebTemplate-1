@@ -15,3 +15,8 @@
 	到 src/main/java -> com.exfantasy.template.mybatis.mapper
 	
 	每隻加上 annotation @Mapper
+
+4.
+	到 src/main/java -> com.exfantasy.template.mybatis.model
+	
+	每隻加上欄位註解

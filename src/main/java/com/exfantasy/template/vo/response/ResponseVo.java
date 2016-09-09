@@ -3,9 +3,15 @@ package com.exfantasy.template.vo.response;
 import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "操作回應")
 public class ResponseVo {
+	@ApiModelProperty(notes = "操作代碼", required = true)
 	private ResultCode resultCode;
 	
+	@ApiModelProperty(notes = "回應資料", required = true)
 	private Object data;
 
 	public ResponseVo(ResultCode resultCode, Object data) {
