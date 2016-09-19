@@ -1,6 +1,7 @@
 package com.exfantasy.template.exception.handler;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,13 @@ public class GenericExceptionHandler {
 	@ResponseBody
 	public ResponseVo handleCustomException(OperationException ex) {
 		return new ResponseVo(ex);
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ResponseVo handleAccessDeniedException(AccessDeniedException ex) {
+		return new ResponseVo(ResultCode.ACCESS_DENIED, ex.getMessage());
 	}
 	
 	@ExceptionHandler(Exception.class)
