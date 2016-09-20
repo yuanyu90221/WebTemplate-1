@@ -16,3 +16,11 @@
 		http://stackoverflow.com/questions/36243352/how-to-set-redirection-after-successful-login
 		
 -----------------------------------------------------------------------------------------------------------------------------------------------
+
+3. 
+	從 main.html 按下登出回到登入頁面, css 會不 work
+	
+	解法:
+		http://stackoverflow.com/questions/32116829/spring-mvc-css-does-not-work-when-adding-slash-at-the-end-of-url
+		
+-----------------------------------------------------------------------------------------------------------------------------------------------		

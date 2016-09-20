@@ -93,7 +93,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout() {
-		System.out.println("logout...");
-		return new ModelAndView("login");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		return modelAndView;
 	}
 }
