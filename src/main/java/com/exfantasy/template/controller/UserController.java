@@ -90,7 +90,7 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@RequestMapping(value = "/logout")
 	public void logout() {
 		System.out.println("logout...");
 	}
