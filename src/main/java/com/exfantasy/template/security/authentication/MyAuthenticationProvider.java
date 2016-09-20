@@ -35,6 +35,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private LoginAttemptService loginAttemptService;
 
+	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		WebAuthenticationDetails wad = (WebAuthenticationDetails) authentication.getDetails();
 		String userIPAddress = wad.getRemoteAddress();
@@ -55,6 +56,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 		return new UsernamePasswordAuthenticationToken(user, password, authorities);
 	}
 
+	@Override
 	public boolean supports(Class<?> authentication) {
 		return true;
 	}

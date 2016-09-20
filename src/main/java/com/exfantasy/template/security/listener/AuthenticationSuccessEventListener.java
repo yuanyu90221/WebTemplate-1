@@ -30,6 +30,7 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
     @Autowired
     private UserService userService;
 
+    @Override
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
     	Authentication auth = e.getAuthentication();
     	User user = (User) auth.getPrincipal();
