@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.exception.OperationException;
@@ -90,8 +91,9 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(value = "/logout")
-	public void logout() {
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout() {
 		System.out.println("logout...");
+		return new ModelAndView("login");
 	}
 }
