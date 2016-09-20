@@ -89,4 +89,9 @@ public class UserController {
 		User user = userService.queryUserByEmail(email);
 		return user;
 	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public void logout() {
+		System.out.println("logout...");
+	}
 }
