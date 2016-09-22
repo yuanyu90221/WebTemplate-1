@@ -2,7 +2,6 @@ package com.exfantasy.template.util;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -86,25 +85,25 @@ public class EncryptUtil {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("You want to 0: Encrypt, 1: Decrypt");
-		int option = sc.nextInt();
-		
-		switch (option) {
-			case 0:
-				System.out.println("Enter the string to encrypted:");
-				String str = sc.next();
-				System.out.println(encrypt(str));
-				break;
-			
-			case 1:
-				System.out.println("Enter the encrypted string to decrypted:");
-				String encStr = sc.next();
-				System.out.println(decrypt(encStr));
-				break;
-		}
-        sc.close();
-	}
+//	public static void main(String[] args) {
+//		Scanner sc = new Scanner(System.in);
+//		
+//		System.out.println("You want to 0: Encrypt, 1: Decrypt");
+//		int option = sc.nextInt();
+//		
+//		switch (option) {
+//			case 0:
+//				System.out.println("Enter the string to encrypted:");
+//				String str = sc.next();
+//				System.out.println(encrypt(str));
+//				break;
+//			
+//			case 1:
+//				System.out.println("Enter the encrypted string to decrypted:");
+//				String encStr = sc.next();
+//				System.out.println(decrypt(encStr));
+//				break;
+//		}
+//        sc.close();
+//	}
 }
