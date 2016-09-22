@@ -16,10 +16,12 @@
 		
 		<!-- 尚未完成, 等好了再打開 -->
 		<!-- 外面的不好用, 改用自己寫的 -->
+		<!-- 
 		<plugin type="util.plugin.AddMapperAnnotationPlugin">
     		<property name="import-class" value="org.apache.ibatis.annotations.Mapper" />
     		<property name="annotation-string" value="@Mapper" />
 		</plugin>
+		-->
 		
 		<!-- 防止生成的程式有很多難看的註解 -->
 		<commentGenerator>
