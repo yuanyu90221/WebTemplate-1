@@ -32,6 +32,8 @@ javadoc {
 }
 
 dependencies {
+	compile 'com.github.dcendents:mybatis-generator-plugins:+'
+
 	compile 'org.mindrot:jbcrypt:0.3m'
 	compile 'com.google.guava:guava:19.0'
 	
