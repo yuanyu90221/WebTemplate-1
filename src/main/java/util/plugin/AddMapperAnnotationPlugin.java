@@ -4,7 +4,11 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.List;
 
+import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 import lombok.NoArgsConstructor;
 
@@ -34,4 +38,13 @@ public class AddMapperAnnotationPlugin extends PluginAdapter {
 		
 		return stringHasValue(importClass) && stringHasValue(annotationString);
 	}
+	
+	@Override
+	public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		interfaze.addImportedType(new FullyQualifiedJavaType(importClass));
+		interfaze.addAnnotation(annotationString);
+
+		return true;
+    }
+
 }
