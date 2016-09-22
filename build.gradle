@@ -20,10 +20,7 @@ repositories {
     mavenCentral()
 }
 
-compileJava { 
-	options.encoding = "UTF-8" 
-}
-
+// https://github.com/nebula-plugins/gradle-aggregate-javadocs-plugin/issues/6
 javadoc {
     options {
         failOnError = false
