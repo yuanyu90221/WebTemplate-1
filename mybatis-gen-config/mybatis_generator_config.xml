@@ -14,8 +14,7 @@
 		</plugin>
 		-->
 		
-		<!-- 尚未完成, 等好了再打開 -->
-		<!-- 外面的不好用, 改用自己寫的 -->
+		<!-- 外面的不好用, 改用自己寫的, 參考上面的寫法 -->
 		<plugin type="util.plugin.AddMapperAnnotationPlugin">
     		<property name="import-class" value="org.apache.ibatis.annotations.Mapper" />
     		<property name="annotation-string" value="@Mapper" />

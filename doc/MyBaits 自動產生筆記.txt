@@ -7,17 +7,12 @@
 	
 2. 
 
-	到 config/mybatis_generator_config.xml 上面按右鍵 Generate
+	到 util.GenerateMyBatisCode 上按右鍵 Run as Application
 
-3. 
-	到 src/main/java -> com.exfantasy.template.mybatis.mapper
-	
-	每隻 Mapper 加上 annotation @Mapper
-
-4.
+3.
 	到 src/main/java -> com.exfantasy.template.mybatis.model
 	
-	每隻 Value Object 加上欄位註解
+	每隻 Value Object 加上欄位註解, 讓 Api document 可以正常顯示
 	
 ----------------------------------------------------------------
 
