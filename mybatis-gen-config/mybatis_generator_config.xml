@@ -6,10 +6,10 @@
 	<context id="test_mybatis_generator" targetRuntime="MyBatis3">
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		
-<!-- 		<plugin type="com.github.dcendents.mybatis.generator.plugin.annotation.AddClassAnnotationsPlugin"> -->
-<!-- 		    <property name="annotationClass" value="lombok.ToString" /> -->
-<!-- 		    <property name="annotationString" value="@ToString(callSuper = true)" /> -->
-<!-- 		</plugin> -->
+		<plugin type="com.github.dcendents.mybatis.generator.plugin.annotation.AddClassAnnotationsPlugin">
+		    <property name="annotationClass" value="lombok.ToString" />
+		    <property name="annotationString" value="@ToString(callSuper = true)" />
+		</plugin>
 		
 		<!-- 防止生成的程式有很多難看的註解 -->
 		<commentGenerator>
@@ -23,21 +23,29 @@
 			userId="tommy"
 			password="7Kcr4iv3" />
 
+		<!-- [IMPORTANT] targetProject 似乎一定得寫絕對路徑, trace soruce code 後的結果, 有換環境記得調整 -->
 		<javaModelGenerator 
-			targetPackage="com.exfantasy.template.mybatis.model" targetProject="WebTemplate/src/main/java">
+			targetPackage="com.exfantasy.template.mybatis.model"
+			targetProject="D:/TommyWs/WebTemplate/src/main/java">
+
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
+		<!-- 這個只有當 javaClientGenerator 為 XML 時才有會有 -->
 		<sqlMapGenerator 
-			targetPackage="sqlmappers" targetProject="WebTemplate/src/main/resources">
+			targetPackage="sqlmappers" 
+			targetProject="D:/TommyWs/WebTemplate/src/main/resources">
+
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- type 可以有很多種, 參考 http://www.mybatis.org/generator/configreference/javaClientGenerator.html# -->
 		<javaClientGenerator 
 			type="ANNOTATEDMAPPER"
-			targetPackage="com.exfantasy.template.mybatis.mapper" targetProject="WebTemplate/src/main/java">
+			targetPackage="com.exfantasy.template.mybatis.mapper" 
+			targetProject="D:/TommyWs/WebTemplate/src/main/java">
+
       		<property name="enableSubPackages" value="true" />
     	</javaClientGenerator>
 		
