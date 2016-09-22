@@ -24,10 +24,10 @@ repositories {
 javadoc {
     options {
         failOnError = false
-        encoding "UTF-8"    
-        docEncoding "UTF-8" 
-        charSet "UTF-8" 
-        linkSource true
+        encoding = "UTF-8"    
+        docEncoding = "UTF-8" 
+        charSet = "UTF-8" 
+        linkSource = true
     }
 }
 
