@@ -15,9 +15,16 @@
 		-->
 		
 		<!-- 外面的不好用, 改用自己寫的, 參考上面的寫法 -->
+		<!-- 在每個 Mapper class 上加上 @Mapper -->
 		<plugin type="util.plugin.AddMapperAnnotationPlugin">
     		<property name="import-class" value="org.apache.ibatis.annotations.Mapper" />
     		<property name="annotation-string" value="@Mapper" />
+		</plugin>
+
+		<!-- 在每個 Model 的每個 fields 上加上 annotation -->		
+		<plugin type="util.plugin.AddModelFieldsAnnotationPlugin">
+			<property name="import-class" value="io.swagger.annotations.ApiModelProperty" />
+    		<property name="annotation-string" value="@ApiModelProperty(notes = &quot;&quot;, required = true)" />
 		</plugin>
 		
 		<!-- 防止生成的程式有很多難看的註解 -->
