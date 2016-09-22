@@ -3,10 +3,10 @@ package com.exfantasy.template.mybatis.model;
 import io.swagger.annotations.ApiModelProperty;
 
 public class UserRole {
-    @ApiModelProperty(notes = "", required = true)
+    @ApiModelProperty(notes = "使用者 ID", required = true)
     private Integer userId;
 
-    @ApiModelProperty(notes = "", required = true)
+    @ApiModelProperty(notes = "角色", required = true)
     private String role;
 
     public Integer getUserId() {
