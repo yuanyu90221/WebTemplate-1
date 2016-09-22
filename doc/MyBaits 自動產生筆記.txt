@@ -2,9 +2,7 @@
 	當 table schema 改變, 
 	
 	先把 
-		src/main/java -> com.exfantasy.template.mybatis.mapper
-		src/main/java -> com.exfantasy.template.mybatis.model
-		src/main/resources -> sqlmappers
+		src/main/java -> com.exfantasy.template.mybatis
 	底下的東西全殺掉
 	
 2. 
@@ -14,12 +12,12 @@
 3. 
 	到 src/main/java -> com.exfantasy.template.mybatis.mapper
 	
-	每隻加上 annotation @Mapper
+	每隻 Mapper 加上 annotation @Mapper
 
 4.
 	到 src/main/java -> com.exfantasy.template.mybatis.model
 	
-	每隻加上欄位註解
+	每隻 Value Object 加上欄位註解
 	
 ----------------------------------------------------------------
 
