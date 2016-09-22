@@ -20,3 +20,13 @@
 	到 src/main/java -> com.exfantasy.template.mybatis.model
 	
 	每隻加上欄位註解
+	
+----------------------------------------------------------------
+
+mybatis_generator_config.xml
+
+其中 javaClientGenerator 的  type 改為 "ANNOTATEDMAPPER",
+
+因使用 XMLMAPPER, 
+
+用 gradle 包出來的 jar 檔啟動會有問題, 暫時先改用 ANNOTATEDMAPPER

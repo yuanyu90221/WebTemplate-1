@@ -29,7 +29,7 @@
 
 		<!-- type 可以有很多種, 參考 http://www.mybatis.org/generator/configreference/javaClientGenerator.html# -->
 		<javaClientGenerator 
-			type="XMLMAPPER"
+			type="ANNOTATEDMAPPER"
 			targetPackage="com.exfantasy.template.mybatis.mapper" targetProject="WebTemplate/src/main/java">
       		<property name="enableSubPackages" value="true" />
     	</javaClientGenerator>
