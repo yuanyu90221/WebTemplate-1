@@ -6,6 +6,11 @@
 	<context id="test_mybatis_generator" targetRuntime="MyBatis3">
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		
+<!-- 		<plugin type="com.github.dcendents.mybatis.generator.plugin.annotation.AddClassAnnotationsPlugin"> -->
+<!-- 		    <property name="annotationClass" value="lombok.ToString" /> -->
+<!-- 		    <property name="annotationString" value="@ToString(callSuper = true)" /> -->
+<!-- 		</plugin> -->
+		
 		<!-- 防止生成的程式有很多難看的註解 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />

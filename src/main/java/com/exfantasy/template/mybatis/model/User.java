@@ -92,4 +92,41 @@ public class User {
     public void setLastSigninTime(Date lastSigninTime) {
         this.lastSigninTime = lastSigninTime;
     }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        User other = (User) that;
+        return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+            && (this.getMobileNo() == null ? other.getMobileNo() == null : this.getMobileNo().equals(other.getMobileNo()))
+            && (this.getLineId() == null ? other.getLineId() == null : this.getLineId().equals(other.getLineId()))
+            && (this.isEnabled() == other.isEnabled())
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getLastSigninTime() == null ? other.getLastSigninTime() == null : this.getLastSigninTime().equals(other.getLastSigninTime()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
+        result = prime * result + ((getMobileNo() == null) ? 0 : getMobileNo().hashCode());
+        result = prime * result + ((getLineId() == null) ? 0 : getLineId().hashCode());
+        result = prime * result + (isEnabled() ? 1231 : 1237);
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getLastSigninTime() == null) ? 0 : getLastSigninTime().hashCode());
+        return result;
+    }
 }
