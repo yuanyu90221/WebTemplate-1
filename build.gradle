@@ -20,6 +20,20 @@ repositories {
     mavenCentral()
 }
 
+compileJava { 
+	options.encoding = "UTF-8" 
+}
+
+javadoc {
+    options {
+        failOnError = false
+        encoding "UTF-8"    
+        docEncoding "UTF-8" 
+        charSet "UTF-8" 
+        linkSource true
+    }
+} 
+
 dependencies {
 	compile 'org.mindrot:jbcrypt:0.3m'
 	compile 'com.google.guava:guava:19.0'
