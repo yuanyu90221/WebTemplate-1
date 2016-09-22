@@ -4,6 +4,8 @@
 	<classPathEntry location="D:/mysql-connector-java-5.1.39.jar" />
 
 	<context id="test_mybatis_generator" targetRuntime="MyBatis3">
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		
 		<!-- 防止生成的程式有很多難看的註解 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
