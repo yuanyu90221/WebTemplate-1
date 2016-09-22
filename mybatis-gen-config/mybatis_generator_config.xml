@@ -32,7 +32,7 @@
 			userId="tommy"
 			password="7Kcr4iv3" />
 
-		<!-- [IMPORTANT] targetProject 似乎一定得寫絕對路徑, trace soruce code 後的結果, 有換環境記得調整 -->
+		<!-- [IMPORTANT] targetProject 似乎一定得寫絕對路徑, trace source code 後的結果, 有換環境記得調整 -->
 		<javaModelGenerator 
 			targetPackage="com.exfantasy.template.mybatis.model"
 			targetProject="D:/TommyWs/WebTemplate/src/main/java">
