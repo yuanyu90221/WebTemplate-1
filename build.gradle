@@ -52,6 +52,8 @@ dependencies {
 	// Generate documents automatic
 	compile 'io.springfox:springfox-swagger-ui:2.2.2'
 	compile 'io.springfox:springfox-swagger2:2.2.2'
-
+	
+	compile 'org.projectlombok:lombok:1.16.10'
+	
     testCompile 'junit:junit:4.+'
 }

@@ -7,9 +7,18 @@
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		
 		<!-- 使用外面的 plugin, https://github.com/dcendents/mybatis-generator-plugins -->
+		<!-- 
 		<plugin type="com.github.dcendents.mybatis.generator.plugin.annotation.AddClassAnnotationsPlugin">
-		    <property name="annotationClass" value="lombok.ToString" />
-		    <property name="annotationString" value="@ToString(callSuper = true)" />
+    		<property name="annotationClass" value="org.apache.ibatis.annotations.Mapper" />
+    		<property name="annotationString" value="@Mapper" />
+		</plugin>
+		-->
+		
+		<!-- 尚未完成, 等好了再打開 -->
+		<!-- 外面的不好用, 改用自己寫的 -->
+		<plugin type="util.plugin.AddMapperAnnotationPlugin">
+    		<property name="import-class" value="org.apache.ibatis.annotations.Mapper" />
+    		<property name="annotation-string" value="@Mapper" />
 		</plugin>
 		
 		<!-- 防止生成的程式有很多難看的註解 -->
