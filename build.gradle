@@ -32,8 +32,6 @@ javadoc {
 }
 
 dependencies {
-	compile 'com.github.dcendents:mybatis-generator-plugins:+'
-
 	compile 'org.mindrot:jbcrypt:0.3m'
 	compile 'com.google.guava:guava:19.0'
 	
@@ -46,6 +44,7 @@ dependencies {
 	
 	// According to config/mybatis_generator_config.xml generate MyBaits related codes 
 	compile 'org.mybatis.generator:mybatis-generator-core:1.3.3'
+	compile 'com.github.dcendents:mybatis-generator-plugins:+'
     
     compile 'mysql:mysql-connector-java:5.1.39'
     compile 'com.sun.mail:javax.mail:1.5.5'
