@@ -35,12 +35,8 @@ public class GenerateMyBatisCode {
         myBatisGenerator.generate(new MyProgressCallBack());
         
         if (warnings.size() != 0) {
-        	System.err.println("~~~~~~ Generate failed ~~~~~~");
-        	System.err.println("Error Messages:");
+        	System.err.println("Generataion got warning messages:");
         	warnings.forEach(System.out::println);
-        }
-        else {
-        	System.out.println("------ Generate succeed ------");
         }
 	}
 	
@@ -65,7 +61,7 @@ public class GenerateMyBatisCode {
 
 		@Override
 		public void done() {
-			System.out.println("------ DONE ------");
+			System.out.println("------ Generation DONE ------");
 		}
 
 		@Override
