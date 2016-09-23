@@ -1,29 +1,27 @@
 package com.exfantasy.template.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.exfantasy.template.services.mail.MailService;
 
 @Controller
 @RequestMapping(value = "/mail")
 public class MailController {
 
 	@Autowired
-	private JavaMailSender mailSender;
+	private MailService mailService;
 	
 	@RequestMapping(value = "/send", method = RequestMethod.GET)
-	@ResponseBody
-	public String sendMail() {
-		SimpleMailMessage mail = new SimpleMailMessage();
+	public @ResponseBody String sendMail() {
+		String mailTo = "tommy.yeh1112@gmail.com";
+		String subject = "This is a test from SpringBoot";
+		String text = "Hello~~";
 
-		mail.setTo("tommy.yeh1112@gmail.com");
-		mail.setSubject("This is a test from SpringBoot");
-		mail.setText("Hello~~");
-		mailSender.send(mail);
+		mailService.sendMail(mailTo, subject, text);
 
 		return "Send mail succeed";
 	}
