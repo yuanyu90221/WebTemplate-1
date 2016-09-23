@@ -7,8 +7,8 @@ spring:
         test-while-idle: true
         test-on-borrow: false
         
-mybatis:
-    mapperLocations: classpath*:**/sqlmappers/*.xml
+#mybatis:
+#    mapperLocations: classpath*:**/sqlmappers/*.xml
     
 custom:
     admins:
