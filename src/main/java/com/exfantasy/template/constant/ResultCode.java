@@ -10,13 +10,13 @@ package com.exfantasy.template.constant;
  */
 public enum ResultCode {
 
-	/** 成功 */
+	/** Code: 0, Message: 成功 */
 	SUCCESS(0, "Succeed"),
-	/** 格式錯誤 */
+	/** Code: 1001, Message: 格式錯誤 */
 	INVALID_FORMAT(1001, "Invalid format"),
-	/** 無權限操作 */
+	/** Code: 4444, Message: 無權限操作 */
 	ACCESS_DENIED(4444, ""),
-	/** 系統發生錯誤 */
+	/** Code: 9999, Message: 系統發生錯誤 */
 	SYSTEM_EXCEPTION(9999, "");
 	
 	private final int code;
