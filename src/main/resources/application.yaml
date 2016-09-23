@@ -1,3 +1,4 @@
+# -------- Datasource Config --------
 spring:
     datasource:
         url: jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8
@@ -6,10 +7,17 @@ spring:
         connection-test-query: "SELECT 1"
         test-while-idle: true
         test-on-borrow: false
-        
+
+# --------- MyBatis 若用 xml 要加這個 ---------        
 #mybatis:
 #    mapperLocations: classpath*:**/sqlmappers/*.xml
-    
+
+# -------- Mail Config --------
+mail:
+    username: exfantasy7wolves
+    password: ilovebmw
+
+# -------- Custom Config --------    
 custom:
     admins:
         - tommy.yeh1112@gmail.com

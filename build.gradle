@@ -44,7 +44,6 @@ ext {
 	mySqlConnectorJavaVersion = '5.1.39'
 	jbcryptVersion = '0.3m'
 	lombokVersion = '1.16.10'
-	javaMailVersion = '1.5.5'
 	googleGuavaVersion = '19.0'
 	
 	swaggerVersion = '2.2.2'
@@ -58,6 +57,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
 	compile "org.springframework.boot:spring-boot-starter-jdbc"
 	compile "org.springframework.boot:spring-boot-starter-security"
+	compile "org.springframework.boot:spring-boot-starter-mail"
 
 	// --------- MyBatis ---------
 	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootVersion}"
@@ -76,9 +76,6 @@ dependencies {
 
 	// --------- https://projectlombok.org/ --------- 
 	compile "org.projectlombok:lombok:${lombokVersion}"
-
-    // --------- Java Mail ---------
-    compile "com.sun.mail:javax.mail:${javaMailVersion}"
 
     // --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"
