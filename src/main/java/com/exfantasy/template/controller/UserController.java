@@ -87,8 +87,7 @@ public class UserController {
 		@ApiImplicitParam(name = "email", value = "註冊當時所使用的 email", required = true, dataType = "String")
 	})
 	public @ResponseBody User queryUserByEmail(@RequestParam(value = "email", required = true) String email) {
-		User user = userService.queryUserByEmail(email);
-		return user;
+		return userService.queryUserByEmail(email);
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
