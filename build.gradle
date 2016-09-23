@@ -43,6 +43,7 @@ ext {
 	mybatisGeneratorVersion = '1.3.3'
 	mySqlConnectorJavaVersion = '5.1.39'
 	jbcryptVersion = '0.3m'
+	lombokVersion = '1.16.10'
 	javaMailVersion = '1.5.5'
 	googleGuavaVersion = '19.0'
 	
@@ -60,32 +61,32 @@ dependencies {
 
 	// --------- MyBatis ---------
 	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootVersion}"
-	
+
 	// 根據 mybatis-gen-config/mybatis_generator_config.xml 產生 MyBaits 相關程式 
 	compile "org.mybatis.generator:mybatis-generator-core:${mybatisGeneratorVersion}"
-	
+
 	// 拿來參考怎麼寫 mybatis generator 的 plugins
 	compile "com.github.dcendents:mybatis-generator-plugins:+"
-    
+
     // --------- MySQL connector ---------
     compile "mysql:mysql-connector-java:${mySqlConnectorJavaVersion}"
-    
+
     // --------- Use to encrypt/decrypt ---------
 	compile "org.mindrot:jbcrypt:${jbcryptVersion}"
-	
+
+	// --------- https://projectlombok.org/ --------- 
+	compile "org.projectlombok:lombok:${lombokVersion}"
+
     // --------- Java Mail ---------
     compile "com.sun.mail:javax.mail:${javaMailVersion}"
-    
+
     // --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"
 
 	// --------- 自動產生 RESTapi 文件 ---------
 	compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
 	compile "io.springfox:springfox-swagger2:${swaggerVersion}"
-	
-	// --------- https://projectlombok.org/ --------- 
-	compile "org.projectlombok:lombok:1.16.10"
-	
+
 	// --------- JUnit --------- 
     testCompile "junit:junit:${junitVersion}"
 }
