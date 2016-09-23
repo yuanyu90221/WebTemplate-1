@@ -13,7 +13,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 import lombok.NoArgsConstructor;
-import util.mapconst.MapFieldNameAndNotes;
+import util.mapconst.MapClassFieldsDef;
 
 /**
  * Mybatis generator plugin to add annotations at the fields of generated Model classes
@@ -45,12 +45,15 @@ public class AddModelFieldsAnnotationPlugin extends PluginAdapter {
 
 	@Override
 	public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, Plugin.ModelClassType modelClassType) {
+		// set import class
 		topLevelClass.addImportedType(new FullyQualifiedJavaType(importClass));
 		
+		// set fields annotation
 		String annotationToSet = annotationString;
 		
-		MapFieldNameAndNotes map = MapFieldNameAndNotes.convert(field.getName());
-		String note = map != null ? map.getNote() : null;
+		MapClassFieldsDef mapClass = MapClassFieldsDef.convert(topLevelClass.getType().getShortName());
+
+		String note = mapClass.getNote(field.getName());
 		if (note != null) {
 			annotationToSet = annotationString.replaceAll("\"\"", "\"" + note + "\"");
 		}

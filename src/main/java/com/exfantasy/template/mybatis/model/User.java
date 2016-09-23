@@ -19,7 +19,7 @@ public class User {
     @ApiModelProperty(notes = "使用者 LINE ID", required = true)
     private String lineId;
 
-    @ApiModelProperty(notes = "", required = true)
+    @ApiModelProperty(notes = "是否允許", required = true)
     private boolean enabled;
 
     @ApiModelProperty(notes = "建立時間", required = true)
