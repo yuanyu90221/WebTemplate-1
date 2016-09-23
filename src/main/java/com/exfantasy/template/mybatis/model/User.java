@@ -22,7 +22,7 @@ public class User {
     @ApiModelProperty(notes = "", required = true)
     private boolean enabled;
 
-    @ApiModelProperty(notes = "", required = true)
+    @ApiModelProperty(notes = "建立時間", required = true)
     private Date createTime;
 
     @ApiModelProperty(notes = "上次登入時間", required = true)

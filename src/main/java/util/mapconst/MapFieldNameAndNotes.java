@@ -13,6 +13,8 @@ public enum MapFieldNameAndNotes {
 	
 	LAST_SIGN_IN_TIME("lastSigninTime", "上次登入時間"),
 	
+	CREATE_TIME("createTime", "建立時間"),
+	
 	ROLE("role", "角色")
 	
 	;
