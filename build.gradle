@@ -31,6 +31,10 @@ javadoc {
     }
 }
 
+springBoot {
+    mainClass = "com.exfantasy.template.Application"
+}
+
 dependencies {
 	compile 'org.mindrot:jbcrypt:0.3m'
 	compile 'com.google.guava:guava:19.0'

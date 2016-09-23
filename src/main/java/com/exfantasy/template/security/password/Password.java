@@ -26,12 +26,12 @@ public class Password {
 		return BCrypt.checkpw(password, hashPassword);
 	}
 
-//	public static void main(String[] args) {
-//		String pwd = "b9134034";
-//		String encrypt = encrypt(pwd);
-//		
-//		System.out.println("Original password: [" + pwd + "] -> encrypt: [" + encrypt + "]");
-//		
-//		System.out.println(isValidatePassword(pwd, encrypt));
-//	}
+	public static void main(String[] args) {
+		String pwd = "b9134034";
+		String encrypt = encrypt(pwd);
+		
+		System.out.println("Original password: [" + pwd + "] -> encrypt: [" + encrypt + "]");
+		
+		System.out.println(isValidatePassword(pwd, encrypt));
+	}
 }
