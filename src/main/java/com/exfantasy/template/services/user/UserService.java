@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.config.CustomConfig;
+import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.constant.Role;
+import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.mapper.UserRoleMapper;
 import com.exfantasy.template.mybatis.model.User;
@@ -52,6 +54,12 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public void register(RegisterVo registerVo) {
+    	User existedUser = queryUserByEmail(registerVo.getEmail());
+    	if (existedUser != null) {
+    		logger.warn("----- Email already in used: <{}> -----", registerVo.getEmail());
+    		throw new OperationException(ResultCode.EMAIL_ALREADY_IN_USED);
+    	}
+    	
     	User user = new User();
     	user.setEmail(registerVo.getEmail());
     	user.setPassword(Password.encrypt(registerVo.getPassword()));
@@ -66,7 +74,7 @@ public class UserService {
         userRole.setRole(isAdminEmail(registerVo.getEmail()) ? Role.ADMIN : Role.USER);
 		userRoleMapper.insert(userRole);
 		
-		logger.info("User register with email: <{}> succeed", registerVo.getEmail());
+		logger.info("----- User register with email: <{}> succeed -----", registerVo.getEmail());
     }
     
 	public User queryUserByEmail(String email) {

@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.exfantasy.template.constraint.Password;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -15,6 +17,8 @@ import io.swagger.annotations.ApiModelProperty;
  * @author tommy.feng
  *
  */
+@Data
+@NoArgsConstructor
 public class RegisterVo {
 	@NotEmpty(message = "Please input email")
 	@Email(message = "Invalid email format")
@@ -34,35 +38,4 @@ public class RegisterVo {
 	@ApiModelProperty(notes = "使用者的密碼", required = true)
     private String password;
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getMobileNo() {
-		return mobileNo;
-	}
-
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-	}
-
-	public String getLineId() {
-		return lineId;
-	}
-
-	public void setLineId(String lineId) {
-		this.lineId = lineId;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
