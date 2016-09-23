@@ -71,7 +71,7 @@ public class UserService {
         
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getUserId());
-        userRole.setRole(isAdminEmail(registerVo.getEmail()) ? Role.ADMIN : Role.USER);
+        userRole.setRole(customConfig.isAdminEmail(registerVo.getEmail()) ? Role.ADMIN : Role.USER);
 		userRoleMapper.insert(userRole);
 		
 		logger.info("----- User register with email: <{}> succeed -----", registerVo.getEmail());
@@ -101,8 +101,4 @@ public class UserService {
         return userMapper.updateByPrimaryKey(user);
     }
     
-    private boolean isAdminEmail(String email) {
-		List<String> admins = customConfig.getAdmins();
-		return admins.contains(email);
-	}
 }

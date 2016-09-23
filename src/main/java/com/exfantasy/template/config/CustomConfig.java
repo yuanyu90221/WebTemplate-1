@@ -38,7 +38,12 @@ public class CustomConfig {
         return this.admins;
     }
     
-    public void setLoginMaxAttempt(int loginMaxAttempt) {
+    public boolean isAdminEmail(String email) {
+		List<String> admins = getAdmins();
+		return admins.contains(email);
+	}
+
+	public void setLoginMaxAttempt(int loginMaxAttempt) {
     	this.loginMaxAttempt = loginMaxAttempt;
     }
     
