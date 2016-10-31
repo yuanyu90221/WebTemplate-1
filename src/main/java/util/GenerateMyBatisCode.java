@@ -48,7 +48,7 @@ public class GenerateMyBatisCode {
 
 		@Override
 		public void generationStarted(int totalTasks) {
-			System.out.println("------ Generation started ------");
+			System.out.println("------ Generation STARTED ------");
 		}
 
 		@Override
