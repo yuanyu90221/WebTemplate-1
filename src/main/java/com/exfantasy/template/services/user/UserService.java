@@ -45,13 +45,6 @@ public class UserService {
     @Autowired
     private CustomConfig customConfig;
 
-//    private final CommonConfig adminConfig;
-//
-//    @Autowired
-//    public UserService(CommonConfig commonConfig) {
-//        this.commonConfig = commonConfig;
-//    }
-
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public void register(RegisterVo registerVo) {
     	User existedUser = queryUserByEmail(registerVo.getEmail());
