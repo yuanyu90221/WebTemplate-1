@@ -10,12 +10,9 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-import lombok.NoArgsConstructor;
-
 /**
  * Mybatis generator plugin to add annotations at the generated Mapper classes.
  */
-@NoArgsConstructor
 public class AddMapperAnnotationPlugin extends PluginAdapter {
 	public static final String IMPORT_CLASS = "import-class";
 	public static final String ANNOTATION_STRING = "annotation-string";

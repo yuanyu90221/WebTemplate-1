@@ -12,13 +12,11 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-import lombok.NoArgsConstructor;
 import util.mapconst.MapClassFieldsDef;
 
 /**
  * Mybatis generator plugin to add annotations at the fields of generated Model classes
  */
-@NoArgsConstructor
 public class AddModelFieldsAnnotationPlugin extends PluginAdapter {
 	
 	public static final String IMPORT_CLASS = "import-class";
