@@ -1,6 +1,6 @@
 package com.exfantasy.template.vo.request;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 public class ConsumeVo {
 	@NotEmpty(message = "Please input consume date")
 	@ApiModelProperty(notes = "消費日期", required = true)
-	private Date consumeDate;
+	private LocalDate consumeDate;
 	
 	@NotEmpty(message = "Please input type")
 	@ApiModelProperty(notes = "分類", required = true)
-	private int type;
+	private Integer type;
 	
 	@NotEmpty(message = "Please input product name")
 	@ApiModelProperty(notes = "商品名稱", required = true)
@@ -33,15 +33,15 @@ public class ConsumeVo {
 	
 	@NotEmpty(message = "Please input amount")
 	@ApiModelProperty(notes = "消費金額", required = true)
-	private long amount;
+	private Integer amount;
 	
 	@NotEmpty(message = "Please input lottery number")
 	@ApiModelProperty(notes = "發票號碼", required = true)
 	private String lotteryNo;
 	
 	@ApiModelProperty(notes = "中獎金額", required = false)
-	private long prize;
+	private Integer prize;
 	
 	@ApiModelProperty(notes = "是否中獎", required = false)
-	private boolean isGot;
+	private Boolean got;
 }

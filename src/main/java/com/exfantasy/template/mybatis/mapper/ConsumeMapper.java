@@ -29,11 +29,11 @@ public interface ConsumeMapper {
         "insert into consume (user_id, consume_date, ",
         "type, prod_name, amount, ",
         "lottery_no, prize, ",
-        "is_got)",
+        "got)",
         "values (#{userId,jdbcType=INTEGER}, #{consumeDate,jdbcType=DATE}, ",
         "#{type,jdbcType=BIT}, #{prodName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
         "#{lotteryNo,jdbcType=VARCHAR}, #{prize,jdbcType=DECIMAL}, ",
-        "#{isGot,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler})"
+        "#{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="consumeId", before=false, resultType=Integer.class)
     int insert(Consume record);
@@ -52,14 +52,14 @@ public interface ConsumeMapper {
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="is_got", property="isGot", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+        @Result(column="got", property="got", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
     })
     List<Consume> selectByExample(ConsumeExample example);
 
     @Select({
         "select",
         "consume_id, user_id, consume_date, type, prod_name, amount, lottery_no, prize, ",
-        "is_got",
+        "got",
         "from consume",
         "where consume_id = #{consumeId,jdbcType=INTEGER}"
     })
@@ -72,7 +72,7 @@ public interface ConsumeMapper {
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="is_got", property="isGot", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+        @Result(column="got", property="got", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
     })
     Consume selectByPrimaryKey(Integer consumeId);
 
@@ -88,7 +88,7 @@ public interface ConsumeMapper {
           "amount = #{amount,jdbcType=DECIMAL},",
           "lottery_no = #{lotteryNo,jdbcType=VARCHAR},",
           "prize = #{prize,jdbcType=DECIMAL},",
-          "is_got = #{isGot,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}",
+          "got = #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}",
         "where consume_id = #{consumeId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Consume record);

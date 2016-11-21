@@ -102,7 +102,7 @@
 			selectByExampleQueryId="false">
 			
 			<generatedKey column="consume_id" sqlStatement="MySql" identity="true" />
-			<columnOverride column="is_got" javaType="boolean" typeHandler="com.exfantasy.template.typehandler.BooleanTypeHandler" />
+			<columnOverride column="got" javaType="boolean" typeHandler="com.exfantasy.template.typehandler.BooleanTypeHandler" />
 		</table>
 	</context>
 </generatorConfiguration>

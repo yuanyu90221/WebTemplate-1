@@ -41,7 +41,7 @@ public class ConsumeSqlProvider {
             sql.VALUES("prize", "#{prize,jdbcType=DECIMAL}");
         }
         
-        sql.VALUES("is_got", "#{isGot,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.VALUES("got", "#{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
         
         return sql.toString();
     }
@@ -60,7 +60,7 @@ public class ConsumeSqlProvider {
         sql.SELECT("amount");
         sql.SELECT("lottery_no");
         sql.SELECT("prize");
-        sql.SELECT("is_got");
+        sql.SELECT("got");
         sql.FROM("consume");
         applyWhere(sql, example, false);
         
@@ -103,7 +103,7 @@ public class ConsumeSqlProvider {
             sql.SET("prize = #{prize,jdbcType=DECIMAL}");
         }
         
-        sql.SET("is_got = #{isGot,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.SET("got = #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
         
         sql.WHERE("consume_id = #{consumeId,jdbcType=INTEGER}");
         

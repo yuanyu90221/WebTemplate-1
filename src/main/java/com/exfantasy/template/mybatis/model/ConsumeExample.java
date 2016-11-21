@@ -66,7 +66,7 @@ public class ConsumeExample {
     }
 
     protected abstract static class GeneratedCriteria {
-        protected List<Criterion> isGotCriteria;
+        protected List<Criterion> gotCriteria;
 
         protected List<Criterion> allCriteria;
 
@@ -75,36 +75,36 @@ public class ConsumeExample {
         protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
-            isGotCriteria = new ArrayList<Criterion>();
+            gotCriteria = new ArrayList<Criterion>();
         }
 
-        public List<Criterion> getIsGotCriteria() {
-            return isGotCriteria;
+        public List<Criterion> getGotCriteria() {
+            return gotCriteria;
         }
 
-        protected void addIsGotCriterion(String condition, Object value, String property) {
+        protected void addGotCriterion(String condition, Object value, String property) {
             if (value == null) {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
-            isGotCriteria.add(new Criterion(condition, value, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
+            gotCriteria.add(new Criterion(condition, value, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
             allCriteria = null;
         }
 
-        protected void addIsGotCriterion(String condition, boolean value1, boolean value2, String property) {
-            isGotCriteria.add(new Criterion(condition, value1, value2, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
+        protected void addGotCriterion(String condition, boolean value1, boolean value2, String property) {
+            gotCriteria.add(new Criterion(condition, value1, value2, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
             allCriteria = null;
         }
 
         public boolean isValid() {
             return criteria.size() > 0
-                || isGotCriteria.size() > 0;
+                || gotCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
             if (allCriteria == null) {
                 allCriteria = new ArrayList<Criterion>();
                 allCriteria.addAll(criteria);
-                allCriteria.addAll(isGotCriteria);
+                allCriteria.addAll(gotCriteria);
             }
             return allCriteria;
         }
@@ -663,73 +663,73 @@ public class ConsumeExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsGotIsNull() {
-            addCriterion("is_got is null");
+        public Criteria andGotIsNull() {
+            addCriterion("got is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotIsNotNull() {
-            addCriterion("is_got is not null");
+        public Criteria andGotIsNotNull() {
+            addCriterion("got is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotEqualTo(boolean value) {
-            addIsGotCriterion("is_got =", value, "isGot");
+        public Criteria andGotEqualTo(boolean value) {
+            addGotCriterion("got =", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotNotEqualTo(boolean value) {
-            addIsGotCriterion("is_got <>", value, "isGot");
+        public Criteria andGotNotEqualTo(boolean value) {
+            addGotCriterion("got <>", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotGreaterThan(boolean value) {
-            addIsGotCriterion("is_got >", value, "isGot");
+        public Criteria andGotGreaterThan(boolean value) {
+            addGotCriterion("got >", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotGreaterThanOrEqualTo(boolean value) {
-            addIsGotCriterion("is_got >=", value, "isGot");
+        public Criteria andGotGreaterThanOrEqualTo(boolean value) {
+            addGotCriterion("got >=", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotLessThan(boolean value) {
-            addIsGotCriterion("is_got <", value, "isGot");
+        public Criteria andGotLessThan(boolean value) {
+            addGotCriterion("got <", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotLessThanOrEqualTo(boolean value) {
-            addIsGotCriterion("is_got <=", value, "isGot");
+        public Criteria andGotLessThanOrEqualTo(boolean value) {
+            addGotCriterion("got <=", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotLike(boolean value) {
-            addIsGotCriterion("is_got like", value, "isGot");
+        public Criteria andGotLike(boolean value) {
+            addGotCriterion("got like", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotNotLike(boolean value) {
-            addIsGotCriterion("is_got not like", value, "isGot");
+        public Criteria andGotNotLike(boolean value) {
+            addGotCriterion("got not like", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotIn(List<Boolean> values) {
-            addIsGotCriterion("is_got in", values, "isGot");
+        public Criteria andGotIn(List<Boolean> values) {
+            addGotCriterion("got in", values, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotNotIn(List<Boolean> values) {
-            addIsGotCriterion("is_got not in", values, "isGot");
+        public Criteria andGotNotIn(List<Boolean> values) {
+            addGotCriterion("got not in", values, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotBetween(boolean value1, boolean value2) {
-            addIsGotCriterion("is_got between", value1, value2, "isGot");
+        public Criteria andGotBetween(boolean value1, boolean value2) {
+            addGotCriterion("got between", value1, value2, "got");
             return (Criteria) this;
         }
 
-        public Criteria andIsGotNotBetween(boolean value1, boolean value2) {
-            addIsGotCriterion("is_got not between", value1, value2, "isGot");
+        public Criteria andGotNotBetween(boolean value1, boolean value2) {
+            addGotCriterion("got not between", value1, value2, "got");
             return (Criteria) this;
         }
     }

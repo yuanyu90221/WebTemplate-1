@@ -29,7 +29,7 @@ public class Consume {
     private Long prize;
 
     @ApiModelProperty(notes = "是否中獎", required = true)
-    private boolean isGot;
+    private boolean got;
 
     public Integer getConsumeId() {
         return consumeId;
@@ -95,12 +95,12 @@ public class Consume {
         this.prize = prize;
     }
 
-    public boolean isIsGot() {
-        return isGot;
+    public boolean isGot() {
+        return got;
     }
 
-    public void setIsGot(boolean isGot) {
-        this.isGot = isGot;
+    public void setGot(boolean got) {
+        this.got = got;
     }
 
     @Override
@@ -123,7 +123,7 @@ public class Consume {
             && (this.getAmount() == null ? other.getAmount() == null : this.getAmount().equals(other.getAmount()))
             && (this.getLotteryNo() == null ? other.getLotteryNo() == null : this.getLotteryNo().equals(other.getLotteryNo()))
             && (this.getPrize() == null ? other.getPrize() == null : this.getPrize().equals(other.getPrize()))
-            && (this.isIsGot() == other.isIsGot());
+            && (this.isGot() == other.isGot());
     }
 
     @Override
@@ -138,7 +138,7 @@ public class Consume {
         result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
         result = prime * result + ((getLotteryNo() == null) ? 0 : getLotteryNo().hashCode());
         result = prime * result + ((getPrize() == null) ? 0 : getPrize().hashCode());
-        result = prime * result + (isIsGot() ? 1231 : 1237);
+        result = prime * result + (isGot() ? 1231 : 1237);
         return result;
     }
 }
