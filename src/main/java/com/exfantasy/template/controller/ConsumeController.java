@@ -1,6 +1,11 @@
 package com.exfantasy.template.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,10 +15,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.exception.OperationException;
+import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.consume.ConsumeService;
 import com.exfantasy.template.services.user.UserService;
@@ -49,6 +56,10 @@ public class ConsumeController {
 	 * <pre>
 	 * 新增記帳資料
 	 * </pre>
+	 * 
+	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
+	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
+	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/add_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "新增記帳資料", notes = "新增記帳資料", response = ResponseVo.class)
@@ -68,5 +79,49 @@ public class ConsumeController {
 		
 		consumeService.addConsume(user, consumeVo);
 		return new ResponseVo(ResultCode.SUCCESS, "Add consume data succeed");
+	}
+	
+	/**
+	 * <pre>
+	 * 查詢記帳資料
+	 * </pre>
+	 * 
+	 * @param startDate 開始時間
+	 * @param endDate 結束時間
+	 * @param type 分類
+	 * @param prodName 商品名稱
+	 * @param lotteryNo 發票號碼
+	 * @return List<<code>{@link com.exfantasy.template.mybatis.model.Consume}</code>> 記帳資訊
+	 */
+	@RequestMapping(value = "/get_consume", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢記帳資料", notes = "查詢記帳資料", response = Consume.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "startDate", value = "開始時間", required = false, dataType = "Date"),
+		@ApiImplicitParam(name = "endDate", value = "結束時間", required = false, dataType = "Date"),
+		@ApiImplicitParam(name = "type", value = "分類", required = false, dataType = "Integer"),
+		@ApiImplicitParam(name = "prodName", value = "商品名稱", required = false, dataType = "String"),
+		@ApiImplicitParam(name = "lotteryNo", value = "發票號碼", required = false, dataType = "String")
+	})
+	public @ResponseBody List<Consume> getConsume(
+			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+			@RequestParam(value = "type", required = false) Integer type,
+			@RequestParam(value = "prodName", required = false) String prodName,
+			@RequestParam(value = "lotteryNo", required = false) String lotteryNo
+		) {
+		if (endDate != null) {
+			setEndDateTime(endDate);
+		}
+		List<Consume> consumes = consumeService.getConsume(startDate, endDate, type, prodName, lotteryNo);
+		return consumes;
+	}
+	
+	private void setEndDateTime(Date endDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(endDate);
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		endDate = cal.getTime();
 	}
 }

@@ -1,5 +1,8 @@
 package com.exfantasy.template.services.consume;
 
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.mybatis.mapper.ConsumeMapper;
 import com.exfantasy.template.mybatis.model.Consume;
+import com.exfantasy.template.mybatis.model.ConsumeExample;
+import com.exfantasy.template.mybatis.model.ConsumeExample.Criteria;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.util.DateUtils;
 import com.exfantasy.template.vo.request.ConsumeVo;
@@ -41,5 +46,27 @@ public class ConsumeService {
 		consume.setLotteryNo(consumeVo.getLotteryNo());
 		
 		consumeMapper.insert(consume);
+	}
+
+	public List<Consume> getConsume(Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
+		ConsumeExample example = new ConsumeExample();
+		Criteria criteria = example.createCriteria();
+		if (startDate != null && endDate == null) {
+			criteria.andConsumeDateGreaterThan(startDate);
+		}
+		if (startDate != null && endDate != null) {
+			criteria.andConsumeDateBetween(startDate, endDate);
+		}
+		if (type != null) {
+			criteria.andTypeEqualTo(type);
+		}
+		if (prodName != null) {
+			criteria.andProdNameLike(prodName);
+		}
+		if (lotteryNo != null) {
+			criteria.andLotteryNoEqualTo(lotteryNo);
+		}
+		List<Consume> consumes = consumeMapper.selectByExample(example);
+		return consumes;
 	}
 }
