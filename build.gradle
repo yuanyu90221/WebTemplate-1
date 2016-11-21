@@ -45,7 +45,6 @@ ext {
 	jbcryptVersion = '0.3m'
 	lombokVersion = '1.16.10'
 	googleGuavaVersion = '19.0'
-	jacksonDataTypeVersion = '2.8.5'
 	
 	swaggerVersion = '2.2.2'
 	
@@ -81,9 +80,6 @@ dependencies {
     // --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"
 	
-	// --------- 通訊資料時間轉換 ---------
-	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeVersion}"
-
 	// --------- 自動產生 RESTapi 文件 ---------
 	compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
 	compile "io.springfox:springfox-swagger2:${swaggerVersion}"
