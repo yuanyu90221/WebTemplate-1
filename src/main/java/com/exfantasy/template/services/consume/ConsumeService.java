@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.mybatis.mapper.ConsumeMapper;
 import com.exfantasy.template.mybatis.model.Consume;
+import com.exfantasy.template.mybatis.model.User;
+import com.exfantasy.template.util.DateUtils;
 import com.exfantasy.template.vo.request.ConsumeVo;
 
 /**
@@ -28,9 +30,16 @@ public class ConsumeService {
 	private ConsumeMapper consumeMapper;
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-	public void addConsume(ConsumeVo consumeVo) {
+	public void addConsume(User user, ConsumeVo consumeVo) {
 		Consume consume = new Consume();
 
-		// TODO 將 consumeVo 的值塞入 consume 並透過 mapper 塞入 DB
+		consume.setUserId(user.getUserId());
+		consume.setConsumeDate(DateUtils.asDate(consumeVo.getConsumeDate()));
+		consume.setType(consumeVo.getType());
+		consume.setProdName(consumeVo.getProdName());
+		consume.setAmount(consumeVo.getAmount());
+		consume.setLotteryNo(consumeVo.getLotteryNo());
+		
+		consumeMapper.insert(consume);
 	}
 }

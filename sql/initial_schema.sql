@@ -30,7 +30,7 @@ CREATE TABLE `consume` (
   `consume_id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) NOT NULL,
   `consume_date` date NOT NULL,
-  `type` tinyint(1) NOT NULL,
+  `type` int(1) NOT NULL,
   `prod_name` varchar(20) NOT NULL,
   `amount` decimal(10,0) NOT NULL,
   `lottery_no` varchar(8) NOT NULL,

@@ -27,13 +27,13 @@ public interface ConsumeMapper {
 
     @Insert({
         "insert into consume (user_id, consume_date, ",
-        "type, prod_name, amount, ",
-        "lottery_no, prize, ",
-        "got)",
+        "type, prod_name, ",
+        "amount, lottery_no, ",
+        "prize, got)",
         "values (#{userId,jdbcType=INTEGER}, #{consumeDate,jdbcType=DATE}, ",
-        "#{type,jdbcType=BIT}, #{prodName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
-        "#{lotteryNo,jdbcType=VARCHAR}, #{prize,jdbcType=DECIMAL}, ",
-        "#{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler})"
+        "#{type,jdbcType=INTEGER}, #{prodName,jdbcType=VARCHAR}, ",
+        "#{amount,jdbcType=DECIMAL}, #{lotteryNo,jdbcType=VARCHAR}, ",
+        "#{prize,jdbcType=DECIMAL}, #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="consumeId", before=false, resultType=Integer.class)
     int insert(Consume record);
@@ -47,7 +47,7 @@ public interface ConsumeMapper {
         @Result(column="consume_id", property="consumeId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
         @Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
-        @Result(column="type", property="type", jdbcType=JdbcType.BIT),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR),
@@ -67,7 +67,7 @@ public interface ConsumeMapper {
         @Result(column="consume_id", property="consumeId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
         @Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
-        @Result(column="type", property="type", jdbcType=JdbcType.BIT),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR),
@@ -83,7 +83,7 @@ public interface ConsumeMapper {
         "update consume",
         "set user_id = #{userId,jdbcType=INTEGER},",
           "consume_date = #{consumeDate,jdbcType=DATE},",
-          "type = #{type,jdbcType=BIT},",
+          "type = #{type,jdbcType=INTEGER},",
           "prod_name = #{prodName,jdbcType=VARCHAR},",
           "amount = #{amount,jdbcType=DECIMAL},",
           "lottery_no = #{lotteryNo,jdbcType=VARCHAR},",

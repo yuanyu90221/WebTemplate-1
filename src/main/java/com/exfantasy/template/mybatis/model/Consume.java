@@ -14,7 +14,7 @@ public class Consume {
     private Date consumeDate;
 
     @ApiModelProperty(notes = "分類", required = true)
-    private Boolean type;
+    private Integer type;
 
     @ApiModelProperty(notes = "商品名稱", required = true)
     private String prodName;
@@ -55,11 +55,11 @@ public class Consume {
         this.consumeDate = consumeDate;
     }
 
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

@@ -35,14 +35,14 @@ public class ConsumeVo {
 	
 	@NotNull(message = "Please input amount")
 	@ApiModelProperty(notes = "消費金額", required = true)
-	private Integer amount;
+	private Long amount;
 	
 	@NotEmpty(message = "Please input lottery number")
 	@ApiModelProperty(notes = "發票號碼", required = true)
 	private String lotteryNo;
 	
 	@ApiModelProperty(notes = "中獎金額", required = false)
-	private Integer prize;
+	private Long prize;
 	
 	@ApiModelProperty(notes = "是否中獎", required = false)
 	private Boolean got;

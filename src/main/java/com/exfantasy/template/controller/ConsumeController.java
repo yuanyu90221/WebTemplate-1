@@ -2,6 +2,8 @@ package com.exfantasy.template.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.exception.OperationException;
+import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.consume.ConsumeService;
+import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.ConsumeVo;
 import com.exfantasy.template.vo.response.ResponseVo;
@@ -36,6 +40,9 @@ import io.swagger.annotations.ApiOperation;
 public class ConsumeController {
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private ConsumeService consumeService;
 	
 	/**
@@ -53,7 +60,13 @@ public class ConsumeController {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
-		consumeService.addConsume(consumeVo);
+		
+		// https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userService.queryUserByEmail(email);
+		
+		consumeService.addConsume(user, consumeVo);
 		return new ResponseVo(ResultCode.SUCCESS, "Add consume data succeed");
 	}
 }

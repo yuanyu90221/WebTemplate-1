@@ -22,7 +22,7 @@ public class ConsumeSqlProvider {
         }
         
         if (record.getType() != null) {
-            sql.VALUES("type", "#{type,jdbcType=BIT}");
+            sql.VALUES("type", "#{type,jdbcType=INTEGER}");
         }
         
         if (record.getProdName() != null) {
@@ -84,7 +84,7 @@ public class ConsumeSqlProvider {
         }
         
         if (record.getType() != null) {
-            sql.SET("type = #{type,jdbcType=BIT}");
+            sql.SET("type = #{type,jdbcType=INTEGER}");
         }
         
         if (record.getProdName() != null) {
