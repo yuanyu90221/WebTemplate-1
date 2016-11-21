@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ConsumeVo {
 	@NotEmpty(message = "Please input consume date")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ApiModelProperty(notes = "消費日期", required = true)
 	private LocalDate consumeDate;
 	
