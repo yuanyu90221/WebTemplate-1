@@ -8,10 +8,9 @@ spring:
         connection-test-query: "SELECT 1"
         test-while-idle: true
         test-on-borrow: false
-        
     http:
         converters:
-            preferred-json-mapper: gson
+           preferred-json-mapper: gson
 
 # --------- MyBatis 若用 xml 要加這個 ---------        
 #mybatis:

@@ -1,7 +1,8 @@
 package com.exfantasy.template.mybatis.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class Consume {
     @ApiModelProperty(notes = "發票號碼", required = true)

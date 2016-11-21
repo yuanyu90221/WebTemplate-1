@@ -44,6 +44,7 @@ ext {
 	mySqlConnectorJavaVersion = '5.1.39'
 	jbcryptVersion = '0.3m'
 	lombokVersion = '1.16.10'
+	gsonVersion = '2.8.0'
 	googleGuavaVersion = '19.0'
 	
 	swaggerVersion = '2.2.2'
@@ -76,6 +77,9 @@ dependencies {
 
 	// --------- https://projectlombok.org/ --------- 
 	compile "org.projectlombok:lombok:${lombokVersion}"
+	
+	// --------- 這個千萬要留著, 若拿掉 Spring Boot 會改用 Jackson, Date 轉換會有問題 ---------
+	compile "com.google.code.gson:gson:${gsonVersion}"
 
     // --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"
