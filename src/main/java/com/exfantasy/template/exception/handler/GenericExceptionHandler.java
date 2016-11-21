@@ -1,5 +1,7 @@
 package com.exfantasy.template.exception.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,10 +24,13 @@ import com.exfantasy.template.vo.response.ResponseVo;
 @ControllerAdvice
 public class GenericExceptionHandler {
 	
+	private Logger logger = LoggerFactory.getLogger(GenericExceptionHandler.class);
+	
 	@ExceptionHandler(OperationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ResponseVo handleCustomException(OperationException ex) {
+		logger.error("OperationException raised", ex);
 		return new ResponseVo(ex);
 	}
 	
@@ -33,6 +38,7 @@ public class GenericExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ResponseVo handleAccessDeniedException(AccessDeniedException ex) {
+		logger.error("AccessDeniedException raised", ex);
 		return new ResponseVo(ResultCode.ACCESS_DENIED, ex.getMessage());
 	}
 	
@@ -40,6 +46,7 @@ public class GenericExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ResponseVo handleAllException(Exception ex) {
+		logger.error("Exception raised", ex);
 		return new ResponseVo(ResultCode.SYSTEM_EXCEPTION, ex.getMessage());
 	}
 }
