@@ -1,8 +1,15 @@
 package com.exfantasy.template.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * <pre>
@@ -38,4 +45,24 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/main").setViewName("main");
     }
+    
+    // http://stackoverflow.com/questions/31335146/configure-gson-in-spring-before-using-gsonhttpmessageconverter
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(createGsonHttpMessageConverter());
+        super.configureMessageConverters(converters);
+    }
+
+    private GsonHttpMessageConverter createGsonHttpMessageConverter() {
+        Gson gson 
+        	= new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+
+        GsonHttpMessageConverter gsonConverter = new GsonHttpMessageConverter();
+        gsonConverter.setGson(gson);
+
+        return gsonConverter;
+    }
+
 }
