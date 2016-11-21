@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <pre>
- * 接收前端發送註冊資料用
+ * 註冊資料
  * </pre>
  * 
  * @author tommy.feng

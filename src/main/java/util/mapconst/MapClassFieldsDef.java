@@ -6,7 +6,9 @@ import java.util.Map;
 public enum MapClassFieldsDef {
 	USER("User", MapFieldsOfUser.values()),
 	USER_ROLE("UserRole", MapFieldsOfUserRole.values()),
-	PRODUCT("Product", MapFieldsOfProduct.values());
+	PRODUCT("Product", MapFieldsOfProduct.values()),
+	CONSUME("Consume", MapFieldsOfConsume.values())
+	;
 	
 	private String className;
 	private Map<String, String> mapFieldNameAndNotes = new HashMap<>();
