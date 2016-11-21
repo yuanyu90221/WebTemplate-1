@@ -13,6 +13,10 @@ public class ConsumeSqlProvider {
         SQL sql = new SQL();
         sql.INSERT_INTO("consume");
         
+        if (record.getLotteryNo() != null) {
+            sql.VALUES("lottery_no", "#{lotteryNo,jdbcType=VARCHAR}");
+        }
+        
         if (record.getUserId() != null) {
             sql.VALUES("user_id", "#{userId,jdbcType=INTEGER}");
         }
@@ -33,10 +37,6 @@ public class ConsumeSqlProvider {
             sql.VALUES("amount", "#{amount,jdbcType=DECIMAL}");
         }
         
-        if (record.getLotteryNo() != null) {
-            sql.VALUES("lottery_no", "#{lotteryNo,jdbcType=VARCHAR}");
-        }
-        
         if (record.getPrize() != null) {
             sql.VALUES("prize", "#{prize,jdbcType=DECIMAL}");
         }
@@ -49,16 +49,15 @@ public class ConsumeSqlProvider {
     public String selectByExample(ConsumeExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
-            sql.SELECT_DISTINCT("consume_id");
+            sql.SELECT_DISTINCT("lottery_no");
         } else {
-            sql.SELECT("consume_id");
+            sql.SELECT("lottery_no");
         }
         sql.SELECT("user_id");
         sql.SELECT("consume_date");
         sql.SELECT("type");
         sql.SELECT("prod_name");
         sql.SELECT("amount");
-        sql.SELECT("lottery_no");
         sql.SELECT("prize");
         sql.SELECT("got");
         sql.FROM("consume");
@@ -95,17 +94,13 @@ public class ConsumeSqlProvider {
             sql.SET("amount = #{amount,jdbcType=DECIMAL}");
         }
         
-        if (record.getLotteryNo() != null) {
-            sql.SET("lottery_no = #{lotteryNo,jdbcType=VARCHAR}");
-        }
-        
         if (record.getPrize() != null) {
             sql.SET("prize = #{prize,jdbcType=DECIMAL}");
         }
         
         sql.SET("got = #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
         
-        sql.WHERE("consume_id = #{consumeId,jdbcType=INTEGER}");
+        sql.WHERE("lottery_no = #{lotteryNo,jdbcType=VARCHAR}");
         
         return sql.toString();
     }

@@ -1,8 +1,6 @@
 package util.mapconst;
 
 public enum MapFieldsOfConsume implements MapFields {
-	CONSUME_ID("consumeId", "消費 ID"),
-	
 	USER_ID("userId", "使用者 ID"),
 	
 	CONSUME_DATE("consumeDate", "消費日期"),

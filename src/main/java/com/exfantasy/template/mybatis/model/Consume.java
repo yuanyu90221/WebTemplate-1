@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 public class Consume {
-    @ApiModelProperty(notes = "消費 ID", required = true)
-    private Integer consumeId;
+    @ApiModelProperty(notes = "發票號碼", required = true)
+    private String lotteryNo;
 
     @ApiModelProperty(notes = "使用者 ID", required = true)
     private Integer userId;
@@ -22,21 +22,18 @@ public class Consume {
     @ApiModelProperty(notes = "消費金額", required = true)
     private Long amount;
 
-    @ApiModelProperty(notes = "發票號碼", required = true)
-    private String lotteryNo;
-
     @ApiModelProperty(notes = "中獎金額", required = true)
     private Long prize;
 
     @ApiModelProperty(notes = "是否中獎", required = true)
     private boolean got;
 
-    public Integer getConsumeId() {
-        return consumeId;
+    public String getLotteryNo() {
+        return lotteryNo;
     }
 
-    public void setConsumeId(Integer consumeId) {
-        this.consumeId = consumeId;
+    public void setLotteryNo(String lotteryNo) {
+        this.lotteryNo = lotteryNo == null ? null : lotteryNo.trim();
     }
 
     public Integer getUserId() {
@@ -79,14 +76,6 @@ public class Consume {
         this.amount = amount;
     }
 
-    public String getLotteryNo() {
-        return lotteryNo;
-    }
-
-    public void setLotteryNo(String lotteryNo) {
-        this.lotteryNo = lotteryNo == null ? null : lotteryNo.trim();
-    }
-
     public Long getPrize() {
         return prize;
     }
@@ -115,13 +104,12 @@ public class Consume {
             return false;
         }
         Consume other = (Consume) that;
-        return (this.getConsumeId() == null ? other.getConsumeId() == null : this.getConsumeId().equals(other.getConsumeId()))
+        return (this.getLotteryNo() == null ? other.getLotteryNo() == null : this.getLotteryNo().equals(other.getLotteryNo()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getConsumeDate() == null ? other.getConsumeDate() == null : this.getConsumeDate().equals(other.getConsumeDate()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getProdName() == null ? other.getProdName() == null : this.getProdName().equals(other.getProdName()))
             && (this.getAmount() == null ? other.getAmount() == null : this.getAmount().equals(other.getAmount()))
-            && (this.getLotteryNo() == null ? other.getLotteryNo() == null : this.getLotteryNo().equals(other.getLotteryNo()))
             && (this.getPrize() == null ? other.getPrize() == null : this.getPrize().equals(other.getPrize()))
             && (this.isGot() == other.isGot());
     }
@@ -130,13 +118,12 @@ public class Consume {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getConsumeId() == null) ? 0 : getConsumeId().hashCode());
+        result = prime * result + ((getLotteryNo() == null) ? 0 : getLotteryNo().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getConsumeDate() == null) ? 0 : getConsumeDate().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getProdName() == null) ? 0 : getProdName().hashCode());
         result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
-        result = prime * result + ((getLotteryNo() == null) ? 0 : getLotteryNo().hashCode());
         result = prime * result + ((getPrize() == null) ? 0 : getPrize().hashCode());
         result = prime * result + (isGot() ? 1231 : 1237);
         return result;

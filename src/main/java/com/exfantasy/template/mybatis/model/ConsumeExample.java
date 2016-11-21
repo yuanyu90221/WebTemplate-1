@@ -163,63 +163,73 @@ public class ConsumeExample {
             addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
-        public Criteria andConsumeIdIsNull() {
-            addCriterion("consume_id is null");
+        public Criteria andLotteryNoIsNull() {
+            addCriterion("lottery_no is null");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdIsNotNull() {
-            addCriterion("consume_id is not null");
+        public Criteria andLotteryNoIsNotNull() {
+            addCriterion("lottery_no is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdEqualTo(Integer value) {
-            addCriterion("consume_id =", value, "consumeId");
+        public Criteria andLotteryNoEqualTo(String value) {
+            addCriterion("lottery_no =", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdNotEqualTo(Integer value) {
-            addCriterion("consume_id <>", value, "consumeId");
+        public Criteria andLotteryNoNotEqualTo(String value) {
+            addCriterion("lottery_no <>", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdGreaterThan(Integer value) {
-            addCriterion("consume_id >", value, "consumeId");
+        public Criteria andLotteryNoGreaterThan(String value) {
+            addCriterion("lottery_no >", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("consume_id >=", value, "consumeId");
+        public Criteria andLotteryNoGreaterThanOrEqualTo(String value) {
+            addCriterion("lottery_no >=", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdLessThan(Integer value) {
-            addCriterion("consume_id <", value, "consumeId");
+        public Criteria andLotteryNoLessThan(String value) {
+            addCriterion("lottery_no <", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdLessThanOrEqualTo(Integer value) {
-            addCriterion("consume_id <=", value, "consumeId");
+        public Criteria andLotteryNoLessThanOrEqualTo(String value) {
+            addCriterion("lottery_no <=", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdIn(List<Integer> values) {
-            addCriterion("consume_id in", values, "consumeId");
+        public Criteria andLotteryNoLike(String value) {
+            addCriterion("lottery_no like", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdNotIn(List<Integer> values) {
-            addCriterion("consume_id not in", values, "consumeId");
+        public Criteria andLotteryNoNotLike(String value) {
+            addCriterion("lottery_no not like", value, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdBetween(Integer value1, Integer value2) {
-            addCriterion("consume_id between", value1, value2, "consumeId");
+        public Criteria andLotteryNoIn(List<String> values) {
+            addCriterion("lottery_no in", values, "lotteryNo");
             return (Criteria) this;
         }
 
-        public Criteria andConsumeIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("consume_id not between", value1, value2, "consumeId");
+        public Criteria andLotteryNoNotIn(List<String> values) {
+            addCriterion("lottery_no not in", values, "lotteryNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryNoBetween(String value1, String value2) {
+            addCriterion("lottery_no between", value1, value2, "lotteryNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryNoNotBetween(String value1, String value2) {
+            addCriterion("lottery_no not between", value1, value2, "lotteryNo");
             return (Criteria) this;
         }
 
@@ -530,76 +540,6 @@ public class ConsumeExample {
 
         public Criteria andAmountNotBetween(Long value1, Long value2) {
             addCriterion("amount not between", value1, value2, "amount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoIsNull() {
-            addCriterion("lottery_no is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoIsNotNull() {
-            addCriterion("lottery_no is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoEqualTo(String value) {
-            addCriterion("lottery_no =", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoNotEqualTo(String value) {
-            addCriterion("lottery_no <>", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoGreaterThan(String value) {
-            addCriterion("lottery_no >", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoGreaterThanOrEqualTo(String value) {
-            addCriterion("lottery_no >=", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoLessThan(String value) {
-            addCriterion("lottery_no <", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoLessThanOrEqualTo(String value) {
-            addCriterion("lottery_no <=", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoLike(String value) {
-            addCriterion("lottery_no like", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoNotLike(String value) {
-            addCriterion("lottery_no not like", value, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoIn(List<String> values) {
-            addCriterion("lottery_no in", values, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoNotIn(List<String> values) {
-            addCriterion("lottery_no not in", values, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoBetween(String value1, String value2) {
-            addCriterion("lottery_no between", value1, value2, "lotteryNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andLotteryNoNotBetween(String value1, String value2) {
-            addCriterion("lottery_no not between", value1, value2, "lotteryNo");
             return (Criteria) this;
         }
 

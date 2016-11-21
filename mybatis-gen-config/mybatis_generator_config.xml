@@ -101,7 +101,6 @@
 			enableDeleteByExample="false" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 			
-			<generatedKey column="consume_id" sqlStatement="MySql" identity="true" />
 			<columnOverride column="got" javaType="boolean" typeHandler="com.exfantasy.template.typehandler.BooleanTypeHandler" />
 		</table>
 	</context>
