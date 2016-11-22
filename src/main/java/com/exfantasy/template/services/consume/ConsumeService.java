@@ -64,7 +64,7 @@ public class ConsumeService {
 			criteria.andTypeEqualTo(type);
 		}
 		if (prodName != null) {
-			criteria.andProdNameLike(prodName);
+			criteria.andProdNameLike("%" + prodName + "%");
 		}
 		if (lotteryNo != null) {
 			criteria.andLotteryNoEqualTo(lotteryNo);
