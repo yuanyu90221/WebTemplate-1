@@ -79,6 +79,7 @@ dependencies {
 	compile "org.projectlombok:lombok:${lombokVersion}"
 	
 	// --------- 這個千萬要留著, 若拿掉 Spring Boot 會改用 Jackson, Date 轉換會有問題 ---------
+	// FIXME 用了 gson swagger 會無法顯示頁面
 	compile "com.google.code.gson:gson:${gsonVersion}"
 
     // --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
