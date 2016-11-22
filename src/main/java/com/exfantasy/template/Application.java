@@ -25,7 +25,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 // 自動掃描 Spring Bean 元件
 //@ComponentScan( basePackages = {"com.exfantasy.school"} )
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
-@EnableSwagger2 // 允許自動產生 api 
 public class Application {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
