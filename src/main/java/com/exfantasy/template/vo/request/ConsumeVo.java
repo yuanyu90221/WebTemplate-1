@@ -6,7 +6,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.exfantasy.template.deserializer.ConsumeVoDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +23,11 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
+@JsonDeserialize(using = ConsumeVoDeserializer.class)
 @NoArgsConstructor
+@AllArgsConstructor
 public class ConsumeVo {
+
 	@NotNull(message = "Please input consume date")
 	@ApiModelProperty(notes = "消費日期", required = true)
 	private LocalDate consumeDate;
