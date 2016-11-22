@@ -1,7 +1,9 @@
 package com.exfantasy.template.services.consume;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +72,7 @@ public class ConsumeService {
 			criteria.andLotteryNoEqualTo(lotteryNo);
 		}
 		List<Consume> consumes = consumeMapper.selectByExample(example);
+		consumes.sort((obj1, obj2) -> obj1.getConsumeDate().compareTo(obj2.getConsumeDate()));
 		return consumes;
 	}
 }
