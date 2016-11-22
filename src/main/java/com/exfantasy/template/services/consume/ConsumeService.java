@@ -52,7 +52,10 @@ public class ConsumeService {
 		ConsumeExample example = new ConsumeExample();
 		Criteria criteria = example.createCriteria();
 		if (startDate != null && endDate == null) {
-			criteria.andConsumeDateGreaterThan(startDate);
+			criteria.andConsumeDateGreaterThanOrEqualTo(startDate);
+		}
+		if (startDate == null && endDate != null) {
+			criteria.andConsumeDateLessThanOrEqualTo(endDate);
 		}
 		if (startDate != null && endDate != null) {
 			criteria.andConsumeDateBetween(startDate, endDate);
