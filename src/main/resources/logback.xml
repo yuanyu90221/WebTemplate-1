@@ -15,7 +15,7 @@
 	</appender>
 
 	<appender name="DAILY_ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${LOG_HOME}/TestSpringBootMyBatis.log</File>
+		<File>${LOG_HOME}/WebTemplate.log</File>
 		<encoder>
 			<Pattern>${PATTERN}</Pattern>
 			<charset>${CHARSET}</charset>
