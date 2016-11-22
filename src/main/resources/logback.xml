@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<property name="LOG_HOME" value="D:/TommyLog" />
+	<property name="LOG_HOME" value="D:/WebTemplateLog" />
 	<property name="CHARSET" value="UTF-8" />
 	<property name="PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%-5level][%logger{50}] %m%n" />
 
@@ -22,7 +22,7 @@
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<FileNamePattern>${LOG_HOME}/TestSpringBootMyBatis.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>${LOG_HOME}/WebTemplate.%d{yyyy-MM-dd}.log</FileNamePattern>
 
 			<!-- keep 30 days' worth of history -->
 			<maxHistory>30</maxHistory>
