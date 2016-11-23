@@ -7,7 +7,8 @@ public enum MapClassFieldsDef {
 	USER("User", MapFieldsOfUser.values()),
 	USER_ROLE("UserRole", MapFieldsOfUserRole.values()),
 	PRODUCT("Product", MapFieldsOfProduct.values()),
-	CONSUME("Consume", MapFieldsOfConsume.values())
+	CONSUME("Consume", MapFieldsOfConsume.values()),
+	RECEIPT_REWARD("ReceiptReward", MapFieldsOfReceiptReward.values())
 	;
 	
 	private String className;
