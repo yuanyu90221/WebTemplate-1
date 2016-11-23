@@ -15,8 +15,8 @@ import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.ConsumeExample;
 import com.exfantasy.template.mybatis.model.ConsumeExample.Criteria;
 import com.exfantasy.template.mybatis.model.User;
-import com.exfantasy.template.util.DateUtils;
 import com.exfantasy.template.vo.request.ConsumeVo;
+import com.exfantasy.utils.date.DateUtils;
 
 /**
  * <pre>
