@@ -48,7 +48,7 @@ ext {
 	gsonVersion = '2.8.0'
 	googleGuavaVersion = '19.0'
 	
-	myUtilsVersion = '1.0.17'
+	myUtilsVersion = '1.0.18'
 	
 	swaggerVersion = '2.2.2'
 	
