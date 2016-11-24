@@ -5,9 +5,24 @@ import com.exfantasy.template.mybatis.model.UserExample.Criteria;
 import com.exfantasy.template.mybatis.model.UserExample.Criterion;
 import com.exfantasy.template.mybatis.model.UserExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
 public class UserSqlProvider {
+
+    public String countByExample(UserExample example) {
+        SQL sql = new SQL();
+        sql.SELECT("count(*)").FROM("user");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
+
+    public String deleteByExample(UserExample example) {
+        SQL sql = new SQL();
+        sql.DELETE_FROM("user");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
 
     public String insertSelective(User record) {
         SQL sql = new SQL();
@@ -63,6 +78,65 @@ public class UserSqlProvider {
             sql.ORDER_BY(example.getOrderByClause());
         }
         
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter) {
+        User record = (User) parameter.get("record");
+        UserExample example = (UserExample) parameter.get("example");
+        
+        SQL sql = new SQL();
+        sql.UPDATE("user");
+        
+        if (record.getUserId() != null) {
+            sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getEmail() != null) {
+            sql.SET("email = #{record.email,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getPassword() != null) {
+            sql.SET("password = #{record.password,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getMobileNo() != null) {
+            sql.SET("mobile_no = #{record.mobileNo,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getLineId() != null) {
+            sql.SET("line_id = #{record.lineId,jdbcType=VARCHAR}");
+        }
+        
+        sql.SET("enabled = #{record.enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        
+        if (record.getCreateTime() != null) {
+            sql.SET("create_time = #{record.createTime,jdbcType=DATE}");
+        }
+        
+        if (record.getLastSigninTime() != null) {
+            sql.SET("last_signin_time = #{record.lastSigninTime,jdbcType=TIMESTAMP}");
+        }
+        
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
+    public String updateByExample(Map<String, Object> parameter) {
+        SQL sql = new SQL();
+        sql.UPDATE("user");
+        
+        sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+        sql.SET("email = #{record.email,jdbcType=VARCHAR}");
+        sql.SET("password = #{record.password,jdbcType=VARCHAR}");
+        sql.SET("mobile_no = #{record.mobileNo,jdbcType=VARCHAR}");
+        sql.SET("line_id = #{record.lineId,jdbcType=VARCHAR}");
+        sql.SET("enabled = #{record.enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.SET("create_time = #{record.createTime,jdbcType=DATE}");
+        sql.SET("last_signin_time = #{record.lastSigninTime,jdbcType=TIMESTAMP}");
+        
+        UserExample example = (UserExample) parameter.get("example");
+        applyWhere(sql, example, true);
         return sql.toString();
     }
 

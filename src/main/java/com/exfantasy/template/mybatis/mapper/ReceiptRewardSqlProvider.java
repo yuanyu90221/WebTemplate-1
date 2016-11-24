@@ -5,9 +5,24 @@ import com.exfantasy.template.mybatis.model.ReceiptRewardExample.Criteria;
 import com.exfantasy.template.mybatis.model.ReceiptRewardExample.Criterion;
 import com.exfantasy.template.mybatis.model.ReceiptRewardExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
 public class ReceiptRewardSqlProvider {
+
+    public String countByExample(ReceiptRewardExample example) {
+        SQL sql = new SQL();
+        sql.SELECT("count(*)").FROM("receipt_reward");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
+
+    public String deleteByExample(ReceiptRewardExample example) {
+        SQL sql = new SQL();
+        sql.DELETE_FROM("receipt_reward");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
 
     public String insertSelective(ReceiptReward record) {
         SQL sql = new SQL();
@@ -44,6 +59,42 @@ public class ReceiptRewardSqlProvider {
             sql.ORDER_BY(example.getOrderByClause());
         }
         
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter) {
+        ReceiptReward record = (ReceiptReward) parameter.get("record");
+        ReceiptRewardExample example = (ReceiptRewardExample) parameter.get("example");
+        
+        SQL sql = new SQL();
+        sql.UPDATE("receipt_reward");
+        
+        if (record.getSection() != null) {
+            sql.SET("section = #{record.section,jdbcType=CHAR}");
+        }
+        
+        if (record.getRewardType() != null) {
+            sql.SET("reward_type = #{record.rewardType,jdbcType=INTEGER}");
+        }
+        
+        if (record.getNumber() != null) {
+            sql.SET("number = #{record.number,jdbcType=CHAR}");
+        }
+        
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
+    public String updateByExample(Map<String, Object> parameter) {
+        SQL sql = new SQL();
+        sql.UPDATE("receipt_reward");
+        
+        sql.SET("section = #{record.section,jdbcType=CHAR}");
+        sql.SET("reward_type = #{record.rewardType,jdbcType=INTEGER}");
+        sql.SET("number = #{record.number,jdbcType=CHAR}");
+        
+        ReceiptRewardExample example = (ReceiptRewardExample) parameter.get("example");
+        applyWhere(sql, example, true);
         return sql.toString();
     }
 

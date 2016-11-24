@@ -5,9 +5,24 @@ import com.exfantasy.template.mybatis.model.ConsumeExample.Criteria;
 import com.exfantasy.template.mybatis.model.ConsumeExample.Criterion;
 import com.exfantasy.template.mybatis.model.ConsumeExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
 public class ConsumeSqlProvider {
+
+    public String countByExample(ConsumeExample example) {
+        SQL sql = new SQL();
+        sql.SELECT("count(*)").FROM("consume");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
+
+    public String deleteByExample(ConsumeExample example) {
+        SQL sql = new SQL();
+        sql.DELETE_FROM("consume");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
 
     public String insertSelective(Consume record) {
         SQL sql = new SQL();
@@ -67,6 +82,65 @@ public class ConsumeSqlProvider {
             sql.ORDER_BY(example.getOrderByClause());
         }
         
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter) {
+        Consume record = (Consume) parameter.get("record");
+        ConsumeExample example = (ConsumeExample) parameter.get("example");
+        
+        SQL sql = new SQL();
+        sql.UPDATE("consume");
+        
+        if (record.getLotteryNo() != null) {
+            sql.SET("lottery_no = #{record.lotteryNo,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getUserId() != null) {
+            sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getConsumeDate() != null) {
+            sql.SET("consume_date = #{record.consumeDate,jdbcType=DATE}");
+        }
+        
+        if (record.getType() != null) {
+            sql.SET("type = #{record.type,jdbcType=INTEGER}");
+        }
+        
+        if (record.getProdName() != null) {
+            sql.SET("prod_name = #{record.prodName,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getAmount() != null) {
+            sql.SET("amount = #{record.amount,jdbcType=DECIMAL}");
+        }
+        
+        if (record.getPrize() != null) {
+            sql.SET("prize = #{record.prize,jdbcType=DECIMAL}");
+        }
+        
+        sql.SET("got = #{record.got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
+    public String updateByExample(Map<String, Object> parameter) {
+        SQL sql = new SQL();
+        sql.UPDATE("consume");
+        
+        sql.SET("lottery_no = #{record.lotteryNo,jdbcType=VARCHAR}");
+        sql.SET("user_id = #{record.userId,jdbcType=INTEGER}");
+        sql.SET("consume_date = #{record.consumeDate,jdbcType=DATE}");
+        sql.SET("type = #{record.type,jdbcType=INTEGER}");
+        sql.SET("prod_name = #{record.prodName,jdbcType=VARCHAR}");
+        sql.SET("amount = #{record.amount,jdbcType=DECIMAL}");
+        sql.SET("prize = #{record.prize,jdbcType=DECIMAL}");
+        sql.SET("got = #{record.got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        
+        ConsumeExample example = (ConsumeExample) parameter.get("example");
+        applyWhere(sql, example, true);
         return sql.toString();
     }
 

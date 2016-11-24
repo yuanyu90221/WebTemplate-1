@@ -5,9 +5,11 @@ import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.typehandler.BooleanTypeHandler;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -19,6 +21,12 @@ import org.apache.ibatis.type.JdbcType;
 
 @Mapper
 public interface UserMapper {
+    @SelectProvider(type=UserSqlProvider.class, method="countByExample")
+    int countByExample(UserExample example);
+
+    @DeleteProvider(type=UserSqlProvider.class, method="deleteByExample")
+    int deleteByExample(UserExample example);
+
     @Delete({
         "delete from user",
         "where user_id = #{userId,jdbcType=INTEGER}"
@@ -72,6 +80,12 @@ public interface UserMapper {
         @Result(column="last_signin_time", property="lastSigninTime", jdbcType=JdbcType.TIMESTAMP)
     })
     User selectByPrimaryKey(Integer userId);
+
+    @UpdateProvider(type=UserSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+
+    @UpdateProvider(type=UserSqlProvider.class, method="updateByExample")
+    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
     @UpdateProvider(type=UserSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(User record);

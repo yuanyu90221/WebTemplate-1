@@ -5,9 +5,24 @@ import com.exfantasy.template.mybatis.model.ProductExample.Criteria;
 import com.exfantasy.template.mybatis.model.ProductExample.Criterion;
 import com.exfantasy.template.mybatis.model.ProductExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
 public class ProductSqlProvider {
+
+    public String countByExample(ProductExample example) {
+        SQL sql = new SQL();
+        sql.SELECT("count(*)").FROM("product");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
+
+    public String deleteByExample(ProductExample example) {
+        SQL sql = new SQL();
+        sql.DELETE_FROM("product");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
 
     public String insertSelective(Product record) {
         SQL sql = new SQL();
@@ -35,6 +50,37 @@ public class ProductSqlProvider {
             sql.ORDER_BY(example.getOrderByClause());
         }
         
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter) {
+        Product record = (Product) parameter.get("record");
+        ProductExample example = (ProductExample) parameter.get("example");
+        
+        SQL sql = new SQL();
+        sql.UPDATE("product");
+        
+        if (record.getProdId() != null) {
+            sql.SET("prod_id = #{record.prodId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getProdName() != null) {
+            sql.SET("prod_name = #{record.prodName,jdbcType=VARCHAR}");
+        }
+        
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
+    public String updateByExample(Map<String, Object> parameter) {
+        SQL sql = new SQL();
+        sql.UPDATE("product");
+        
+        sql.SET("prod_id = #{record.prodId,jdbcType=INTEGER}");
+        sql.SET("prod_name = #{record.prodName,jdbcType=VARCHAR}");
+        
+        ProductExample example = (ProductExample) parameter.get("example");
+        applyWhere(sql, example, true);
         return sql.toString();
     }
 

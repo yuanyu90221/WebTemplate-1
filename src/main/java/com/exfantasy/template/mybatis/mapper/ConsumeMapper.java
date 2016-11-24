@@ -5,9 +5,11 @@ import com.exfantasy.template.mybatis.model.ConsumeExample;
 import com.exfantasy.template.typehandler.BooleanTypeHandler;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -18,6 +20,12 @@ import org.apache.ibatis.type.JdbcType;
 
 @Mapper
 public interface ConsumeMapper {
+    @SelectProvider(type=ConsumeSqlProvider.class, method="countByExample")
+    int countByExample(ConsumeExample example);
+
+    @DeleteProvider(type=ConsumeSqlProvider.class, method="deleteByExample")
+    int deleteByExample(ConsumeExample example);
+
     @Delete({
         "delete from consume",
         "where lottery_no = #{lotteryNo,jdbcType=VARCHAR}"
@@ -69,6 +77,12 @@ public interface ConsumeMapper {
         @Result(column="got", property="got", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
     })
     Consume selectByPrimaryKey(String lotteryNo);
+
+    @UpdateProvider(type=ConsumeSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record") Consume record, @Param("example") ConsumeExample example);
+
+    @UpdateProvider(type=ConsumeSqlProvider.class, method="updateByExample")
+    int updateByExample(@Param("record") Consume record, @Param("example") ConsumeExample example);
 
     @UpdateProvider(type=ConsumeSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(Consume record);
