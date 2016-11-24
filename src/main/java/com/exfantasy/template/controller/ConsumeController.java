@@ -57,7 +57,7 @@ public class ConsumeController {
 	 * 新增記帳資料
 	 * </pre>
 	 * 
-	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.InsertConsume}</code>
+	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
 	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
 	 */
@@ -81,6 +81,15 @@ public class ConsumeController {
 		return new ResponseVo(ResultCode.SUCCESS, "Add consume data succeed");
 	}
 	
+	/**
+	 * <pre>
+	 * 更新記帳資料
+	 * </pre>
+	 * 
+	 * @param consumeVo 前端發過來要更新的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
+	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
+	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
+	 */
 	@RequestMapping(value = "/upd_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "更新記帳資料", notes = "更新記帳資料", response = ResponseVo.class)
 	@ApiImplicitParams({

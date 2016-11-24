@@ -12,7 +12,11 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * https://dzone.com/articles/custom-json-deserialization-with-jackson
+ * <pre>
+ * 前端傳輸過來的記帳資料, 特製 deserializer
+ * 
+ * 參考: https://dzone.com/articles/custom-json-deserialization-with-jackson
+ * </pre>
  * 
  * @author tommy.feng
  *
@@ -25,14 +29,13 @@ public class ConsumeVoDeserializer extends JsonDeserializer<ConsumeVo> {
 	    JsonNode node = oc.readTree(jp);
 	    
 	    String consumeDate = node.get("consumeDate").asText();
-	    Integer type = node.get("type").asInt();
-	    String prodName = node.get("prodName").asText();
-	    Long amount = node.get("amount").asLong();
-	    String lotteryNo = node.get("lotteryNo").asText();
-	    Boolean got = node.get("got").asBoolean();
-	    Long prize = node.get("prize").asLong();
-	    
-        LocalDate localDate = LocalDate.parse(consumeDate);
+	    final LocalDate localDate = LocalDate.parse(consumeDate);
+	    final Integer type = node.get("type").asInt();
+	    final String prodName = node.get("prodName").asText();
+	    final Long amount = node.get("amount").asLong();
+	    final String lotteryNo = node.get("lotteryNo").asText();
+	    final Boolean got = node.get("got").asBoolean();
+	    final Long prize = node.get("prize").asLong();
 		
 		return new ConsumeVo(localDate, type, prodName, amount, lotteryNo, prize, got);
 	}
