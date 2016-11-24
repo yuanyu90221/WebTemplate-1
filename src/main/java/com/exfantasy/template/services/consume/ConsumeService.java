@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exfantasy.template.mybatis.custom.CustomReceiptRewardMapper;
 import com.exfantasy.template.mybatis.mapper.ConsumeMapper;
-import com.exfantasy.template.mybatis.mapper.ReceiptRewardMapper;
 import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.ConsumeExample;
 import com.exfantasy.template.mybatis.model.ConsumeExample.Criteria;
@@ -45,7 +45,7 @@ public class ConsumeService {
 	private ConsumeMapper consumeMapper;
 	
 	@Autowired
-	private ReceiptRewardMapper receiptRewardMapper;
+	private CustomReceiptRewardMapper receiptRewardMapper;
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void addConsume(User user, ConsumeVo consumeVo) {
@@ -94,8 +94,11 @@ public class ConsumeService {
 	}
 
 	private void getLatestReceiptLotteryNo() {
-		// 判斷這期資料是否已經刪除過
-		List<String> sectionAlreadyDeleted = new ArrayList<>();
+		// 用來 batch delete
+		List<String> sectionsToDelete = new ArrayList<>();
+		
+		// 用來 batch Insert
+		List<ReceiptReward> receiptRewardsToInsert = new ArrayList<>();
 		
 		List<Reward> rewards = ReceiptLotteryNoUtil.getReceiptLotteryNo();
 		for (Reward reward : rewards) {
@@ -103,23 +106,22 @@ public class ConsumeService {
 			int rewardType = reward.getRewardType().getCode();
 			String number = reward.getNo();
 			
+			// 準備將 db 中已存在資料刪除
+			if (!sectionsToDelete.contains(section)) {
+				sectionsToDelete.add(section);
+			}
+			
+			// 將網路查回來的 Reward 轉換為 ReceiptReward 加到 list 中準備 batch insert
 			ReceiptReward receiptReward = new ReceiptReward();
 			receiptReward.setSection(section);
 			receiptReward.setRewardType(rewardType);
 			receiptReward.setNumber(number);
-
-			// 用來查詢 DB 此期別是否存在
-			ReceiptRewardExample example = new ReceiptRewardExample();
-			example.createCriteria().andSectionEqualTo(section);
-			List<ReceiptReward> dbDatas = receiptRewardMapper.selectByExample(example);
-			
-			// 若 DB 已存在這期資料, 將 DB 資料全數刪除, 重新 insert
-			if (dbDatas.size() != 0 && !sectionAlreadyDeleted.contains(section)) {
-				receiptRewardMapper.deleteBySection(section);
-				sectionAlreadyDeleted.add(section);
-			}
-			receiptRewardMapper.insertSelective(receiptReward);
+			receiptRewardsToInsert.add(receiptReward);
 		}
+		
+		receiptRewardMapper.batchDeleteBySection(sectionsToDelete);
+		
+		receiptRewardMapper.batchInsert(receiptRewardsToInsert);
 	}
 
 	private void checkIsGot(List<Consume> consumes) {

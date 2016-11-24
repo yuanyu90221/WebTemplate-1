@@ -3,8 +3,6 @@ package com.exfantasy.template.mybatis.mapper;
 import com.exfantasy.template.mybatis.model.ReceiptReward;
 import com.exfantasy.template.mybatis.model.ReceiptRewardExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
@@ -18,13 +16,6 @@ import org.apache.ibatis.type.JdbcType;
 
 @Mapper
 public interface ReceiptRewardMapper {
-	// 這個自己加的, 因為 Table: receipt_reward 沒有 PKey, 所以 generator 不會產生
-	@Delete({
-    	"delete from receipt_reward",
-    	"where section = #{section,jdbcType=CHAR}"
-    })
-    int deleteBySection(String section);
-	
     @SelectProvider(type=ReceiptRewardSqlProvider.class, method="countByExample")
     int countByExample(ReceiptRewardExample example);
 
