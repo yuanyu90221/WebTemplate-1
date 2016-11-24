@@ -57,7 +57,7 @@ public class ConsumeController {
 	 * 新增記帳資料
 	 * </pre>
 	 * 
-	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
+	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.InsertConsume}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
 	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
 	 */
@@ -80,6 +80,26 @@ public class ConsumeController {
 		consumeService.addConsume(user, consumeVo);
 		return new ResponseVo(ResultCode.SUCCESS, "Add consume data succeed");
 	}
+	
+	@RequestMapping(value = "/upd_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "更新記帳資料", notes = "更新記帳資料", response = ResponseVo.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "consumeVo", value = "更新記帳資料需填入", required = true, dataType = "ConsumeVo")
+	})
+	public @ResponseBody ResponseVo updConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
+		if (result.hasErrors()) {
+			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
+			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
+		}
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userService.queryUserByEmail(email);
+		
+		consumeService.updConsume(user, consumeVo);
+		return new ResponseVo(ResultCode.SUCCESS, "Update consume data succeed");
+	}
+	
 	
 	/**
 	 * <pre>

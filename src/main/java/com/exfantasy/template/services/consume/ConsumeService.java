@@ -49,16 +49,25 @@ public class ConsumeService {
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void addConsume(User user, ConsumeVo consumeVo) {
-		Consume consume = new Consume();
+		Consume consume = convertConsumVoToModel(user, consumeVo);
+		consumeMapper.insert(consume);
+	}
 
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
+	public void updConsume(User user, ConsumeVo consumeVo) {
+		Consume consume = convertConsumVoToModel(user, consumeVo);
+		consumeMapper.updateByPrimaryKey(consume);
+	}
+
+	private Consume convertConsumVoToModel(User user, ConsumeVo consumeVo) {
+		Consume consume = new Consume();
 		consume.setUserId(user.getUserId());
 		consume.setConsumeDate(DateUtils.asDate(consumeVo.getConsumeDate()));
 		consume.setType(consumeVo.getType());
 		consume.setProdName(consumeVo.getProdName());
 		consume.setAmount(consumeVo.getAmount());
 		consume.setLotteryNo(consumeVo.getLotteryNo());
-		
-		consumeMapper.insert(consume);
+		return consume;
 	}
 
 	public List<Consume> getConsume(Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
