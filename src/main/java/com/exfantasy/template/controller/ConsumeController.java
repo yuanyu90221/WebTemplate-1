@@ -109,6 +109,33 @@ public class ConsumeController {
 		return new ResponseVo(ResultCode.SUCCESS, "Update consume data succeed");
 	}
 	
+	/**
+	 * <pre>
+	 * 刪除記帳資料
+	 * </pre>
+	 * 
+	 * @param consumeVo 前端發過來要刪除的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
+	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
+	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
+	 */
+	@RequestMapping(value = "/del_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "刪除記帳資料", notes = "刪除記帳資料", response = ResponseVo.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "consumeVo", value = "刪除記帳資料需填入", required = true, dataType = "ConsumeVo")
+	})
+	public @ResponseBody ResponseVo delConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
+		if (result.hasErrors()) {
+			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
+			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
+		}
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userService.queryUserByEmail(email);
+		
+		consumeService.delConsume(user, consumeVo);
+		return new ResponseVo(ResultCode.SUCCESS, "Update consume data succeed");
+	}
 	
 	/**
 	 * <pre>

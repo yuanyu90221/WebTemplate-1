@@ -59,15 +59,10 @@ public class ConsumeService {
 		consumeMapper.updateByPrimaryKey(consume);
 	}
 
-	private Consume convertConsumVoToModel(User user, ConsumeVo consumeVo) {
-		Consume consume = new Consume();
-		consume.setUserId(user.getUserId());
-		consume.setConsumeDate(DateUtils.asDate(consumeVo.getConsumeDate()));
-		consume.setType(consumeVo.getType());
-		consume.setProdName(consumeVo.getProdName());
-		consume.setAmount(consumeVo.getAmount());
-		consume.setLotteryNo(consumeVo.getLotteryNo());
-		return consume;
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
+	public void delConsume(User user, ConsumeVo consumeVo) {
+		Consume consume = convertConsumVoToModel(user, consumeVo);
+		consumeMapper.deleteByPrimaryKey(consume.getLotteryNo());
 	}
 
 	public List<Consume> getConsume(Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
@@ -100,6 +95,17 @@ public class ConsumeService {
 		}
 		
 		return consumes;
+	}
+
+	private Consume convertConsumVoToModel(User user, ConsumeVo consumeVo) {
+		Consume consume = new Consume();
+		consume.setUserId(user.getUserId());
+		consume.setConsumeDate(DateUtils.asDate(consumeVo.getConsumeDate()));
+		consume.setType(consumeVo.getType());
+		consume.setProdName(consumeVo.getProdName());
+		consume.setAmount(consumeVo.getAmount());
+		consume.setLotteryNo(consumeVo.getLotteryNo());
+		return consume;
 	}
 
 	private void getLatestReceiptLotteryNo() {
