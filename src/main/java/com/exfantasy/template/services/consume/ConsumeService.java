@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exfantasy.template.mybatis.custom.CustomConsumeMapper;
 import com.exfantasy.template.mybatis.custom.CustomReceiptRewardMapper;
-import com.exfantasy.template.mybatis.mapper.ConsumeMapper;
 import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.ConsumeExample;
 import com.exfantasy.template.mybatis.model.ConsumeExample.Criteria;
@@ -42,7 +42,7 @@ public class ConsumeService {
 	private static final Logger logger = LoggerFactory.getLogger(ConsumeService.class);
 	
 	@Autowired
-	private ConsumeMapper consumeMapper;
+	private CustomConsumeMapper consumeMapper;
 	
 	@Autowired
 	private CustomReceiptRewardMapper receiptRewardMapper;
@@ -197,9 +197,10 @@ public class ConsumeService {
 					consume.setGot(0);
 				}
 			}
-			// 更新 DB 狀態
-			consumeMapper.updateByPrimaryKeySelective(consume);
 		}
+		
+		// 批次更新 DB 狀態
+		consumeMapper.batchUpdate(consumes);
 	}
 	
 	/**
