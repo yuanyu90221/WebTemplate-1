@@ -200,7 +200,7 @@ public class ConsumeService {
 		}
 		
 		// 批次更新 DB 狀態
-		consumeMapper.batchUpdate(consumes);
+		consumeMapper.batchUpdateGot(consumes);
 	}
 	
 	/**

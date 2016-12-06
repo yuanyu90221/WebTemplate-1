@@ -14,12 +14,12 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	// 參考: http://stackoverflow.com/questions/10797794/multiple-queries-executed-in-java-in-single-statement
 	@Update({
 		"<script>",
-		"<foreach collection='list' item='consume'>",
+		"<foreach collection='list' item='consume' separator=';'>",
 		"update consume ",
 		"set got = #{consume.got,jdbcType=INTEGER} ",
-		"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR};",
+		"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
 		"</foreach>",
 		"</script>"
 	})
-	int batchUpdate(List<Consume> consumesToUpdateGot);
+	int batchUpdateGot(List<Consume> consumesToUpdateGot);
 }
