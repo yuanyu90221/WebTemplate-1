@@ -19,6 +19,8 @@ import com.sun.mail.util.BASE64EncoderStream;
  * 參考:
  * 	<a href="https://examples.javacodegeeks.com/core-java/crypto/encrypt-decrypt-string-with-des/">Example 1</a>
  * 	<a href="http://doraprojects.net/blog/?p=1276">Example 2</a>
+ *  <a href="http://www.cnblogs.com/arix04/archive/2009/06/26/1511839.html">Example 3</a>
+ *  <a href="http://ijecorp.blogspot.tw/2016/05/java-jce-aes-encryption-decryption-2016.html">Example 4</a>
  * </pre>
  * 
  * @author tommy.feng
