@@ -1,4 +1,4 @@
-package com.exfantasy.template.typehandler;
+package com.exfantasy.template.mybatis.typehandler;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

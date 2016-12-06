@@ -76,7 +76,7 @@
 			<generatedKey column="user_id" sqlStatement="MySql" identity="true" />
 			
 			<!-- 使欄位會根據 typeHandler 來處理 DB 的值 -->
-			<columnOverride column="enabled" javaType="boolean" typeHandler="com.exfantasy.template.typehandler.BooleanTypeHandler" />
+			<columnOverride column="enabled" javaType="boolean" typeHandler="com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler" />
 		</table>
 		
 		<!-- Table: user_roles -->

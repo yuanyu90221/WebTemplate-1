@@ -44,7 +44,7 @@ public class UserSqlProvider {
             sql.VALUES("line_id", "#{lineId,jdbcType=VARCHAR}");
         }
         
-        sql.VALUES("enabled", "#{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.VALUES("enabled", "#{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
         
         if (record.getCreateTime() != null) {
             sql.VALUES("create_time", "#{createTime,jdbcType=DATE}");
@@ -108,7 +108,7 @@ public class UserSqlProvider {
             sql.SET("line_id = #{record.lineId,jdbcType=VARCHAR}");
         }
         
-        sql.SET("enabled = #{record.enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.SET("enabled = #{record.enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
         
         if (record.getCreateTime() != null) {
             sql.SET("create_time = #{record.createTime,jdbcType=DATE}");
@@ -131,7 +131,7 @@ public class UserSqlProvider {
         sql.SET("password = #{record.password,jdbcType=VARCHAR}");
         sql.SET("mobile_no = #{record.mobileNo,jdbcType=VARCHAR}");
         sql.SET("line_id = #{record.lineId,jdbcType=VARCHAR}");
-        sql.SET("enabled = #{record.enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.SET("enabled = #{record.enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
         sql.SET("create_time = #{record.createTime,jdbcType=DATE}");
         sql.SET("last_signin_time = #{record.lastSigninTime,jdbcType=TIMESTAMP}");
         
@@ -160,7 +160,7 @@ public class UserSqlProvider {
             sql.SET("line_id = #{lineId,jdbcType=VARCHAR}");
         }
         
-        sql.SET("enabled = #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.SET("enabled = #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
         
         if (record.getCreateTime() != null) {
             sql.SET("create_time = #{createTime,jdbcType=DATE}");

@@ -2,7 +2,7 @@ package com.exfantasy.template.mybatis.mapper;
 
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserExample;
-import com.exfantasy.template.typehandler.BooleanTypeHandler;
+import com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -40,7 +40,7 @@ public interface UserMapper {
         "create_time, last_signin_time)",
         "values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{mobileNo,jdbcType=VARCHAR}, #{lineId,jdbcType=VARCHAR}, ",
-        "#{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}, ",
+        "#{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}, ",
         "#{createTime,jdbcType=DATE}, #{lastSigninTime,jdbcType=TIMESTAMP})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="userId", before=false, resultType=Integer.class)
@@ -96,7 +96,7 @@ public interface UserMapper {
           "password = #{password,jdbcType=VARCHAR},",
           "mobile_no = #{mobileNo,jdbcType=VARCHAR},",
           "line_id = #{lineId,jdbcType=VARCHAR},",
-          "enabled = #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler},",
+          "enabled = #{enabled,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler},",
           "create_time = #{createTime,jdbcType=DATE},",
           "last_signin_time = #{lastSigninTime,jdbcType=TIMESTAMP}",
         "where user_id = #{userId,jdbcType=INTEGER}"

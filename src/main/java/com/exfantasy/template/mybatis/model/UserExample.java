@@ -86,12 +86,12 @@ public class UserExample {
             if (value == null) {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
-            enabledCriteria.add(new Criterion(condition, value, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
+            enabledCriteria.add(new Criterion(condition, value, "com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler"));
             allCriteria = null;
         }
 
         protected void addEnabledCriterion(String condition, boolean value1, boolean value2, String property) {
-            enabledCriteria.add(new Criterion(condition, value1, value2, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
+            enabledCriteria.add(new Criterion(condition, value1, value2, "com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler"));
             allCriteria = null;
         }
 
