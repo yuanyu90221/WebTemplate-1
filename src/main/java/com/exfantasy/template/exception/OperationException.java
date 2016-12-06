@@ -1,6 +1,6 @@
 package com.exfantasy.template.exception;
 
-import com.exfantasy.template.constant.ResultCode;
+import com.exfantasy.template.cnst.ResultCode;
 
 /**
  * <pre>

@@ -1,4 +1,4 @@
-package com.exfantasy.template.deserializer;
+package com.exfantasy.template.vo.deserializer;
 
 import java.io.IOException;
 import java.time.LocalDate;

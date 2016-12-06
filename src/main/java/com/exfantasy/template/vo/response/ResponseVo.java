@@ -1,6 +1,6 @@
 package com.exfantasy.template.vo.response;
 
-import com.exfantasy.template.constant.ResultCode;
+import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 
 import io.swagger.annotations.ApiModel;

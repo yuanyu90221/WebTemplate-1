@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.config.CustomConfig;
-import com.exfantasy.template.constant.ResultCode;
-import com.exfantasy.template.constant.Role;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.mapper.UserRoleMapper;

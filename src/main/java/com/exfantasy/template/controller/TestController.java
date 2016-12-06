@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.exfantasy.template.constant.ResultCode;
-import com.exfantasy.template.constant.Role;
+import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.vo.response.ResponseVo;
 
 import io.swagger.annotations.Api;

@@ -1,4 +1,4 @@
-package com.exfantasy.template.constant;
+package com.exfantasy.template.cnst;
 
 /**
  * <pre>
