@@ -66,47 +66,19 @@ public class ConsumeExample {
     }
 
     protected abstract static class GeneratedCriteria {
-        protected List<Criterion> gotCriteria;
-
-        protected List<Criterion> allCriteria;
-
         protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
-            gotCriteria = new ArrayList<Criterion>();
-        }
-
-        public List<Criterion> getGotCriteria() {
-            return gotCriteria;
-        }
-
-        protected void addGotCriterion(String condition, Object value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            gotCriteria.add(new Criterion(condition, value, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
-            allCriteria = null;
-        }
-
-        protected void addGotCriterion(String condition, boolean value1, boolean value2, String property) {
-            gotCriteria.add(new Criterion(condition, value1, value2, "com.exfantasy.template.typehandler.BooleanTypeHandler"));
-            allCriteria = null;
         }
 
         public boolean isValid() {
-            return criteria.size() > 0
-                || gotCriteria.size() > 0;
+            return criteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
-            if (allCriteria == null) {
-                allCriteria = new ArrayList<Criterion>();
-                allCriteria.addAll(criteria);
-                allCriteria.addAll(gotCriteria);
-            }
-            return allCriteria;
+            return criteria;
         }
 
         public List<Criterion> getCriteria() {
@@ -118,7 +90,6 @@ public class ConsumeExample {
                 throw new RuntimeException("Value for condition cannot be null");
             }
             criteria.add(new Criterion(condition));
-            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value, String property) {
@@ -126,7 +97,6 @@ public class ConsumeExample {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
-            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
@@ -134,7 +104,6 @@ public class ConsumeExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-            allCriteria = null;
         }
 
         protected void addCriterionForJDBCDate(String condition, Date value, String property) {
@@ -613,63 +582,53 @@ public class ConsumeExample {
             return (Criteria) this;
         }
 
-        public Criteria andGotEqualTo(boolean value) {
-            addGotCriterion("got =", value, "got");
+        public Criteria andGotEqualTo(Integer value) {
+            addCriterion("got =", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotNotEqualTo(boolean value) {
-            addGotCriterion("got <>", value, "got");
+        public Criteria andGotNotEqualTo(Integer value) {
+            addCriterion("got <>", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotGreaterThan(boolean value) {
-            addGotCriterion("got >", value, "got");
+        public Criteria andGotGreaterThan(Integer value) {
+            addCriterion("got >", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotGreaterThanOrEqualTo(boolean value) {
-            addGotCriterion("got >=", value, "got");
+        public Criteria andGotGreaterThanOrEqualTo(Integer value) {
+            addCriterion("got >=", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotLessThan(boolean value) {
-            addGotCriterion("got <", value, "got");
+        public Criteria andGotLessThan(Integer value) {
+            addCriterion("got <", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotLessThanOrEqualTo(boolean value) {
-            addGotCriterion("got <=", value, "got");
+        public Criteria andGotLessThanOrEqualTo(Integer value) {
+            addCriterion("got <=", value, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotLike(boolean value) {
-            addGotCriterion("got like", value, "got");
+        public Criteria andGotIn(List<Integer> values) {
+            addCriterion("got in", values, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotNotLike(boolean value) {
-            addGotCriterion("got not like", value, "got");
+        public Criteria andGotNotIn(List<Integer> values) {
+            addCriterion("got not in", values, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotIn(List<Boolean> values) {
-            addGotCriterion("got in", values, "got");
+        public Criteria andGotBetween(Integer value1, Integer value2) {
+            addCriterion("got between", value1, value2, "got");
             return (Criteria) this;
         }
 
-        public Criteria andGotNotIn(List<Boolean> values) {
-            addGotCriterion("got not in", values, "got");
-            return (Criteria) this;
-        }
-
-        public Criteria andGotBetween(boolean value1, boolean value2) {
-            addGotCriterion("got between", value1, value2, "got");
-            return (Criteria) this;
-        }
-
-        public Criteria andGotNotBetween(boolean value1, boolean value2) {
-            addGotCriterion("got not between", value1, value2, "got");
+        public Criteria andGotNotBetween(Integer value1, Integer value2) {
+            addCriterion("got not between", value1, value2, "got");
             return (Criteria) this;
         }
     }

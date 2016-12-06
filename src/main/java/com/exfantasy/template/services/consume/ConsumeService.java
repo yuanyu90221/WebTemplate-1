@@ -172,7 +172,7 @@ public class ConsumeService {
 			
 			// 代表未開獎
 			if (receiptRewards.size() == 0) {
-				consume.setGot(false);
+				consume.setGot(-1);
 			}
 			// 代表已開獎
 			else {
@@ -184,16 +184,21 @@ public class ConsumeService {
 				Bingo bingo = ReceiptLotteryNoUtil.checkIsBingo(lotteryNo, rewards);
 				
 				boolean isBingo = bingo.isBingo();
+				
+				// 中獎
 				if (isBingo) {
 					long prize = bingo.getPrize();
 					logger.info(">>>>> Section: {}, lotteryNo: {} is bingo, prize: {}", section, lotteryNo, prize);
-					consume.setGot(true);
+					consume.setGot(1);
 					consume.setPrize(prize);
-					
-					// 更新 DB 狀態
-					consumeMapper.updateByPrimaryKeySelective(consume);
+				}
+				// 未中獎
+				else {
+					consume.setGot(0);
 				}
 			}
+			// 更新 DB 狀態
+			consumeMapper.updateByPrimaryKeySelective(consume);
 		}
 	}
 	

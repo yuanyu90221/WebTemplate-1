@@ -100,8 +100,6 @@
 			enableCountByExample="true" enableUpdateByExample="true"
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="false">
-			
-			<columnOverride column="got" javaType="boolean" typeHandler="com.exfantasy.template.typehandler.BooleanTypeHandler" />
 		</table>
 		
 		<!-- Table: receipt_reward -->

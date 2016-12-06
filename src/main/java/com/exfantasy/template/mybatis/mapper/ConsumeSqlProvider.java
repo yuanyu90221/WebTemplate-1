@@ -56,7 +56,9 @@ public class ConsumeSqlProvider {
             sql.VALUES("prize", "#{prize,jdbcType=DECIMAL}");
         }
         
-        sql.VALUES("got", "#{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        if (record.getGot() != null) {
+            sql.VALUES("got", "#{got,jdbcType=INTEGER}");
+        }
         
         return sql.toString();
     }
@@ -120,7 +122,9 @@ public class ConsumeSqlProvider {
             sql.SET("prize = #{record.prize,jdbcType=DECIMAL}");
         }
         
-        sql.SET("got = #{record.got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        if (record.getGot() != null) {
+            sql.SET("got = #{record.got,jdbcType=INTEGER}");
+        }
         
         applyWhere(sql, example, true);
         return sql.toString();
@@ -137,7 +141,7 @@ public class ConsumeSqlProvider {
         sql.SET("prod_name = #{record.prodName,jdbcType=VARCHAR}");
         sql.SET("amount = #{record.amount,jdbcType=DECIMAL}");
         sql.SET("prize = #{record.prize,jdbcType=DECIMAL}");
-        sql.SET("got = #{record.got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        sql.SET("got = #{record.got,jdbcType=INTEGER}");
         
         ConsumeExample example = (ConsumeExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -172,7 +176,9 @@ public class ConsumeSqlProvider {
             sql.SET("prize = #{prize,jdbcType=DECIMAL}");
         }
         
-        sql.SET("got = #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}");
+        if (record.getGot() != null) {
+            sql.SET("got = #{got,jdbcType=INTEGER}");
+        }
         
         sql.WHERE("lottery_no = #{lotteryNo,jdbcType=VARCHAR}");
         

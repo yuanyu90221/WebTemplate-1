@@ -2,7 +2,6 @@ package com.exfantasy.template.mybatis.mapper;
 
 import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.ConsumeExample;
-import com.exfantasy.template.typehandler.BooleanTypeHandler;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -40,7 +39,7 @@ public interface ConsumeMapper {
         "values (#{lotteryNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, ",
         "#{consumeDate,jdbcType=DATE}, #{type,jdbcType=INTEGER}, ",
         "#{prodName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
-        "#{prize,jdbcType=DECIMAL}, #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler})"
+        "#{prize,jdbcType=DECIMAL}, #{got,jdbcType=INTEGER})"
     })
     int insert(Consume record);
 
@@ -56,7 +55,7 @@ public interface ConsumeMapper {
         @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="got", property="got", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER)
     })
     List<Consume> selectByExample(ConsumeExample example);
 
@@ -74,7 +73,7 @@ public interface ConsumeMapper {
         @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="got", property="got", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER)
     })
     Consume selectByPrimaryKey(String lotteryNo);
 
@@ -95,7 +94,7 @@ public interface ConsumeMapper {
           "prod_name = #{prodName,jdbcType=VARCHAR},",
           "amount = #{amount,jdbcType=DECIMAL},",
           "prize = #{prize,jdbcType=DECIMAL},",
-          "got = #{got,jdbcType=CHAR,typeHandler=com.exfantasy.template.typehandler.BooleanTypeHandler}",
+          "got = #{got,jdbcType=INTEGER}",
         "where lottery_no = #{lotteryNo,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Consume record);

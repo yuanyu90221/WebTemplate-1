@@ -34,10 +34,8 @@ public class ConsumeVoDeserializer extends JsonDeserializer<ConsumeVo> {
 	    final String prodName = node.get("prodName").asText();
 	    final Long amount = node.get("amount").asLong();
 	    final String lotteryNo = node.get("lotteryNo").asText();
-	    final Boolean got = node.get("got").asBoolean();
-	    final Long prize = node.get("prize").asLong();
 		
-		return new ConsumeVo(localDate, type, prodName, amount, lotteryNo, prize, got);
+		return new ConsumeVo(localDate, type, prodName, amount, lotteryNo);
 	}
 
 }
