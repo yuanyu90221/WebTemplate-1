@@ -18,6 +18,9 @@ public enum ResultCode {
 	
 	/** Code: 2001, Message: Email 已被使用 */
 	EMAIL_ALREADY_IN_USED(2001, "Email already in used"),
+	
+	/** Code: 3001, Message: 資料重複 */
+	DUPLICATE_KEY(3001, "Data already existed"),
 
 	/** Code: 4444, Message: 無權限操作 */
 	ACCESS_DENIED(4444, ""),
@@ -39,5 +42,14 @@ public enum ResultCode {
 	
 	public String getMessage() {
 		return this.message;
+	}
+	
+	public static ResultCode convert(int code) {
+		for (ResultCode e : ResultCode.values()) {
+			if (e.getCode() == code) {
+				return e;
+			}
+		}
+		return null;
 	}
 }

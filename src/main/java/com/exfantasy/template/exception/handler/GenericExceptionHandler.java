@@ -2,6 +2,7 @@ package com.exfantasy.template.exception.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -40,6 +41,14 @@ public class GenericExceptionHandler {
 	public ResponseVo handleAccessDeniedException(AccessDeniedException ex) {
 		logger.error("AccessDeniedException raised", ex);
 		return new ResponseVo(ResultCode.ACCESS_DENIED, ex.getMessage());
+	}
+	
+	@ExceptionHandler(DuplicateKeyException.class)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public ResponseVo handleDuplicateKeyException(DuplicateKeyException ex) {
+		logger.warn("DuplicateKeyException raised", ex);
+		return new ResponseVo(ResultCode.DUPLICATE_KEY, ex.getMessage());
 	}
 	
 	@ExceptionHandler(Exception.class)
