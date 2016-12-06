@@ -99,12 +99,13 @@ public class ConsumeService {
 
 	private Consume convertConsumVoToModel(User user, ConsumeVo consumeVo) {
 		Consume consume = new Consume();
+		consume.setLotteryNo(consumeVo.getLotteryNo());
 		consume.setUserId(user.getUserId());
 		consume.setConsumeDate(DateUtils.asDate(consumeVo.getConsumeDate()));
 		consume.setType(consumeVo.getType());
 		consume.setProdName(consumeVo.getProdName());
 		consume.setAmount(consumeVo.getAmount());
-		consume.setLotteryNo(consumeVo.getLotteryNo());
+		consume.setGot(-1);
 		return consume;
 	}
 
