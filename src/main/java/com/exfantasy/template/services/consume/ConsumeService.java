@@ -77,7 +77,7 @@ public class ConsumeService {
 		if (startDate != null && endDate != null) {
 			criteria.andConsumeDateBetween(startDate, endDate);
 		}
-		if (type != null) {
+		if (type != null && type != 0) {
 			criteria.andTypeEqualTo(type);
 		}
 		if (prodName != null) {
