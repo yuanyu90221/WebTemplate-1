@@ -1,18 +1,13 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
-    }
-}
-
 version = '1.0'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+
+// for google cloud
+// https://github.com/GoogleCloudPlatform/gradle-appengine-plugin
+apply plugin: 'appengine'
 
 sourceCompatibility = 1.8
 
@@ -45,7 +40,6 @@ ext {
 	mySqlConnectorJavaVersion = '5.1.39'
 	jbcryptVersion = '0.3m'
 	lombokVersion = '1.16.10'
-	gsonVersion = '2.8.0'
 	googleGuavaVersion = '19.0'
 	
 	myUtilsVersion = '1.0.19'
@@ -81,11 +75,6 @@ dependencies {
 	// --------- https://projectlombok.org/ --------- 
 	compile "org.projectlombok:lombok:${lombokVersion}"
 	
-	// --------- 這個千萬要留著, 若拿掉 Spring Boot 會改用 Jackson, Date 轉換會有問題 ---------
-	// FIXME 用了 gson swagger 會無法顯示頁面, 因為 swagger 目前為 jackson only !!!
-	// https://github.com/swagger-api/swagger-core -> Prerequisites
-	// compile "com.google.code.gson:gson:${gsonVersion}"
-
     // --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"
 	
@@ -98,4 +87,14 @@ dependencies {
 
 	// --------- JUnit --------- 
     testCompile "junit:junit:${junitVersion}"
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE"
+        classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
+    }
 }
