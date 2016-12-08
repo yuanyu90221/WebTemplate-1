@@ -88,6 +88,8 @@ dependencies {
 
 	// --------- JUnit --------- 
     testCompile "junit:junit:${junitVersion}"
+    
+    appengineSdk "com.google.appengine:appengine-java-sdk:1.9.48"
 }
 
 task wrapper(type: Wrapper) {
@@ -101,6 +103,5 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE"
         classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
-        appengineSdk "com.google.appengine:appengine-java-sdk:1.9.48"
     }
 }
