@@ -107,6 +107,7 @@ dependencies {
     testCompile "junit:junit:${junitVersion}"
     
     appengineSdk "com.google.appengine:appengine-java-sdk:1.9.48"
+    compile "com.google.appengine:appengine-api-1.0-sdk:1.9.48"
 }
 
 task wrapper(type: Wrapper) {
