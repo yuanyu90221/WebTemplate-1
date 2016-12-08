@@ -1,5 +1,4 @@
 // 參考: https://github.com/manish-in-java/spring-boot-rest/blob/master/build.gradle
-
 buildscript {
 	ext {
 		springBootVersion = '1.4.1.RELEASE'
