@@ -89,6 +89,10 @@ dependencies {
     testCompile "junit:junit:${junitVersion}"
 }
 
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.14.1'
+}
+
 buildscript {
     repositories {
         mavenCentral()
