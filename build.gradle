@@ -1,20 +1,38 @@
+// 參考: https://github.com/manish-in-java/spring-boot-rest/blob/master/build.gradle
+
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
+    }
+}
+
 version = '1.0'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-
-// for google cloud
-// https://github.com/GoogleCloudPlatform/gradle-appengine-plugin
 apply plugin: 'war'
 apply plugin: 'appengine'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
+}
+
+configurations {
+    providedRuntime
 }
 
 // 處理 javadoc 編碼
@@ -97,15 +115,5 @@ task wrapper(type: Wrapper) {
 }
 
 appengine {
-  downloadSdk = true 
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE"
-        classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
-    }
+  	downloadSdk = true 
 }
