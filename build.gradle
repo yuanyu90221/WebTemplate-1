@@ -7,23 +7,21 @@ buildscript {
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
     }
 }
 
 version = '1.0'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'war'
-apply plugin: 'appengine'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -105,15 +103,8 @@ dependencies {
 
 	// --------- JUnit --------- 
     testCompile "junit:junit:${junitVersion}"
-    
-    appengineSdk "com.google.appengine:appengine-java-sdk:1.9.48"
-    compile "com.google.appengine:appengine-api-1.0-sdk:1.9.48"
 }
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.14.1'
-}
-
-appengine {
-  	downloadSdk = true 
 }
