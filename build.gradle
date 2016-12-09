@@ -37,7 +37,7 @@ repositories {
 }
 
 // 處理 javadoc 編碼
-// ref: https://github.com/nebula-plugins/gradle-aggregate-javadocs-plugin/issues/6
+// https://github.com/nebula-plugins/gradle-aggregate-javadocs-plugin/issues/6
 javadoc {
     options {
         failOnError = false
