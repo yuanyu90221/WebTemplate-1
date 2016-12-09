@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.kaiinui.appenginetest.Application</param-value>
+        <param-value>com.exfantasy.template.Application</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.boot.legacy.context.web.SpringBootContextLoaderListener</listener-class>
