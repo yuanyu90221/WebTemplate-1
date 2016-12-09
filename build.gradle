@@ -1,7 +1,22 @@
+version = '1.0'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+	providedRuntime
+}
+
 // 參考: https://github.com/manish-in-java/spring-boot-rest/blob/master/build.gradle
 buildscript {
 	ext {
 		springBootVersion = '1.4.1.RELEASE'
+		appenginePluginVersion = '1.9.17'
 	}
 
     repositories {
@@ -10,26 +25,15 @@ buildscript {
 
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath "com.google.appengine:gradle-appengine-plugin:${appenginePluginVersion}"
     }
 }
 
-version = '1.0'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
-
 repositories {
     mavenCentral()
-    maven { url "https://jitpack.io" }
-}
-
-configurations {
-    providedRuntime
+    maven { 
+    	url "https://jitpack.io" 
+    }
 }
 
 // 處理 javadoc 編碼
@@ -66,6 +70,13 @@ ext {
 }
 
 dependencies {
+	// --------- App Engine ---------
+	providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.15'
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.15'
+    compile 'gmultipart:gmultipart:0.4'
+    compile 'com.google.appengine.tools:appengine-gcs-client:0.4.3'
+
 	// --------- Spring Boot ---------
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
