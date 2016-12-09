@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
  * <pre>
@@ -22,7 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // 自動掃描 Spring Bean 元件
 //@ComponentScan( basePackages = {"com.exfantasy.school"} )
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
-public class Application {
+public class Application extends SpringBootServletInitializer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
@@ -45,5 +47,10 @@ public class Application {
 //        for (String beanName : beanNames) {
 //            System.out.println(beanName);
 //        }
+    }
+	
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
     }
 }

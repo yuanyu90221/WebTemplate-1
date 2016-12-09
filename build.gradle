@@ -76,6 +76,7 @@ dependencies {
 	// google appengine
 	providedCompile "javax.servlet:servlet-api:2.5"
 	compile "com.google.appengine:appengine:+"
+	compile "org.springframework.boot:spring-boot-legacy:1.0.2.RELEASE"
 
 	// --------- Spring Boot ---------
     compile "org.springframework.boot:spring-boot-starter-web"
