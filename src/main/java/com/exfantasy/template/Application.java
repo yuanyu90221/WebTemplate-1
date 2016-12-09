@@ -4,11 +4,12 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
-
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * <pre>
@@ -25,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 // 自動掃描 Spring Bean 元件
 //@ComponentScan( basePackages = {"com.exfantasy.school"} )
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
-public class Application {
+public class Application extends SpringBootServletInitializer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
@@ -36,8 +37,18 @@ public class Application {
 		logger.debug("Sample Debug Message");
 		logger.trace("Sample Trace Message");
 	}
+	
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return configureApplication(builder);
+    }
+	
 
-    public static void main(String[] args) {
+    private SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
+		return builder.sources(Application.class).bannerMode(Banner.Mode.OFF);
+	}
+
+	public static void main(String[] args) {
         @SuppressWarnings("unused")
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
