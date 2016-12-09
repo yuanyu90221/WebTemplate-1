@@ -26,7 +26,7 @@ import org.springframework.context.ApplicationContext;
 // 自動掃描 Spring Bean 元件
 //@ComponentScan( basePackages = {"com.exfantasy.school"} )
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
-public class Application extends SpringBootServletInitializer {
+public class Application {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
@@ -38,20 +38,10 @@ public class Application extends SpringBootServletInitializer {
 		logger.trace("Sample Trace Message");
 	}
 	
-	@Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return configureApplication(builder);
-    }
-	
-
-    private SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
-		return builder.sources(Application.class).bannerMode(Banner.Mode.OFF);
-	}
-
 	public static void main(String[] args) {
-        @SuppressWarnings("unused")
-		ApplicationContext ctx = SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class, args);
 
+//		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 //        System.out.println("Let's inspect the beans provided by Spring Boot:");
 //
 //        String[] beanNames = ctx.getBeanDefinitionNames();
