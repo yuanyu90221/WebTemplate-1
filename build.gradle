@@ -45,6 +45,7 @@ javadoc {
 // To specify the main class of Spring Boot
 springBoot {
     mainClass = "com.exfantasy.template.Application"
+    executable = true
 }
 
 // Version settings
