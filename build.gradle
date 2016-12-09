@@ -14,7 +14,6 @@ targetCompatibility = 1.8
 // Version settings
 ext {
 	appEmail = 'tommy.yeh1112@gmail.com'
-	appengineVersion = '1.9.42'
 
 	mybatisSpringBootVersion = '1.1.1'
 	mybatisGeneratorVersion = '1.3.3'
@@ -42,7 +41,7 @@ buildscript {
 
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.google.appengine:gradle-appengine-plugin:1.9.42"
+        classpath "com.google.appengine:gradle-appengine-plugin:+"
     }
 }
 
@@ -71,9 +70,9 @@ springBoot {
 }
 
 dependencies {
-	appengineSdk "com.google.appengine:appengine-java-sdk:${appengineVersion}"
+	appengineSdk "com.google.appengine:appengine-java-sdk:+"
 	compile "javax.servlet:servlet-api:2.5"
- 	compile "com.google.appengine:appengine-api-1.0-sdk:${appengineVersion}"
+ 	compile "com.google.appengine:appengine-api-1.0-sdk:+"
 
 	// --------- Spring Boot ---------
     compile "org.springframework.boot:spring-boot-starter-web"
