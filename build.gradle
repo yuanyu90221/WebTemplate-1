@@ -5,9 +5,6 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
-apply plugin: 'war'
-apply plugin: 'com.google.cloud.tools.appengine'
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -40,16 +37,12 @@ buildscript {
 
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.google.cloud.tools:appengine-gradle-plugin:+"
     }
 }
 
 repositories {
 	jcenter()
     mavenCentral()
-    maven {
-    	url "https://maven-central.storage.googleapis.com"             // Google's mirror of Maven Central
-  	}
     maven { 
     	url "https://jitpack.io" 
     }
@@ -73,11 +66,6 @@ springBoot {
 }
 
 dependencies {
-	// google appengine
-	providedCompile "javax.servlet:servlet-api:2.5"
-	compile "com.google.appengine:appengine:+"
-	compile "org.springframework.boot:spring-boot-legacy:1.0.2.RELEASE"
-
 	// --------- Spring Boot ---------
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
@@ -115,17 +103,6 @@ dependencies {
 
 	// --------- JUnit --------- 
     testCompile "junit:junit:${junitVersion}"
-}
-
-appengine {
-	run {
-		port = 8080
-	}
-	
-	deploy {   // deploy configuration
-		stopPreviousVersion = true  // default - stop the current version
-    	promote = true              // default - & make this the current version
-  	}
 }
 
 task wrapper(type: Wrapper) {
