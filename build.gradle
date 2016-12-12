@@ -115,3 +115,7 @@ dependencies {
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.14.1'
 }
+
+appengine {
+	downloadSdk = true 
+}
