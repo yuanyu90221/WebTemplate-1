@@ -21,7 +21,7 @@ ext {
 	lombokVersion = '1.16.10'
 	googleGuavaVersion = '19.0'
 	
-	myUtilsVersion = '1.0.19'
+	myUtilsVersion = '1.0.21'
 	
 	swaggerVersion = '2.2.2'
 	
