@@ -89,7 +89,8 @@ public class ConsumeService {
 		List<Consume> consumes = consumeMapper.selectByExample(example);
 
 		if (consumes.size() != 0) {
-			consumes.sort((obj1, obj2) -> obj1.getConsumeDate().compareTo(obj2.getConsumeDate()));
+			// TEST 先不要用 1.8
+//			consumes.sort((obj1, obj2) -> obj1.getConsumeDate().compareTo(obj2.getConsumeDate()));
 			getLatestReceiptLotteryNo();
 			checkIsGot(consumes);
 		}

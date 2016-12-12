@@ -9,8 +9,8 @@ apply plugin: 'spring-boot'
 apply plugin: 'war'
 apply plugin: 'com.google.cloud.tools.appengine'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 // Version settings
 ext {
