@@ -73,6 +73,7 @@ springBoot {
 dependencies {
 	// App Engine
 	compile "com.google.appengine:appengine:+"
+	compile "org.springframework.boot:spring-boot-legacy:1.1.0.RELEASE"
 
 	// --------- Spring Boot ---------
     compile "org.springframework.boot:spring-boot-starter-web"
