@@ -5,6 +5,10 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
+// GAE
+apply plugin: 'war'
+apply plugin: 'appengine'
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -37,6 +41,7 @@ buildscript {
 
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
     }
 }
 
@@ -66,7 +71,7 @@ springBoot {
 }
 
 dependencies {
-	compile "org.springframework.boot:spring-boot-legacy:1.0.2.RELEASE"
+	appengineSdk "com.google.appengine:appengine-java-sdk:1.9.48"
 
 	// --------- Spring Boot ---------
     compile "org.springframework.boot:spring-boot-starter-web"
