@@ -58,7 +58,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		System.out.println("Testing git...");
 		return true;
 	}
 }
