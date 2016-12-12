@@ -36,8 +36,7 @@ public class GenerateMyBatisCode {
         
         if (warnings.size() != 0) {
         	System.err.println("Generataion got warning messages:");
-        	// TEST 先不要用 1.8
-//        	warnings.forEach(System.out::println);
+        	warnings.forEach(System.out::println);
         }
 	}
 	
