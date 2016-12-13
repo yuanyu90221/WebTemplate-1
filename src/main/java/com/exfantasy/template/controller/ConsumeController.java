@@ -168,7 +168,12 @@ public class ConsumeController {
 		if (endDate != null) {
 			setEndDateTime(endDate);
 		}
-		List<Consume> consumes = consumeService.getConsume(startDate, endDate, type, prodName, lotteryNo);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userService.queryUserByEmail(email);
+		
+		List<Consume> consumes = consumeService.getConsume(user, startDate, endDate, type, prodName, lotteryNo);
 		return consumes;
 	}
 	

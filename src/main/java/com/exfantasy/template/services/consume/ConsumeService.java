@@ -65,9 +65,12 @@ public class ConsumeService {
 		consumeMapper.deleteByPrimaryKey(consume.getLotteryNo());
 	}
 
-	public List<Consume> getConsume(Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
+	public List<Consume> getConsume(User user, Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
 		ConsumeExample example = new ConsumeExample();
 		Criteria criteria = example.createCriteria();
+		
+		criteria.andUserIdEqualTo(user.getUserId());
+		
 		if (startDate != null && endDate == null) {
 			criteria.andConsumeDateGreaterThanOrEqualTo(startDate);
 		}
