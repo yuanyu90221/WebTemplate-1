@@ -2,6 +2,8 @@ package com.exfantasy.template.config;
 
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  */
 @Configuration
 public class MailConfig {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MailConfig.class);
 
 	@Value("${mail.username}")
 	private String username;
@@ -32,6 +36,8 @@ public class MailConfig {
 		mailSender.setPort(587);
 		mailSender.setUsername(username);
 		mailSender.setPassword(password);
+		
+		logger.debug(">>>>> Gmail username: <{}>, password: <{}>", username, password);
 
 		Properties prop = mailSender.getJavaMailProperties();
 		prop.put("mail.transport.protocol", "smtp");

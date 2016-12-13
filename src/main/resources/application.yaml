@@ -22,18 +22,11 @@ spring:
         test-on-borrow: true
         validation-query: "SELECT 1"
         connection-test-query: "SELECT 1"
-        
-    mail:
-        host: smtp.gmail.com
-        username: exfantasy7wolves@gmail.com
-        password: ilovebmw
-        port: 587
-        properties.mail.smtp.starttls.enable: true
 
 # -------- Mail Config --------
 mail:
     username: exfantasy7wolves
-    password: ilovebmw        
+    password: meywlnxyckgerkgw        
         
 # -------- Custom Config --------    
 custom:
