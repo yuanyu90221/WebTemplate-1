@@ -66,8 +66,6 @@ public class ConsumeService {
 	}
 
 	public List<Consume> getConsume(User user, Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
-		logger.info(">>>>>> Testing auto deployed");
-		
 		ConsumeExample example = new ConsumeExample();
 		Criteria criteria = example.createCriteria();
 		
