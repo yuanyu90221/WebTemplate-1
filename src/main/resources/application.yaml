@@ -29,6 +29,11 @@ spring:
         password: ilovebmw
         port: 587
         properties.mail.smtp.starttls.enable: true
+
+# -------- Mail Config --------
+mail:
+    username: exfantasy7wolves
+    password: ilovebmw        
         
 # -------- Custom Config --------    
 custom:
