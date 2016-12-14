@@ -44,3 +44,13 @@ CREATE TABLE `receipt_reward` (
   `reward_type` int(1) NOT NULL,
   `number` char(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `mail_template`;
+CREATE TABLE `mail_template` (
+  `template_id` int(10) NOT NULL AUTO_INCREMENT,
+  `header` text NOT NULL,
+  `body_header` text NOT NULL,
+  `body_tail` text NOT NULL,
+  `tail` text NOT NULL,
+  PRIMARY KEY (`template_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,1 @@
+mysqldump -utommy -p7Kcr4iv3 --opt --default-character-set=utf8 --no-create-info testing consume mail_template user user_roles > initial_data.sql
