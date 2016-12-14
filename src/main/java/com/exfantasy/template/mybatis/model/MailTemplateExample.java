@@ -233,6 +233,76 @@ public class MailTemplateExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andSubjectIsNull() {
+            addCriterion("subject is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectIsNotNull() {
+            addCriterion("subject is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectEqualTo(String value) {
+            addCriterion("subject =", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotEqualTo(String value) {
+            addCriterion("subject <>", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectGreaterThan(String value) {
+            addCriterion("subject >", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectGreaterThanOrEqualTo(String value) {
+            addCriterion("subject >=", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectLessThan(String value) {
+            addCriterion("subject <", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectLessThanOrEqualTo(String value) {
+            addCriterion("subject <=", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectLike(String value) {
+            addCriterion("subject like", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotLike(String value) {
+            addCriterion("subject not like", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectIn(List<String> values) {
+            addCriterion("subject in", values, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotIn(List<String> values) {
+            addCriterion("subject not in", values, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectBetween(String value1, String value2) {
+            addCriterion("subject between", value1, value2, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotBetween(String value1, String value2) {
+            addCriterion("subject not between", value1, value2, "subject");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

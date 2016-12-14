@@ -1,5 +1,7 @@
 package com.exfantasy.template.controller;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +23,11 @@ public class MailController {
 		String subject = "This is a test from SpringBoot";
 		String text = "Hello~~";
 
-		mailService.sendMail(mailTo, subject, text);
-
-		return "Send mail succeed";
+		try {
+			mailService.sendMail(mailTo, subject, text);
+			return "Send mail succeed";
+		} catch (MessagingException e) {
+			return "Send mail failed, err-msg: " + e.getMessage();
+		}
 	}
 }

@@ -21,6 +21,10 @@ public class MailTemplateSqlProvider {
             sql.VALUES("type", "#{type,jdbcType=VARCHAR}");
         }
         
+        if (record.getSubject() != null) {
+            sql.VALUES("subject", "#{subject,jdbcType=VARCHAR}");
+        }
+        
         if (record.getHeader() != null) {
             sql.VALUES("header", "#{header,jdbcType=LONGVARCHAR}");
         }
@@ -48,6 +52,7 @@ public class MailTemplateSqlProvider {
             sql.SELECT("template_id");
         }
         sql.SELECT("type");
+        sql.SELECT("subject");
         sql.SELECT("header");
         sql.SELECT("body_header");
         sql.SELECT("body_tail");
@@ -70,6 +75,7 @@ public class MailTemplateSqlProvider {
             sql.SELECT("template_id");
         }
         sql.SELECT("type");
+        sql.SELECT("subject");
         sql.FROM("mail_template");
         applyWhere(sql, example, false);
         
@@ -86,6 +92,10 @@ public class MailTemplateSqlProvider {
         
         if (record.getType() != null) {
             sql.SET("type = #{type,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getSubject() != null) {
+            sql.SET("subject = #{subject,jdbcType=VARCHAR}");
         }
         
         if (record.getHeader() != null) {

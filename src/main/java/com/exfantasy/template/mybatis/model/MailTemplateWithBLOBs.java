@@ -61,6 +61,7 @@ public class MailTemplateWithBLOBs extends MailTemplate {
         MailTemplateWithBLOBs other = (MailTemplateWithBLOBs) that;
         return (this.getTemplateId() == null ? other.getTemplateId() == null : this.getTemplateId().equals(other.getTemplateId()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getSubject() == null ? other.getSubject() == null : this.getSubject().equals(other.getSubject()))
             && (this.getHeader() == null ? other.getHeader() == null : this.getHeader().equals(other.getHeader()))
             && (this.getBodyHeader() == null ? other.getBodyHeader() == null : this.getBodyHeader().equals(other.getBodyHeader()))
             && (this.getBodyTail() == null ? other.getBodyTail() == null : this.getBodyTail().equals(other.getBodyTail()))
@@ -73,6 +74,7 @@ public class MailTemplateWithBLOBs extends MailTemplate {
         int result = 1;
         result = prime * result + ((getTemplateId() == null) ? 0 : getTemplateId().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getSubject() == null) ? 0 : getSubject().hashCode());
         result = prime * result + ((getHeader() == null) ? 0 : getHeader().hashCode());
         result = prime * result + ((getBodyHeader() == null) ? 0 : getBodyHeader().hashCode());
         result = prime * result + ((getBodyTail() == null) ? 0 : getBodyTail().hashCode());

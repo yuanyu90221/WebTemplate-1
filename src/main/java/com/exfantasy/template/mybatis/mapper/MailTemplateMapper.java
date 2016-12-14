@@ -26,11 +26,13 @@ public interface MailTemplateMapper {
 
     @Insert({
         "insert into mail_template (template_id, type, ",
-        "header, body_header, ",
-        "body_tail, tail)",
+        "subject, header, ",
+        "body_header, body_tail, ",
+        "tail)",
         "values (#{templateId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, ",
-        "#{header,jdbcType=LONGVARCHAR}, #{bodyHeader,jdbcType=LONGVARCHAR}, ",
-        "#{bodyTail,jdbcType=LONGVARCHAR}, #{tail,jdbcType=LONGVARCHAR})"
+        "#{subject,jdbcType=VARCHAR}, #{header,jdbcType=LONGVARCHAR}, ",
+        "#{bodyHeader,jdbcType=LONGVARCHAR}, #{bodyTail,jdbcType=LONGVARCHAR}, ",
+        "#{tail,jdbcType=LONGVARCHAR})"
     })
     int insert(MailTemplateWithBLOBs record);
 
@@ -41,6 +43,7 @@ public interface MailTemplateMapper {
     @Results({
         @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR),
+        @Result(column="subject", property="subject", jdbcType=JdbcType.VARCHAR),
         @Result(column="header", property="header", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_header", property="bodyHeader", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_tail", property="bodyTail", jdbcType=JdbcType.LONGVARCHAR),
@@ -51,19 +54,21 @@ public interface MailTemplateMapper {
     @SelectProvider(type=MailTemplateSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR)
+        @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR),
+        @Result(column="subject", property="subject", jdbcType=JdbcType.VARCHAR)
     })
     List<MailTemplate> selectByExample(MailTemplateExample example);
 
     @Select({
         "select",
-        "template_id, type, header, body_header, body_tail, tail",
+        "template_id, type, subject, header, body_header, body_tail, tail",
         "from mail_template",
         "where template_id = #{templateId,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR),
+        @Result(column="subject", property="subject", jdbcType=JdbcType.VARCHAR),
         @Result(column="header", property="header", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_header", property="bodyHeader", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_tail", property="bodyTail", jdbcType=JdbcType.LONGVARCHAR),
@@ -77,6 +82,7 @@ public interface MailTemplateMapper {
     @Update({
         "update mail_template",
         "set type = #{type,jdbcType=VARCHAR},",
+          "subject = #{subject,jdbcType=VARCHAR},",
           "header = #{header,jdbcType=LONGVARCHAR},",
           "body_header = #{bodyHeader,jdbcType=LONGVARCHAR},",
           "body_tail = #{bodyTail,jdbcType=LONGVARCHAR},",
@@ -87,7 +93,8 @@ public interface MailTemplateMapper {
 
     @Update({
         "update mail_template",
-        "set type = #{type,jdbcType=VARCHAR}",
+        "set type = #{type,jdbcType=VARCHAR},",
+          "subject = #{subject,jdbcType=VARCHAR}",
         "where template_id = #{templateId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(MailTemplate record);

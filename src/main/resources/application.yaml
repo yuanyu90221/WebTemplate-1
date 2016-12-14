@@ -3,14 +3,14 @@
 spring:
     datasource:
         # Local database
-        url: jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
-        username: tommy
-        password: 7Kcr4iv3
+        # url: jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+        # username: tommy
+        # password: 7Kcr4iv3
 
         # Heroku ClearDB
-        # url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/heroku_c013c43b09ce49a?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
-        # username: b370d0c06a6ecd
-        # password: e3218523
+        url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/heroku_c013c43b09ce49a?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+        username: b370d0c06a6ecd
+        password: e3218523
 
         # Connection Setting
         # Ref: http://stackoverflow.com/questions/30451470/connection-to-db-dies-after-424-in-spring-boot-jpa-hibernate

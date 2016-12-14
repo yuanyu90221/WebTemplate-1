@@ -3,6 +3,8 @@ package util.mapconst;
 public enum MapFieldsOfMailTemplate implements MapFields {
 	TEMPLATE_ID("templateId", "模板 ID"),
 	
+	SUBJECT("subject", "Mail 主旨"),
+	
 	TYPE("type", "模板類別"),
 	
 	HEADER("header", "模板 Header"),

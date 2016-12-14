@@ -4,9 +4,14 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.exfantasy.template.cnst.MailTemplateType;
@@ -19,20 +24,24 @@ import com.exfantasy.template.mybatis.model.User;
 
 @Service
 public class MailService {
+	private static final Logger logger = LoggerFactory.getLogger(MailService.class);
+	
 	@Autowired
 	private JavaMailSender mailSender;
 	
 	@Autowired
 	private MailTemplateMapper mailTemplateMapper;
 	
-	public void sendMail(String mailTo, String subject, String text) {
-		SimpleMailMessage mail = new SimpleMailMessage();
-
-		mail.setTo(mailTo);
-		mail.setSubject(subject);
-		mail.setText(text);
-
-		mailSender.send(mail);
+	public void sendMail(String mailTo, String subject, String text) throws MessagingException {
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		
+		mimeMessage.setSubject(subject);
+		
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "utf-8");
+		helper.setTo(mailTo);
+		helper.setText(text, true);
+		
+		mailSender.send(mimeMessage);
 	}
 
 	public void sendGotItMail(User user, List<Consume> gotItConsumes) {
@@ -61,13 +70,17 @@ public class MailService {
 			
 			// 將中獎資訊塞入參數中
 			Consume gotItConsume = gotItConsumes.get(i);
-			args.add("號碼: " + gotItConsume.getLotteryNo() + ", 獎金: " + gotItConsume.getPrize());
+			args.add("號碼: " + gotItConsume.getLotteryNo() + "，獎金: " + gotItConsume.getPrize());
 		}
 		mailContentBuffer.append(mailTemplate.getTail());
 		
 		String mailContent = MessageFormat.format(mailContentBuffer.toString(), args.toArray(new Object[0]));
 		
 		// 發信
-		sendMail(user.getEmail(), "恭喜您發票中獎", mailContent);
+		try {
+			sendMail(user.getEmail(), mailTemplate.getSubject(), mailContent);
+		} catch (MessagingException e) {
+			logger.warn("Send mail failed", e);
+		}
 	}
 }

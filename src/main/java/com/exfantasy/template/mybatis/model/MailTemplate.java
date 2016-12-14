@@ -9,6 +9,9 @@ public class MailTemplate {
     @ApiModelProperty(notes = "模板類別", required = true)
     private String type;
 
+    @ApiModelProperty(notes = "Mail 主旨", required = true)
+    private String subject;
+
     public Integer getTemplateId() {
         return templateId;
     }
@@ -25,6 +28,14 @@ public class MailTemplate {
         this.type = type == null ? null : type.trim();
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject == null ? null : subject.trim();
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -38,7 +49,8 @@ public class MailTemplate {
         }
         MailTemplate other = (MailTemplate) that;
         return (this.getTemplateId() == null ? other.getTemplateId() == null : this.getTemplateId().equals(other.getTemplateId()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()));
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getSubject() == null ? other.getSubject() == null : this.getSubject().equals(other.getSubject()));
     }
 
     @Override
@@ -47,6 +59,7 @@ public class MailTemplate {
         int result = 1;
         result = prime * result + ((getTemplateId() == null) ? 0 : getTemplateId().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getSubject() == null) ? 0 : getSubject().hashCode());
         return result;
     }
 }
