@@ -44,7 +44,7 @@ public class MailService {
 		mailSender.send(mimeMessage);
 	}
 
-	public void sendGotItMail(User user, List<Consume> gotItConsumes) {
+	public void sendGotItMail(User user, List<Object> gotItConsumes) {
 		// 暫存要填入 html 的參數
 		List<Object> args = new ArrayList<>();
 		
@@ -69,8 +69,10 @@ public class MailService {
 			mailContentBuffer.append(mailTemplate.getBodyTail());
 			
 			// 將中獎資訊塞入參數中
-			Consume gotItConsume = gotItConsumes.get(i);
-			args.add("號碼: " + gotItConsume.getLotteryNo() + "，獎金: " + gotItConsume.getPrize());
+			Object[] gotItSectionAndConsume = (Object[]) gotItConsumes.get(i);
+			String section = (String) gotItSectionAndConsume[0];
+			Consume gotItConsume = (Consume) gotItSectionAndConsume[1];
+			args.add("月份：" + section + "，號碼：" + gotItConsume.getLotteryNo() + "，獎金：" + gotItConsume.getPrize());
 		}
 		mailContentBuffer.append(mailTemplate.getTail());
 		

@@ -151,8 +151,8 @@ public class ConsumeService {
 		// 暫存每一期的資料
 		Map<String, List<ReceiptReward>> receiptRewardMap = new HashMap<>();
 		
-		// 暫存中獎資料用來發送 mail
-		List<Consume> gotItConsumes = new ArrayList<>();
+		// 暫存期號及中獎資料用來發送 mail
+		List<Object> gotItSectionAndConsumes = new ArrayList<>();
 		
 		for (Consume consume : consumes) {
 			String section = ReceiptLotteryNoUtil.getSection(consume.getConsumeDate());
@@ -204,7 +204,8 @@ public class ConsumeService {
 					consume.setPrize(prize);
 					
 					// 加到已中獎紀錄, 準備發送 mail
-					gotItConsumes.add(consume);
+					Object[] sectionAndConsume = new Object[] {section, consume};
+					gotItSectionAndConsumes.add(sectionAndConsume);
 				}
 				// 未中獎
 				else {
@@ -219,7 +220,7 @@ public class ConsumeService {
 			consumeMapper.batchUpdateGot(consumes);
 			
 			// 發送中獎通知
-			mailService.sendGotItMail(user, gotItConsumes);
+			mailService.sendGotItMail(user, gotItSectionAndConsumes);
 			
 		}).start();;
 	}
