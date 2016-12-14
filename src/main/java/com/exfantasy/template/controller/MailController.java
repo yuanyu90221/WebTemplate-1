@@ -15,7 +15,7 @@ public class MailController {
 	@Autowired
 	private MailService mailService;
 	
-	@RequestMapping(value = "/send", method = RequestMethod.GET)
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public @ResponseBody String sendMail() {
 		String mailTo = "tommy.yeh1112@gmail.com";
 		String subject = "This is a test from SpringBoot";

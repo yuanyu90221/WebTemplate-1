@@ -31,7 +31,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `mail_template` WRITE;
 /*!40000 ALTER TABLE `mail_template` DISABLE KEYS */;
-INSERT INTO `mail_template` VALUES (1,'<div style=\"border:1px solid #ccc; width:500px; padding: 10px; background-color:#fefefe;\">\r\n    <p style=\"font-size: 16px;\">親愛的 <b>{0}</b> 您好：</p>\r\n    <hr style=\"border: 0px; border-bottom:1px dashed #ececec;\">\r\n    <p>恭喜您的發票中獎！</p>\r\n	<p>中獎資訊</p>','<div style=\"background-color:#fff; border:1px solid #ececec; padding: 10px; text-align:center; font-size: 22px; font-weight:bold;\">','</div>','<p style=\"background-color:#eee; color: #bf4736; padding: 10px; text-align:center;\">提醒您記得去領獎唷，啾咪！</p>\r\n	<p style=\"text-align:right; color:#666; padding-top:30px;\">Exfantasy團隊敬上</p>\r\n</div>');
+INSERT INTO `mail_template` VALUES (1,'consumeGotIt','<div style=\"border:1px solid #ccc; width:500px; padding: 10px; background-color:#fefefe;\">\r\n    <p style=\"font-size: 16px;\">親愛的 <b>{0}</b> 您好：</p>\r\n    <hr style=\"border: 0px; border-bottom:1px dashed #ececec;\">\r\n    <p>恭喜您的發票中獎！</p>\r\n	<p>中獎資訊</p>','<div style=\"background-color:#fff; border:1px solid #ececec; padding: 10px; text-align:center; font-size: 22px; font-weight:bold;\">','</div>','<p style=\"background-color:#eee; color: #bf4736; padding: 10px; text-align:center;\">提醒您記得去領獎唷，啾咪！</p>\r\n	<p style=\"text-align:right; color:#666; padding-top:30px;\">Exfantasy團隊敬上</p>\r\n</div>');
 /*!40000 ALTER TABLE `mail_template` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -41,7 +41,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'tommy.yeh1112@gmail.com','$2a$08$w/bObZ1DZglyjnSOLCTSH.fGzvvhBXUPh7N9LN1MBUFd8imuKB9mG','0988147589','tommyyeh','Y','2016-09-23','2016-12-13 15:22:10'),(2,'alicechen0913@gmail.com','$2a$08$/0rlakO3Sf73eE.cemgvn.nqPJkMk0/V/sLSltIKo0ZFkSX4MX5WO','0936902592','alicechen','Y','2016-10-07','2016-11-22 15:30:31'),(3,'bensonQQQQ@gmail.com','$2a$08$mgoCGk2Iyn.YEWvqtnjxke7Qezpyx6lIRLc1TnRWf1qIYCXCWDW2O','0912345678','bensonQQQQ','Y','2016-10-31','2016-10-31 16:34:01');
+INSERT INTO `user` VALUES (1,'tommy.yeh1112@gmail.com','$2a$08$w/bObZ1DZglyjnSOLCTSH.fGzvvhBXUPh7N9LN1MBUFd8imuKB9mG','0988147589','tommyyeh','Y','2016-09-23','2016-12-14 11:05:37'),(2,'alicechen0913@gmail.com','$2a$08$/0rlakO3Sf73eE.cemgvn.nqPJkMk0/V/sLSltIKo0ZFkSX4MX5WO','0936902592','alicechen','Y','2016-10-07','2016-11-22 15:30:31'),(3,'bensonQQQQ@gmail.com','$2a$08$mgoCGk2Iyn.YEWvqtnjxke7Qezpyx6lIRLc1TnRWf1qIYCXCWDW2O','0912345678','bensonQQQQ','Y','2016-10-31','2016-10-31 16:34:01');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-14 10:43:44
+-- Dump completed on 2016-12-14 11:46:25

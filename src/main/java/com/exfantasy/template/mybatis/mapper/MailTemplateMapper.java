@@ -2,6 +2,7 @@ package com.exfantasy.template.mybatis.mapper;
 
 import com.exfantasy.template.mybatis.model.MailTemplate;
 import com.exfantasy.template.mybatis.model.MailTemplateExample;
+import com.exfantasy.template.mybatis.model.MailTemplateWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -24,59 +25,70 @@ public interface MailTemplateMapper {
     int deleteByPrimaryKey(Integer templateId);
 
     @Insert({
-        "insert into mail_template (template_id, header, ",
-        "body_header, body_tail, ",
-        "tail)",
-        "values (#{templateId,jdbcType=INTEGER}, #{header,jdbcType=LONGVARCHAR}, ",
-        "#{bodyHeader,jdbcType=LONGVARCHAR}, #{bodyTail,jdbcType=LONGVARCHAR}, ",
-        "#{tail,jdbcType=LONGVARCHAR})"
+        "insert into mail_template (template_id, type, ",
+        "header, body_header, ",
+        "body_tail, tail)",
+        "values (#{templateId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, ",
+        "#{header,jdbcType=LONGVARCHAR}, #{bodyHeader,jdbcType=LONGVARCHAR}, ",
+        "#{bodyTail,jdbcType=LONGVARCHAR}, #{tail,jdbcType=LONGVARCHAR})"
     })
-    int insert(MailTemplate record);
+    int insert(MailTemplateWithBLOBs record);
 
     @InsertProvider(type=MailTemplateSqlProvider.class, method="insertSelective")
-    int insertSelective(MailTemplate record);
+    int insertSelective(MailTemplateWithBLOBs record);
 
     @SelectProvider(type=MailTemplateSqlProvider.class, method="selectByExampleWithBLOBs")
     @Results({
         @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR),
         @Result(column="header", property="header", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_header", property="bodyHeader", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_tail", property="bodyTail", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="tail", property="tail", jdbcType=JdbcType.LONGVARCHAR)
     })
-    List<MailTemplate> selectByExampleWithBLOBs(MailTemplateExample example);
+    List<MailTemplateWithBLOBs> selectByExampleWithBLOBs(MailTemplateExample example);
 
     @SelectProvider(type=MailTemplateSqlProvider.class, method="selectByExample")
     @Results({
-        @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true)
+        @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR)
     })
     List<MailTemplate> selectByExample(MailTemplateExample example);
 
     @Select({
         "select",
-        "template_id, header, body_header, body_tail, tail",
+        "template_id, type, header, body_header, body_tail, tail",
         "from mail_template",
         "where template_id = #{templateId,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="template_id", property="templateId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR),
         @Result(column="header", property="header", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_header", property="bodyHeader", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="body_tail", property="bodyTail", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="tail", property="tail", jdbcType=JdbcType.LONGVARCHAR)
     })
-    MailTemplate selectByPrimaryKey(Integer templateId);
+    MailTemplateWithBLOBs selectByPrimaryKey(Integer templateId);
 
     @UpdateProvider(type=MailTemplateSqlProvider.class, method="updateByPrimaryKeySelective")
-    int updateByPrimaryKeySelective(MailTemplate record);
+    int updateByPrimaryKeySelective(MailTemplateWithBLOBs record);
 
     @Update({
         "update mail_template",
-        "set header = #{header,jdbcType=LONGVARCHAR},",
+        "set type = #{type,jdbcType=VARCHAR},",
+          "header = #{header,jdbcType=LONGVARCHAR},",
           "body_header = #{bodyHeader,jdbcType=LONGVARCHAR},",
           "body_tail = #{bodyTail,jdbcType=LONGVARCHAR},",
           "tail = #{tail,jdbcType=LONGVARCHAR}",
         "where template_id = #{templateId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKeyWithBLOBs(MailTemplate record);
+    int updateByPrimaryKeyWithBLOBs(MailTemplateWithBLOBs record);
+
+    @Update({
+        "update mail_template",
+        "set type = #{type,jdbcType=VARCHAR}",
+        "where template_id = #{templateId,jdbcType=INTEGER}"
+    })
+    int updateByPrimaryKey(MailTemplate record);
 }

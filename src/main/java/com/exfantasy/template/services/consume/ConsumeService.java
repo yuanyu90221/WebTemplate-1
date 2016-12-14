@@ -21,6 +21,7 @@ import com.exfantasy.template.mybatis.model.ConsumeExample.Criteria;
 import com.exfantasy.template.mybatis.model.ReceiptReward;
 import com.exfantasy.template.mybatis.model.ReceiptRewardExample;
 import com.exfantasy.template.mybatis.model.User;
+import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.vo.request.ConsumeVo;
 import com.exfantasy.utils.date.DateUtils;
 import com.exfantasy.utils.tools.Bingo;
@@ -46,6 +47,9 @@ public class ConsumeService {
 	
 	@Autowired
 	private CustomReceiptRewardMapper receiptRewardMapper;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void addConsume(User user, ConsumeVo consumeVo) {
@@ -94,7 +98,7 @@ public class ConsumeService {
 		if (consumes.size() != 0) {
 			consumes.sort((obj1, obj2) -> obj1.getConsumeDate().compareTo(obj2.getConsumeDate()));
 			getLatestReceiptLotteryNo();
-			checkIsGot(consumes);
+			checkIsGot(user, consumes);
 		}
 		
 		return consumes;
@@ -143,9 +147,12 @@ public class ConsumeService {
 		receiptRewardMapper.batchInsert(receiptRewardsToInsert);
 	}
 
-	private void checkIsGot(List<Consume> consumes) {
+	private void checkIsGot(User user, List<Consume> consumes) {
 		// 暫存每一期的資料
 		Map<String, List<ReceiptReward>> receiptRewardMap = new HashMap<>();
+		
+		// 暫存中獎資料用來發送 mail
+		List<Consume> gotItConsumes = new ArrayList<>();
 		
 		for (Consume consume : consumes) {
 			String section = ReceiptLotteryNoUtil.getSection(consume.getConsumeDate());
@@ -195,6 +202,9 @@ public class ConsumeService {
 					logger.info(">>>>> Section: {}, lotteryNo: {} is bingo, prize: {}", section, lotteryNo, prize);
 					consume.setGot(1);
 					consume.setPrize(prize);
+					
+					// 加到已中獎紀錄, 準備發送 mail
+					gotItConsumes.add(consume);
 				}
 				// 未中獎
 				else {
@@ -203,8 +213,15 @@ public class ConsumeService {
 			}
 		}
 		
-		// 批次更新 DB 狀態
-		consumeMapper.batchUpdateGot(consumes);
+		// 啟動 Thread 來做裡面的事
+		new Thread(() -> {
+			// 批次更新 DB 狀態
+			consumeMapper.batchUpdateGot(consumes);
+			
+			// 發送中獎通知
+			mailService.sendGotItMail(user, gotItConsumes);
+			
+		}).start();;
 	}
 	
 	/**

@@ -1,20 +1,24 @@
 package com.exfantasy.template.mybatis.mapper;
 
-import com.exfantasy.template.mybatis.model.MailTemplate;
 import com.exfantasy.template.mybatis.model.MailTemplateExample.Criteria;
 import com.exfantasy.template.mybatis.model.MailTemplateExample.Criterion;
 import com.exfantasy.template.mybatis.model.MailTemplateExample;
+import com.exfantasy.template.mybatis.model.MailTemplateWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.jdbc.SQL;
 
 public class MailTemplateSqlProvider {
 
-    public String insertSelective(MailTemplate record) {
+    public String insertSelective(MailTemplateWithBLOBs record) {
         SQL sql = new SQL();
         sql.INSERT_INTO("mail_template");
         
         if (record.getTemplateId() != null) {
             sql.VALUES("template_id", "#{templateId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getType() != null) {
+            sql.VALUES("type", "#{type,jdbcType=VARCHAR}");
         }
         
         if (record.getHeader() != null) {
@@ -43,6 +47,7 @@ public class MailTemplateSqlProvider {
         } else {
             sql.SELECT("template_id");
         }
+        sql.SELECT("type");
         sql.SELECT("header");
         sql.SELECT("body_header");
         sql.SELECT("body_tail");
@@ -64,6 +69,7 @@ public class MailTemplateSqlProvider {
         } else {
             sql.SELECT("template_id");
         }
+        sql.SELECT("type");
         sql.FROM("mail_template");
         applyWhere(sql, example, false);
         
@@ -74,9 +80,13 @@ public class MailTemplateSqlProvider {
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(MailTemplate record) {
+    public String updateByPrimaryKeySelective(MailTemplateWithBLOBs record) {
         SQL sql = new SQL();
         sql.UPDATE("mail_template");
+        
+        if (record.getType() != null) {
+            sql.SET("type = #{type,jdbcType=VARCHAR}");
+        }
         
         if (record.getHeader() != null) {
             sql.SET("header = #{header,jdbcType=LONGVARCHAR}");

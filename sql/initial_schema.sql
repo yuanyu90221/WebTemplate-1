@@ -48,6 +48,7 @@ CREATE TABLE `receipt_reward` (
 DROP TABLE IF EXISTS `mail_template`;
 CREATE TABLE `mail_template` (
   `template_id` int(10) NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) NOT NULL,
   `header` text NOT NULL,
   `body_header` text NOT NULL,
   `body_tail` text NOT NULL,
