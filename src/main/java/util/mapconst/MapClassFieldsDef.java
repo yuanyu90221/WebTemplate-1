@@ -8,7 +8,8 @@ public enum MapClassFieldsDef {
 	USER_ROLE("UserRole", MapFieldsOfUserRole.values()),
 	PRODUCT("Product", MapFieldsOfProduct.values()),
 	CONSUME("Consume", MapFieldsOfConsume.values()),
-	RECEIPT_REWARD("ReceiptReward", MapFieldsOfReceiptReward.values())
+	RECEIPT_REWARD("ReceiptReward", MapFieldsOfReceiptReward.values()),
+	MAIL_TEMPLATE("MailTemplate", MapFieldsOfMailTemplate.values())
 	;
 	
 	private String className;

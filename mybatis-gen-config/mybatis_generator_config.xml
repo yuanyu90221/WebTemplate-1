@@ -108,5 +108,12 @@
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 		</table>
+		
+		<!-- Table: mail_template -->
+		<table schema="testing" tableName="mail_template" domainObjectName="MailTemplate" 
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
 	</context>
 </generatorConfiguration>
