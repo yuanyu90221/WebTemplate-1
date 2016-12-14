@@ -72,7 +72,7 @@ public class MailService {
 			Object[] gotItSectionAndConsume = (Object[]) gotItConsumes.get(i);
 			String section = (String) gotItSectionAndConsume[0];
 			Consume gotItConsume = (Consume) gotItSectionAndConsume[1];
-			args.add("月份：" + section + "，號碼：" + gotItConsume.getLotteryNo() + "，獎金：" + gotItConsume.getPrize());
+			args.add("月份：" + section + "<br>號碼：" + gotItConsume.getLotteryNo() + "，獎金：" + gotItConsume.getPrize());
 		}
 		mailContentBuffer.append(mailTemplate.getTail());
 		
