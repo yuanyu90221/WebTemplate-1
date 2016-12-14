@@ -219,9 +219,10 @@ public class ConsumeService {
 			// 批次更新 DB 狀態
 			consumeMapper.batchUpdateGot(consumes);
 			
-			// 發送中獎通知
-			mailService.sendGotItMail(user, gotItSectionAndConsumes);
-			
+			if (gotItSectionAndConsumes.size() != 0) {
+				// 若發現有中獎的資料, 發送中獎通知
+				mailService.sendGotItMail(user, gotItSectionAndConsumes);
+			}
 		}).start();;
 	}
 	
