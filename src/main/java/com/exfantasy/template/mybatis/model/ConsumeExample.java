@@ -66,19 +66,47 @@ public class ConsumeExample {
     }
 
     protected abstract static class GeneratedCriteria {
+        protected List<Criterion> alreadySentCriteria;
+
+        protected List<Criterion> allCriteria;
+
         protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
+            alreadySentCriteria = new ArrayList<Criterion>();
+        }
+
+        public List<Criterion> getAlreadySentCriteria() {
+            return alreadySentCriteria;
+        }
+
+        protected void addAlreadySentCriterion(String condition, Object value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            alreadySentCriteria.add(new Criterion(condition, value, "com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler"));
+            allCriteria = null;
+        }
+
+        protected void addAlreadySentCriterion(String condition, boolean value1, boolean value2, String property) {
+            alreadySentCriteria.add(new Criterion(condition, value1, value2, "com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler"));
+            allCriteria = null;
         }
 
         public boolean isValid() {
-            return criteria.size() > 0;
+            return criteria.size() > 0
+                || alreadySentCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
-            return criteria;
+            if (allCriteria == null) {
+                allCriteria = new ArrayList<Criterion>();
+                allCriteria.addAll(criteria);
+                allCriteria.addAll(alreadySentCriteria);
+            }
+            return allCriteria;
         }
 
         public List<Criterion> getCriteria() {
@@ -90,6 +118,7 @@ public class ConsumeExample {
                 throw new RuntimeException("Value for condition cannot be null");
             }
             criteria.add(new Criterion(condition));
+            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value, String property) {
@@ -97,6 +126,7 @@ public class ConsumeExample {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
+            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
@@ -104,6 +134,7 @@ public class ConsumeExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+            allCriteria = null;
         }
 
         protected void addCriterionForJDBCDate(String condition, Date value, String property) {
@@ -629,6 +660,76 @@ public class ConsumeExample {
 
         public Criteria andGotNotBetween(Integer value1, Integer value2) {
             addCriterion("got not between", value1, value2, "got");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentIsNull() {
+            addCriterion("already_sent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentIsNotNull() {
+            addCriterion("already_sent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentEqualTo(boolean value) {
+            addAlreadySentCriterion("already_sent =", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentNotEqualTo(boolean value) {
+            addAlreadySentCriterion("already_sent <>", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentGreaterThan(boolean value) {
+            addAlreadySentCriterion("already_sent >", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentGreaterThanOrEqualTo(boolean value) {
+            addAlreadySentCriterion("already_sent >=", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentLessThan(boolean value) {
+            addAlreadySentCriterion("already_sent <", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentLessThanOrEqualTo(boolean value) {
+            addAlreadySentCriterion("already_sent <=", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentLike(boolean value) {
+            addAlreadySentCriterion("already_sent like", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentNotLike(boolean value) {
+            addAlreadySentCriterion("already_sent not like", value, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentIn(List<Boolean> values) {
+            addAlreadySentCriterion("already_sent in", values, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentNotIn(List<Boolean> values) {
+            addAlreadySentCriterion("already_sent not in", values, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentBetween(boolean value1, boolean value2) {
+            addAlreadySentCriterion("already_sent between", value1, value2, "alreadySent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlreadySentNotBetween(boolean value1, boolean value2) {
+            addAlreadySentCriterion("already_sent not between", value1, value2, "alreadySent");
             return (Criteria) this;
         }
     }

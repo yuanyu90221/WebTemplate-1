@@ -60,6 +60,8 @@ public class ConsumeSqlProvider {
             sql.VALUES("got", "#{got,jdbcType=INTEGER}");
         }
         
+        sql.VALUES("already_sent", "#{alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
+        
         return sql.toString();
     }
 
@@ -77,6 +79,7 @@ public class ConsumeSqlProvider {
         sql.SELECT("amount");
         sql.SELECT("prize");
         sql.SELECT("got");
+        sql.SELECT("already_sent");
         sql.FROM("consume");
         applyWhere(sql, example, false);
         
@@ -126,6 +129,8 @@ public class ConsumeSqlProvider {
             sql.SET("got = #{record.got,jdbcType=INTEGER}");
         }
         
+        sql.SET("already_sent = #{record.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
+        
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -142,6 +147,7 @@ public class ConsumeSqlProvider {
         sql.SET("amount = #{record.amount,jdbcType=DECIMAL}");
         sql.SET("prize = #{record.prize,jdbcType=DECIMAL}");
         sql.SET("got = #{record.got,jdbcType=INTEGER}");
+        sql.SET("already_sent = #{record.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
         
         ConsumeExample example = (ConsumeExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -179,6 +185,8 @@ public class ConsumeSqlProvider {
         if (record.getGot() != null) {
             sql.SET("got = #{got,jdbcType=INTEGER}");
         }
+        
+        sql.SET("already_sent = #{alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}");
         
         sql.WHERE("lottery_no = #{lotteryNo,jdbcType=VARCHAR}");
         

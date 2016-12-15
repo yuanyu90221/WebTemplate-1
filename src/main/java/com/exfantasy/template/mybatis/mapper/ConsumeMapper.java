@@ -2,6 +2,7 @@ package com.exfantasy.template.mybatis.mapper;
 
 import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.ConsumeExample;
+import com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -35,11 +36,11 @@ public interface ConsumeMapper {
         "insert into consume (lottery_no, user_id, ",
         "consume_date, type, ",
         "prod_name, amount, ",
-        "prize, got)",
+        "prize, got, already_sent)",
         "values (#{lotteryNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, ",
         "#{consumeDate,jdbcType=DATE}, #{type,jdbcType=INTEGER}, ",
         "#{prodName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
-        "#{prize,jdbcType=DECIMAL}, #{got,jdbcType=INTEGER})"
+        "#{prize,jdbcType=DECIMAL}, #{got,jdbcType=INTEGER}, #{alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler})"
     })
     int insert(Consume record);
 
@@ -55,13 +56,14 @@ public interface ConsumeMapper {
         @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER)
+        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
+        @Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
     })
     List<Consume> selectByExample(ConsumeExample example);
 
     @Select({
         "select",
-        "lottery_no, user_id, consume_date, type, prod_name, amount, prize, got",
+        "lottery_no, user_id, consume_date, type, prod_name, amount, prize, got, already_sent",
         "from consume",
         "where lottery_no = #{lotteryNo,jdbcType=VARCHAR}"
     })
@@ -73,7 +75,8 @@ public interface ConsumeMapper {
         @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER)
+        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
+        @Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
     })
     Consume selectByPrimaryKey(String lotteryNo);
 
@@ -94,7 +97,8 @@ public interface ConsumeMapper {
           "prod_name = #{prodName,jdbcType=VARCHAR},",
           "amount = #{amount,jdbcType=DECIMAL},",
           "prize = #{prize,jdbcType=DECIMAL},",
-          "got = #{got,jdbcType=INTEGER}",
+          "got = #{got,jdbcType=INTEGER},",
+          "already_sent = #{alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}",
         "where lottery_no = #{lotteryNo,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Consume record);

@@ -35,6 +35,7 @@ CREATE TABLE `consume` (
   `lottery_no` varchar(8) NOT NULL,
   `prize` decimal(10,0),
   `got` int(1) NOT NULL,
+  `already_sent` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`lottery_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

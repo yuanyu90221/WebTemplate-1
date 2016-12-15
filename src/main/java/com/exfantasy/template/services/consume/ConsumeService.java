@@ -106,13 +106,14 @@ public class ConsumeService {
 
 	private Consume convertConsumVoToModel(User user, ConsumeVo consumeVo) {
 		Consume consume = new Consume();
-		consume.setLotteryNo(consumeVo.getLotteryNo());
 		consume.setUserId(user.getUserId());
 		consume.setConsumeDate(DateUtils.asDate(consumeVo.getConsumeDate()));
 		consume.setType(consumeVo.getType());
 		consume.setProdName(consumeVo.getProdName());
 		consume.setAmount(consumeVo.getAmount());
+		consume.setLotteryNo(consumeVo.getLotteryNo());
 		consume.setGot(-1);
+		consume.setAlreadySent(false);
 		return consume;
 	}
 
@@ -156,6 +157,18 @@ public class ConsumeService {
 		
 		for (Consume consume : consumes) {
 			String section = ReceiptLotteryNoUtil.getSection(consume.getConsumeDate());
+			
+			// 若已經對過獎的不繼續對獎流程
+			if (consume.getGot() == 0 || consume.getGot() == 1) {
+				// 若中獎卻沒發過信的就寄信
+				if (consume.getGot() == 1 && consume.isAlreadySent() == false) {
+					// 加到已中獎紀錄, 準備發送 mail
+					consume.setAlreadySent(true);
+					Object[] sectionAndConsume = new Object[] {section, consume};
+					gotItSectionAndConsumes.add(sectionAndConsume);
+				}
+				continue;
+			}
 			
 			List<ReceiptReward> receiptRewards = new ArrayList<>();
 			
@@ -204,6 +217,7 @@ public class ConsumeService {
 					consume.setPrize(prize);
 					
 					// 加到已中獎紀錄, 準備發送 mail
+					consume.setAlreadySent(true);
 					Object[] sectionAndConsume = new Object[] {section, consume};
 					gotItSectionAndConsumes.add(sectionAndConsume);
 				}
@@ -216,12 +230,22 @@ public class ConsumeService {
 		
 		// 啟動 Thread 來做裡面的事
 		new Thread(() -> {
-			// 批次更新 DB 狀態
+			// 批次更新 DB 中獎狀態
 			consumeMapper.batchUpdateGot(consumes);
 			
 			if (gotItSectionAndConsumes.size() != 0) {
 				// 若發現有中獎的資料, 發送中獎通知
 				mailService.sendGotItMail(user, gotItSectionAndConsumes);
+				
+				
+				// 批次更新 DB 中寄信狀態
+				List<Consume> gotItConsumes = new ArrayList<>();
+				for (int i = 0; i < gotItSectionAndConsumes.size(); i++) {
+					Object[] gotItSectionAndConsume = (Object[]) gotItSectionAndConsumes.get(i);
+					Consume gotItConsume = (Consume) gotItSectionAndConsume[1];
+					gotItConsumes.add(gotItConsume);
+				}
+				consumeMapper.batchUpdateAlreadtSent(gotItConsumes);
 			}
 		}).start();;
 	}

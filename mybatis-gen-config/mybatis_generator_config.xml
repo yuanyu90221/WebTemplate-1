@@ -100,6 +100,9 @@
 			enableCountByExample="true" enableUpdateByExample="true"
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="false">
+			
+			<!-- 使欄位會根據 typeHandler 來處理 DB 的值 -->
+			<columnOverride column="already_sent" javaType="boolean" typeHandler="com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler" />
 		</table>
 		
 		<!-- Table: receipt_reward -->

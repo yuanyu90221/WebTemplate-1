@@ -15,7 +15,9 @@ public enum MapFieldsOfConsume implements MapFields {
 	
 	PRIZE("prize", "中獎金額"),
 	
-	GOT("got", "是否中獎");
+	GOT("got", "是否中獎"),
+	
+	ALREADY_SENT("alreadySent", "是否已發信");
 	
 	private String fieldName;
 	private String note;

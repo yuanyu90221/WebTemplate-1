@@ -22,4 +22,15 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 		"</script>"
 	})
 	int batchUpdateGot(List<Consume> consumesToUpdateGot);
+	
+	@Update({
+		"<script>",
+		"<foreach collection='list' item='consume' separator=';'>",
+		"update consume ",
+		"set already_sent = #{consume.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler} ",
+		"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
+		"</foreach>",
+		"</script>"
+	})
+	int batchUpdateAlreadtSent(List<Consume> consumesToUpdateAlreadySent);
 }

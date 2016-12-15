@@ -28,6 +28,9 @@ public class Consume {
     @ApiModelProperty(notes = "是否中獎", required = true)
     private Integer got;
 
+    @ApiModelProperty(notes = "是否已發信", required = true)
+    private boolean alreadySent;
+
     public String getLotteryNo() {
         return lotteryNo;
     }
@@ -92,6 +95,14 @@ public class Consume {
         this.got = got;
     }
 
+    public boolean isAlreadySent() {
+        return alreadySent;
+    }
+
+    public void setAlreadySent(boolean alreadySent) {
+        this.alreadySent = alreadySent;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -111,7 +122,8 @@ public class Consume {
             && (this.getProdName() == null ? other.getProdName() == null : this.getProdName().equals(other.getProdName()))
             && (this.getAmount() == null ? other.getAmount() == null : this.getAmount().equals(other.getAmount()))
             && (this.getPrize() == null ? other.getPrize() == null : this.getPrize().equals(other.getPrize()))
-            && (this.getGot() == null ? other.getGot() == null : this.getGot().equals(other.getGot()));
+            && (this.getGot() == null ? other.getGot() == null : this.getGot().equals(other.getGot()))
+            && (this.isAlreadySent() == other.isAlreadySent());
     }
 
     @Override
@@ -126,6 +138,7 @@ public class Consume {
         result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
         result = prime * result + ((getPrize() == null) ? 0 : getPrize().hashCode());
         result = prime * result + ((getGot() == null) ? 0 : getGot().hashCode());
+        result = prime * result + (isAlreadySent() ? 1231 : 1237);
         return result;
     }
 }
