@@ -7,7 +7,7 @@ import org.springframework.validation.ObjectError;
 
 /**
  * <pre>
- * 用來處理前端發送錯誤 request 時, 組成錯誤訊息用 
+ * 錯誤訊息處理工具 
  * </pre>
  * 
  * @author tommy.feng
@@ -15,6 +15,14 @@ import org.springframework.validation.ObjectError;
  */
 public class ErrorMsgUtil {
 
+	/**
+	 * <pre>
+	 * 當前端傳來的資訊有錯誤時, 組成錯誤訊息
+	 * </pre>
+	 * 
+	 * @param result
+	 * @return
+	 */
 	public static String getErrorMsgs(BindingResult result) {
 		StringBuilder buffer = new StringBuilder();
 		

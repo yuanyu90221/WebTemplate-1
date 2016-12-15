@@ -45,6 +45,13 @@ public class UserService {
     @Autowired
     private CustomConfig customConfig;
 
+    /**
+     * <pre>
+     * 註冊新的使用者
+     * </pre>
+     * 
+     * @param registerVo
+     */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public void register(RegisterVo registerVo) {
     	User existedUser = queryUserByEmail(registerVo.getEmail());
@@ -70,6 +77,14 @@ public class UserService {
 		logger.info("----- User register with email: <{}> succeed -----", registerVo.getEmail());
     }
     
+    /**
+     * <pre>
+     * 根據傳入的 email 查詢對應使用者
+     * </pre>
+     * 
+     * @param email
+     * @return
+     */
 	public User queryUserByEmail(String email) {
 		UserExample example = new UserExample();
 		example.createCriteria().andEmailEqualTo(email);
@@ -77,6 +92,14 @@ public class UserService {
 		return user.isEmpty() ? null : user.get(0);
 	}
 	
+	/**
+	 * <pre>
+	 * 查詢使用者所擁有的角色
+	 * </pre>
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public List<UserRole> queryUserRoles(User user) {
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
@@ -84,11 +107,27 @@ public class UserService {
 		return roles.isEmpty() ? null : roles;
 	}
 
+	/**
+	 * <pre>
+	 * 根據 Primary Key 更新使用者, 有欄位變動才更新
+	 * </pre>
+	 * 
+	 * @param user
+	 * @return
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserSelective(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
     }
     
+	/**
+	 * <pre>
+	 * 根據 Primary Key 更新使用者
+	 * </pre>
+	 * 
+	 * @param user
+	 * @return
+	 */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserByReplace(User user) {
         return userMapper.updateByPrimaryKey(user);

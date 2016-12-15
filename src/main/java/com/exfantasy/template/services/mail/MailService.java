@@ -22,6 +22,12 @@ import com.exfantasy.template.mybatis.model.MailTemplateExample.Criteria;
 import com.exfantasy.template.mybatis.model.MailTemplateWithBLOBs;
 import com.exfantasy.template.mybatis.model.User;
 
+/**
+ * 處理發送 email 邏輯
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 public class MailService {
 	private static final Logger logger = LoggerFactory.getLogger(MailService.class);
@@ -32,6 +38,14 @@ public class MailService {
 	@Autowired
 	private MailTemplateMapper mailTemplateMapper;
 	
+	/**
+	 * 發送 email
+	 * 
+	 * @param mailTo 收件者信箱
+	 * @param subject 主旨
+	 * @param text 內容
+	 * @throws MessagingException
+	 */
 	public void sendMail(String mailTo, String subject, String text) throws MessagingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		
@@ -44,6 +58,12 @@ public class MailService {
 		mailSender.send(mimeMessage);
 	}
 
+	/**
+	 * 將消費資料中獎資訊發送給使用者
+	 * 
+	 * @param user
+	 * @param gotItConsumes
+	 */
 	public void sendGotItMail(User user, List<Object> gotItConsumes) {
 		// 暫存要填入 html 的參數
 		List<Object> args = new ArrayList<>();

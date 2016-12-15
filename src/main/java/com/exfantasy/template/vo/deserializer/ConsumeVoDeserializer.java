@@ -15,7 +15,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  * <pre>
  * 前端傳輸過來的記帳資料, 特製 deserializer
  * 
- * 參考: https://dzone.com/articles/custom-json-deserialization-with-jackson
+ * 參考: 
+ * <a href="https://dzone.com/articles/custom-json-deserialization-with-jackson">Custom JSON Deserialization with Jackson</a>
  * </pre>
  * 
  * @author tommy.feng

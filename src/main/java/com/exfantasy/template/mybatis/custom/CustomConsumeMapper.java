@@ -10,8 +10,15 @@ import com.exfantasy.template.mybatis.model.Consume;
 
 @Mapper
 public interface CustomConsumeMapper extends ConsumeMapper {
-	// 這個自己加的, batch update
-	// 參考: http://stackoverflow.com/questions/10797794/multiple-queries-executed-in-java-in-single-statement
+	/**
+	 * <pre>
+	 * 批次更新消費資料 table 的中獎欄位
+	 * <a href="http://stackoverflow.com/questions/10797794/multiple-queries-executed-in-java-in-single-statement">http://stackoverflow.com/questions/10797794/multiple-queries-executed-in-java-in-single-statement</a>
+	 * </pre>
+	 * 
+	 * @param consumesToUpdateGot
+	 * @return
+	 */
 	@Update({
 		"<script>",
 		"<foreach collection='list' item='consume' separator=';'>",
@@ -23,6 +30,14 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	})
 	int batchUpdateGot(List<Consume> consumesToUpdateGot);
 	
+	/**
+	 * <pre>
+	 * 批次更新消費資料 table 的是否已寄信欄位
+	 * </pre>
+	 * 
+	 * @param consumesToUpdateAlreadySent
+	 * @return
+	 */
 	@Update({
 		"<script>",
 		"<foreach collection='list' item='consume' separator=';'>",

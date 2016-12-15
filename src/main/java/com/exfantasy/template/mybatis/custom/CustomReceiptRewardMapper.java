@@ -11,15 +11,31 @@ import com.exfantasy.template.mybatis.model.ReceiptReward;
 
 @Mapper
 public interface CustomReceiptRewardMapper extends ReceiptRewardMapper {
-	// 這個自己加的, 因為 Table: receipt_reward 沒有 PKey, 所以 generator 不會產生
+	/**
+	 * <pre>
+	 * 根據傳入期號刪除中獎號碼
+	 * 
+	 * PS: 這個自己加的, 因為 Table: receipt_reward 沒有 PKey, 所以 generator 不會產生
+	 * </pre>
+	 * 
+	 * @param section
+	 * @return
+	 */
 	@Delete({
     	"delete from receipt_reward",
     	"where section = #{section,jdbcType=CHAR}"
     })
     int deleteBySection(String section);
 	
-	// 這個自己加的, batch delete
-	// 參考: http://www.mybatis.org/mybatis-3/dynamic-sql.html
+	/**
+	 * <pre>
+	 * 根據傳入期號批次刪除中獎號碼
+	 * <a href="http://www.mybatis.org/mybatis-3/dynamic-sql.html">http://www.mybatis.org/mybatis-3/dynamic-sql.html</a>
+	 * </pre>
+	 * 
+	 * @param sections
+	 * @return
+	 */
 	@Delete({
 		"<script>",
 		"delete from receipt_reward",
@@ -31,8 +47,15 @@ public interface CustomReceiptRewardMapper extends ReceiptRewardMapper {
 	})
 	int batchDeleteBySection(List<String> sections);
 	
-	// 這個自己加的, batch insert
-	// 參考: http://stackoverflow.com/questions/23486547/mybatis-batch-insert-update-for-oracle
+	/**
+	 * <pre>
+	 * 批次新增中獎資料
+	 * <a href="http://stackoverflow.com/questions/23486547/mybatis-batch-insert-update-for-oracle">http://stackoverflow.com/questions/23486547/mybatis-batch-insert-update-for-oracle</a>
+	 * </pre>
+	 * 
+	 * @param receiptRewards
+	 * @return
+	 */
 	@Insert({
 		"<script>",
 		"insert into receipt_reward (section, reward_type, number) values",

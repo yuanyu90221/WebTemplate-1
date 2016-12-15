@@ -31,7 +31,7 @@ import com.exfantasy.utils.tools.RewardType;
 
 /**
  * <pre>
- * 處理記帳相關邏輯
+ * 處理消費資料相關邏輯
  * </pre>
  * 
  * @author tommy.feng
@@ -51,24 +51,61 @@ public class ConsumeService {
 	@Autowired
 	private MailService mailService;
 	
+	/**
+	 * <pre>
+	 * 新增消費資料
+	 * </pre>
+	 * 
+	 * @param user
+	 * @param consumeVo
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void addConsume(User user, ConsumeVo consumeVo) {
 		Consume consume = convertConsumVoToModel(user, consumeVo);
 		consumeMapper.insert(consume);
 	}
 
+	/**
+	 * <pre>
+	 * 更新消費資料
+	 * </pre>
+	 * 
+	 * @param user
+	 * @param consumeVo
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void updConsume(User user, ConsumeVo consumeVo) {
 		Consume consume = convertConsumVoToModel(user, consumeVo);
 		consumeMapper.updateByPrimaryKey(consume);
 	}
 
+	/**
+	 * <pre>
+	 * 刪除消費資料
+	 * </pre>
+	 * 
+	 * @param user
+	 * @param consumeVo
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void delConsume(User user, ConsumeVo consumeVo) {
 		Consume consume = convertConsumVoToModel(user, consumeVo);
 		consumeMapper.deleteByPrimaryKey(consume.getLotteryNo());
 	}
 
+	/**
+	 * <pre>
+	 * 根據條件查詢消費資料
+	 * </pre>
+	 * 
+	 * @param user
+	 * @param startDate
+	 * @param endDate
+	 * @param type
+	 * @param prodName
+	 * @param lotteryNo
+	 * @return
+	 */
 	public List<Consume> getConsume(User user, Date startDate, Date endDate, Integer type, String prodName, String lotteryNo) {
 		ConsumeExample example = new ConsumeExample();
 		Criteria criteria = example.createCriteria();
@@ -104,6 +141,13 @@ public class ConsumeService {
 		return consumes;
 	}
 
+	/**
+	 * 將前端傳過來的消費資料物件轉換成 mybatis model
+	 * 
+	 * @param user
+	 * @param consumeVo
+	 * @return
+	 */
 	private Consume convertConsumVoToModel(User user, ConsumeVo consumeVo) {
 		Consume consume = new Consume();
 		consume.setUserId(user.getUserId());
@@ -117,6 +161,11 @@ public class ConsumeService {
 		return consume;
 	}
 
+	/**
+	 * <pre>
+	 * 取得最新發票開獎資訊
+	 * </pre>
+	 */
 	private void getLatestReceiptLotteryNo() {
 		// 用來 batch delete
 		List<String> sectionsToDelete = new ArrayList<>();
@@ -148,6 +197,14 @@ public class ConsumeService {
 		receiptRewardMapper.batchInsert(receiptRewardsToInsert);
 	}
 
+	/**
+	 * <pre>
+	 * 判斷串入的消費資料是否中獎, 並且更新 DB 狀態, 若有中獎則發信給使用者
+	 * </pre>
+	 * 
+	 * @param user
+	 * @param consumes
+	 */
 	private void checkIsGot(User user, List<Consume> consumes) {
 		// 暫存每一期的資料
 		Map<String, List<ReceiptReward>> receiptRewardMap = new HashMap<>();
