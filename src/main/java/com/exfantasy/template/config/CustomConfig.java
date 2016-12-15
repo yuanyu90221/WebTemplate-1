@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 /**
  * <pre>
  * 客製化設定, 此處設定可參照 application.yaml
+ * 
+ * PS: 取 config 設定值寫法有兩種, 也可以參考 MailConfig 的寫法
  * </pre>
  * 
  * @author tommy.feng
