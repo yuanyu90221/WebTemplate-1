@@ -46,9 +46,9 @@ public class TestController {
 	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 統一回應格式
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')") 
-	@RequestMapping(value = "/authorities", method = RequestMethod.GET)
+	@RequestMapping(value = "/testAuthorities", method = RequestMethod.GET)
 	@ApiOperation(value = "測試權限用")
-	public @ResponseBody ResponseVo test() {
+	public @ResponseBody ResponseVo testAuthorities() {
 		return new ResponseVo(ResultCode.SUCCESS, "Hello admin");
 	}
 	
@@ -59,9 +59,9 @@ public class TestController {
 	 * 
 	 * @return String 若成功回傳 "Send mail succeed", 若失敗回傳 "Send mail failed, err-msg: ..."
 	 */
-	@RequestMapping(value = "/sendTestMail", method = RequestMethod.GET)
+	@RequestMapping(value = "/testSendMail", method = RequestMethod.GET)
 	@ApiOperation(value = "測試發送信件")
-	public @ResponseBody String sendMail() {
+	public @ResponseBody String testSendMail() {
 		String mailTo = "tommy.yeh1112@gmail.com";
 		String subject = "This is a test from SpringBoot";
 		String text = "Hello~~";
