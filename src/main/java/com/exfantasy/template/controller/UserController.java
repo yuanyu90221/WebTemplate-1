@@ -83,9 +83,6 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/get_by_email", method = RequestMethod.GET)
 	@ApiOperation(value = "使用 email 查詢用戶")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "email", value = "註冊當時所使用的 email", required = true, dataType = "String")
-	})
 	public @ResponseBody User queryUserByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserByEmail(email);
 	}
