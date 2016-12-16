@@ -1,5 +1,7 @@
 package com.exfantasy.template.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
+import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
@@ -85,6 +88,20 @@ public class UserController {
 	@ApiOperation(value = "使用 email 查詢用戶")
 	public @ResponseBody User queryUserByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserByEmail(email);
+	}
+	
+	/**
+	 * <pre>
+	 * 使用 email 查詢用戶所擁有角色
+	 * </pre>
+	 * 
+	 * @param email 用戶當初註冊的 email
+	 * @return
+	 */
+	@RequestMapping(value = "/get_user_roles_by_email", method = RequestMethod.GET)
+	@ApiOperation(value = "使用 email 查詢用戶所擁有角色")
+	public @ResponseBody List<UserRole> queryUserRolesByEmail(@RequestParam(value = "email", required = true) String email) {
+		return userService.queryUserRolesByEmail(email);
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

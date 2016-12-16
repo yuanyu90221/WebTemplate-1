@@ -97,6 +97,22 @@ public class UserService {
 	 * 查詢使用者所擁有的角色
 	 * </pre>
 	 * 
+	 * @param email
+	 * @return
+	 */
+	public List<UserRole> queryUserRolesByEmail(String email) {
+		User user = queryUserByEmail(email);
+		if (user == null) {
+			return null;
+		}
+		return queryUserRoles(user);
+	}
+	
+	/**
+	 * <pre>
+	 * 查詢使用者所擁有的角色
+	 * </pre>
+	 * 
 	 * @param user
 	 * @return
 	 */
