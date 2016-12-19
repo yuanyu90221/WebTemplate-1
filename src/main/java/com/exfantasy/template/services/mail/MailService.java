@@ -43,17 +43,17 @@ public class MailService {
 	 * 
 	 * @param mailTo 收件者信箱
 	 * @param subject 主旨
-	 * @param text 內容
+	 * @param mailContent 內容
 	 * @throws MessagingException
 	 */
-	public void sendMail(String mailTo, String subject, String text) throws MessagingException {
+	public void sendMail(String mailTo, String subject, String mailContent) throws MessagingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		
 		mimeMessage.setSubject(subject);
 		
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "utf-8");
 		helper.setTo(mailTo);
-		helper.setText(text, true);
+		helper.setText(mailContent, true);
 		
 		mailSender.send(mimeMessage);
 	}

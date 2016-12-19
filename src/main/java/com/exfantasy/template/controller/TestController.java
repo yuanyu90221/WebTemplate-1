@@ -57,18 +57,18 @@ public class TestController {
 	 * 發送測試信件
 	 * </pre>
 	 * 
-	 * @return String 若成功回傳 "Send mail succeed", 若失敗回傳 "Send mail failed, err-msg: ..."
+	 * @return String 若成功回傳 "Send mail to: <" + mailTo + "> with subject: <" + subject + "> and content: <" + mailContent + "> succeed", 若失敗回傳 "Send mail failed, err-msg: ..."
 	 */
 	@RequestMapping(value = "/testSendMail", method = RequestMethod.GET)
 	@ApiOperation(value = "測試發送信件")
-	public @ResponseBody String testSendMail() {
-		String mailTo = "tommy.yeh1112@gmail.com";
-		String subject = "This is a test from SpringBoot";
-		String text = "Hello~~";
-
+	public @ResponseBody String testSendMail(
+		@RequestParam(value = "mailTo", required = true) String mailTo, 
+		@RequestParam(value = "subject", required = true) String subject, 
+		@RequestParam(value = "mailContent", required = true) String mailContent) {
+		
 		try {
-			mailService.sendMail(mailTo, subject, text);
-			return "Send mail succeed";
+			mailService.sendMail(mailTo, subject, mailContent);
+			return "Send mail to: <" + mailTo + "> with subject: <" + subject + "> and content: <" + mailContent + "> succeed";
 		} catch (MessagingException e) {
 			return "Send mail failed, err-msg: " + e.getMessage();
 		}
