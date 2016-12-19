@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.services.mail.MailService;
-import com.exfantasy.template.vo.response.ResponseVo;
+import com.exfantasy.template.vo.response.RespCommon;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,13 +43,13 @@ public class TestController {
 	 * 	<a href="http://blog.csdn.net/tzdwsy/article/details/50738043">使用 Spring Security 設定權限</a>
 	 * </pre>
 	 * 
-	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 統一回應格式
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 統一回應格式
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')") 
 	@RequestMapping(value = "/testAuthorities", method = RequestMethod.GET)
 	@ApiOperation(value = "測試權限用")
-	public @ResponseBody ResponseVo testAuthorities() {
-		return new ResponseVo(ResultCode.SUCCESS, "Hello admin");
+	public @ResponseBody RespCommon testAuthorities() {
+		return new RespCommon(ResultCode.SUCCESS, "Hello admin");
 	}
 	
 	/**

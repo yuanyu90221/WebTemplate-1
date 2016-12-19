@@ -26,7 +26,8 @@ import com.exfantasy.template.services.consume.ConsumeService;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.ConsumeVo;
-import com.exfantasy.template.vo.response.ResponseVo;
+import com.exfantasy.template.vo.response.RespCommon;
+import com.exfantasy.template.vo.response.RespReward;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -59,14 +60,14 @@ public class ConsumeController {
 	 * 
 	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/add_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "新增記帳資料", notes = "新增記帳資料", response = ResponseVo.class)
+	@ApiOperation(value = "新增記帳資料", notes = "新增記帳資料", response = RespCommon.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "consumeVo", value = "新增記帳資料需填入", required = true, dataType = "ConsumeVo")
 	})
-	public @ResponseBody ResponseVo addConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
+	public @ResponseBody RespCommon addConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
@@ -78,7 +79,7 @@ public class ConsumeController {
 		User user = userService.queryUserByEmail(email);
 		
 		consumeService.addConsume(user, consumeVo);
-		return new ResponseVo(ResultCode.SUCCESS, "Add consume data succeed");
+		return new RespCommon(ResultCode.SUCCESS, "Add consume data succeed");
 	}
 	
 	/**
@@ -88,14 +89,14 @@ public class ConsumeController {
 	 * 
 	 * @param consumeVo 前端發過來要更新的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/upd_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "更新記帳資料", notes = "更新記帳資料", response = ResponseVo.class)
+	@ApiOperation(value = "更新記帳資料", notes = "更新記帳資料", response = RespCommon.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "consumeVo", value = "更新記帳資料需填入", required = true, dataType = "ConsumeVo")
 	})
-	public @ResponseBody ResponseVo updConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
+	public @ResponseBody RespCommon updConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
@@ -106,7 +107,7 @@ public class ConsumeController {
 		User user = userService.queryUserByEmail(email);
 		
 		consumeService.updConsume(user, consumeVo);
-		return new ResponseVo(ResultCode.SUCCESS, "Update consume data succeed");
+		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
 	}
 	
 	/**
@@ -116,14 +117,14 @@ public class ConsumeController {
 	 * 
 	 * @param consumeVo 前端發過來要刪除的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/del_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "刪除記帳資料", notes = "刪除記帳資料", response = ResponseVo.class)
+	@ApiOperation(value = "刪除記帳資料", notes = "刪除記帳資料", response = RespCommon.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "consumeVo", value = "刪除記帳資料需填入", required = true, dataType = "ConsumeVo")
 	})
-	public @ResponseBody ResponseVo delConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
+	public @ResponseBody RespCommon delConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
@@ -134,7 +135,7 @@ public class ConsumeController {
 		User user = userService.queryUserByEmail(email);
 		
 		consumeService.delConsume(user, consumeVo);
-		return new ResponseVo(ResultCode.SUCCESS, "Update consume data succeed");
+		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
 	}
 	
 	/**
@@ -175,6 +176,13 @@ public class ConsumeController {
 		
 		List<Consume> consumes = consumeService.getConsume(user, startDate, endDate, type, prodName, lotteryNo);
 		return consumes;
+	}
+	
+	@RequestMapping(value = "/get_latest_reward_numbers", method = RequestMethod.GET)
+	@ApiOperation(value = "取得最新發票開獎號碼", notes = "取得最新發票開獎號碼", response = RespReward.class)
+	public @ResponseBody List<RespReward> getLatestRewardNumbers() {
+		List<RespReward> latestRewardNumbers = consumeService.getLatestRewardNumbers();
+		return latestRewardNumbers;
 	}
 	
 	private void setEndDateTime(Date endDate) {

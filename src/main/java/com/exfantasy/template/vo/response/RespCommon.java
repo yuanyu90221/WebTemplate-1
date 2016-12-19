@@ -15,19 +15,19 @@ import io.swagger.annotations.ApiModelProperty;
  *
  */
 @ApiModel(description = "操作回應")
-public class ResponseVo {
+public class RespCommon {
 	@ApiModelProperty(notes = "操作代碼", required = true)
 	private ResultCode resultCode;
 	
 	@ApiModelProperty(notes = "回應資料", required = true)
 	private Object data;
 
-	public ResponseVo(ResultCode resultCode, Object data) {
+	public RespCommon(ResultCode resultCode, Object data) {
 		this.resultCode = resultCode;
 		this.data = data;
 	}
 	
-	public ResponseVo(OperationException ex) {
+	public RespCommon(OperationException ex) {
 		this.resultCode = ex.getErrorCode();
 		this.data = ex.getErrorMessage();
 	}

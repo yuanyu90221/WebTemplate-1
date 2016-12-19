@@ -21,7 +21,7 @@ import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
-import com.exfantasy.template.vo.response.ResponseVo;
+import com.exfantasy.template.vo.response.RespCommon;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -60,20 +60,20 @@ public class UserController {
 	 * 
 	 * @param registerVo 前端發過來的資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.RegisterVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.ResponseVo}</code> 回應操作結果
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/do_register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "用戶註冊", notes = "給用戶輸入資料新增帳號用", response = ResponseVo.class)
+	@ApiOperation(value = "用戶註冊", notes = "給用戶輸入資料新增帳號用", response = RespCommon.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "registerVo", value = "用戶註冊需填入的資料", required = true, dataType = "RegisterVo")
 	})
-	public @ResponseBody ResponseVo register(@Validated @RequestBody final RegisterVo registerVo, BindingResult result) {
+	public @ResponseBody RespCommon register(@Validated @RequestBody final RegisterVo registerVo, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		userService.register(registerVo);
-		return new ResponseVo(ResultCode.SUCCESS, "Register succeed");
+		return new RespCommon(ResultCode.SUCCESS, "Register succeed");
 	}
 	
 	/**

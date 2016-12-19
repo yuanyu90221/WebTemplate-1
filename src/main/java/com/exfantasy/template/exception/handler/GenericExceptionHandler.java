@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
-import com.exfantasy.template.vo.response.ResponseVo;
+import com.exfantasy.template.vo.response.RespCommon;
 
 /**
  * <pre>
@@ -30,32 +30,32 @@ public class GenericExceptionHandler {
 	@ExceptionHandler(OperationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ResponseVo handleCustomException(OperationException ex) {
+	public RespCommon handleCustomException(OperationException ex) {
 		logger.error("OperationException raised", ex);
-		return new ResponseVo(ex);
+		return new RespCommon(ex);
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ResponseVo handleAccessDeniedException(AccessDeniedException ex) {
+	public RespCommon handleAccessDeniedException(AccessDeniedException ex) {
 		logger.error("AccessDeniedException raised", ex);
-		return new ResponseVo(ResultCode.ACCESS_DENIED, ex.getMessage());
+		return new RespCommon(ResultCode.ACCESS_DENIED, ex.getMessage());
 	}
 	
 	@ExceptionHandler(DuplicateKeyException.class)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseVo handleDuplicateKeyException(DuplicateKeyException ex) {
+	public RespCommon handleDuplicateKeyException(DuplicateKeyException ex) {
 		logger.warn("DuplicateKeyException raised", ex);
-		return new ResponseVo(ResultCode.DUPLICATE_KEY, ex.getMessage());
+		return new RespCommon(ResultCode.DUPLICATE_KEY, ex.getMessage());
 	}
 	
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ResponseVo handleAllException(Exception ex) {
+	public RespCommon handleAllException(Exception ex) {
 		logger.error("Exception raised", ex);
-		return new ResponseVo(ResultCode.SYSTEM_EXCEPTION, ex.getMessage());
+		return new RespCommon(ResultCode.SYSTEM_EXCEPTION, ex.getMessage());
 	}
 }

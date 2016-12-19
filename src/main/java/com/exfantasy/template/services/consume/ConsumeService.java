@@ -23,6 +23,7 @@ import com.exfantasy.template.mybatis.model.ReceiptRewardExample;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.vo.request.ConsumeVo;
+import com.exfantasy.template.vo.response.RespReward;
 import com.exfantasy.utils.date.DateUtils;
 import com.exfantasy.utils.tools.Bingo;
 import com.exfantasy.utils.tools.ReceiptLotteryNoUtil;
@@ -323,5 +324,26 @@ public class ConsumeService {
 			rewards.add(reward);
 		}
 		return rewards;
+	}
+
+	/**
+	 * 取得最新發票開獎號碼
+	 */
+	public List<RespReward> getLatestRewardNumbers() {
+		List<Reward> rewards = ReceiptLotteryNoUtil.getReceiptLotteryNo();
+		List<RespReward> respRewards = convertRewardToRespReward(rewards);
+		return respRewards;
+	}
+
+	private List<RespReward> convertRewardToRespReward(List<Reward> rewards) {
+		List<RespReward> respRewards = new ArrayList<>();
+		for (Reward reward : rewards) {
+			RespReward respReward = new RespReward();
+			respReward.setSection(reward.getSection());
+			respReward.setRewardType(reward.getRewardType().getCode());
+			respReward.setNo(reward.getNo());
+			respRewards.add(respReward);
+		}
+		return respRewards;
 	}
 }
