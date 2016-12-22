@@ -135,7 +135,6 @@ public class ConsumeService {
 
 		if (consumes.size() != 0) {
 			consumes.sort((obj1, obj2) -> obj1.getConsumeDate().compareTo(obj2.getConsumeDate()));
-			getLatestReceiptLotteryNo();
 			checkIsGot(user, consumes);
 		}
 		
@@ -167,35 +166,40 @@ public class ConsumeService {
 	 * 取得最新發票開獎資訊
 	 * </pre>
 	 */
-	private void getLatestReceiptLotteryNo() {
-		// 用來 batch delete
-		List<String> sectionsToDelete = new ArrayList<>();
-		
-		// 用來 batch Insert
-		List<ReceiptReward> receiptRewardsToInsert = new ArrayList<>();
-		
+	private List<Reward> getLatestReceiptLotteryNo() {
 		List<Reward> rewards = ReceiptLotteryNoUtil.getReceiptLotteryNo();
-		for (Reward reward : rewards) {
-			String section = reward.getSection();
-			int rewardType = reward.getRewardType().getCode();
-			String number = reward.getNo();
+
+		// 啟一個 Thread 更新 DB 資料
+		new Thread(() -> {
+			// 用來 batch delete
+			List<String> sectionsToDelete = new ArrayList<>();
 			
-			// 準備將 db 中已存在資料刪除
-			if (!sectionsToDelete.contains(section)) {
-				sectionsToDelete.add(section);
+			// 用來 batch Insert
+			List<ReceiptReward> receiptRewardsToInsert = new ArrayList<>();
+			for (Reward reward : rewards) {
+				String section = reward.getSection();
+				int rewardType = reward.getRewardType().getCode();
+				String number = reward.getNo();
+				
+				// 準備將 db 中已存在資料刪除
+				if (!sectionsToDelete.contains(section)) {
+					sectionsToDelete.add(section);
+				}
+				
+				// 將網路查回來的 Reward 轉換為 ReceiptReward 加到 list 中準備 batch insert
+				ReceiptReward receiptReward = new ReceiptReward();
+				receiptReward.setSection(section);
+				receiptReward.setRewardType(rewardType);
+				receiptReward.setNumber(number);
+				receiptRewardsToInsert.add(receiptReward);
 			}
 			
-			// 將網路查回來的 Reward 轉換為 ReceiptReward 加到 list 中準備 batch insert
-			ReceiptReward receiptReward = new ReceiptReward();
-			receiptReward.setSection(section);
-			receiptReward.setRewardType(rewardType);
-			receiptReward.setNumber(number);
-			receiptRewardsToInsert.add(receiptReward);
-		}
-		
-		receiptRewardMapper.batchDeleteBySection(sectionsToDelete);
-		
-		receiptRewardMapper.batchInsert(receiptRewardsToInsert);
+			receiptRewardMapper.batchDeleteBySection(sectionsToDelete);
+			
+			receiptRewardMapper.batchInsert(receiptRewardsToInsert);
+		}).start();
+
+		return rewards;
 	}
 
 	/**
@@ -330,7 +334,7 @@ public class ConsumeService {
 	 * 取得最新發票開獎號碼
 	 */
 	public List<RespReward> getLatestRewardNumbers() {
-		List<Reward> rewards = ReceiptLotteryNoUtil.getReceiptLotteryNo();
+		List<Reward> rewards = getLatestReceiptLotteryNo();
 		List<RespReward> respRewards = convertRewardToRespReward(rewards);
 		return respRewards;
 	}
