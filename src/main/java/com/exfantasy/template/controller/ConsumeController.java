@@ -28,6 +28,7 @@ import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.ConsumeVo;
 import com.exfantasy.template.vo.response.RespCommon;
 import com.exfantasy.template.vo.response.RespReward;
+import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -183,6 +184,13 @@ public class ConsumeController {
 	public @ResponseBody List<RespReward> getLatestRewardNumbers() {
 		List<RespReward> latestRewardNumbers = consumeService.getLatestRewardNumbers();
 		return latestRewardNumbers;
+	}
+	
+	@RequestMapping(value = "/get_typhoon_vacation", method = RequestMethod.GET)
+	@ApiOperation(value = "取得最新颱風假資訊", notes = "取得最新颱風假資訊", response = TyphoonVacationInfo.class)
+	public @ResponseBody List<TyphoonVacationInfo> getTyphoonVacation() {
+		List<TyphoonVacationInfo> typhoonVacation = consumeService.getTyphoonVacation();
+		return typhoonVacation;
 	}
 	
 	private void setEndDateTime(Date endDate) {

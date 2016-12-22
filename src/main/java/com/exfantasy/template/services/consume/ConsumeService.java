@@ -29,6 +29,8 @@ import com.exfantasy.utils.tools.receipt_lottery.Bingo;
 import com.exfantasy.utils.tools.receipt_lottery.ReceiptLotteryNoUtil;
 import com.exfantasy.utils.tools.receipt_lottery.Reward;
 import com.exfantasy.utils.tools.receipt_lottery.RewardType;
+import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationInfo;
+import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationUtil;
 
 /**
  * <pre>
@@ -357,5 +359,10 @@ public class ConsumeService {
 			respRewards.add(respReward);
 		}
 		return respRewards;
+	}
+
+	public List<TyphoonVacationInfo> getTyphoonVacation() {
+		List<TyphoonVacationInfo> typhoonVactionInfos = TyphoonVacationUtil.getTyphoonVactionInfo();
+		return typhoonVactionInfos;
 	}
 }
