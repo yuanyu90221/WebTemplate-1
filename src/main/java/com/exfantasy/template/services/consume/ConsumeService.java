@@ -332,13 +332,21 @@ public class ConsumeService {
 
 	/**
 	 * 取得最新發票開獎號碼
+	 * 
+	 * @return List<RespReward> 回應給前端最新開獎資料
 	 */
 	public List<RespReward> getLatestRewardNumbers() {
 		List<Reward> rewards = getLatestReceiptLotteryNo();
 		List<RespReward> respRewards = convertRewardToRespReward(rewards);
 		return respRewards;
 	}
-
+	
+	/**
+	 * 轉換 ReceiptLotteryNoUtil 回傳的 Reward 為前端可接收的資料
+	 * 
+	 * @param rewards ReceiptLotteryNoUtil 所使用開獎物件
+	 * @return List<RespReward> 回應給前端最新開獎資料
+	 */
 	private List<RespReward> convertRewardToRespReward(List<Reward> rewards) {
 		List<RespReward> respRewards = new ArrayList<>();
 		for (Reward reward : rewards) {
