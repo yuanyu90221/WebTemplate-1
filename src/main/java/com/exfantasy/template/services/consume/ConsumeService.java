@@ -25,10 +25,10 @@ import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.vo.request.ConsumeVo;
 import com.exfantasy.template.vo.response.RespReward;
 import com.exfantasy.utils.date.DateUtils;
-import com.exfantasy.utils.tools.Bingo;
-import com.exfantasy.utils.tools.ReceiptLotteryNoUtil;
-import com.exfantasy.utils.tools.Reward;
-import com.exfantasy.utils.tools.RewardType;
+import com.exfantasy.utils.tools.receipt_lottery.Bingo;
+import com.exfantasy.utils.tools.receipt_lottery.ReceiptLotteryNoUtil;
+import com.exfantasy.utils.tools.receipt_lottery.Reward;
+import com.exfantasy.utils.tools.receipt_lottery.RewardType;
 
 /**
  * <pre>
