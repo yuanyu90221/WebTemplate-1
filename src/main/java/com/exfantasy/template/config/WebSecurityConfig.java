@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.exfantasy.template.security.authentication.MyAuthenticationFailureHandler;
 import com.exfantasy.template.security.authentication.MyAuthenticationProvider;
 import com.exfantasy.template.security.service.MyUserDetailsService;
 
@@ -48,13 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
             .and()
             	.formLogin()
-            	.loginPage("/login").permitAll()
+            	.loginPage("/login").permitAll() // 這邊 permitAll 不能拿掉, 會有問題!!
             	.usernameParameter("email")
             	.passwordParameter("password")
             	.defaultSuccessUrl("/main", true) // 登入成功後導向
             .and()
-            	.logout().permitAll()
-            	.logoutSuccessUrl("/login?logout")
+            	.logout().permitAll() // 這邊 permitAll 不能拿掉, 會有問題!!
+            	.logoutSuccessUrl("/login?logout") // 登出成功後導回 login 頁面並帶參數 logout
             .and()
             	.csrf().disable();
     }
