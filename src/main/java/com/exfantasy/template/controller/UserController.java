@@ -108,5 +108,5 @@ public class UserController {
 	public @ResponseBody List<UserRole> queryUserRolesByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserRolesByEmail(email);
 	}
-	
+
 }
