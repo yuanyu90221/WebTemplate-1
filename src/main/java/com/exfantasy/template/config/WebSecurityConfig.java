@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.exfantasy.template.security.authentication.MyAuthenticationFailureHandler;
 import com.exfantasy.template.security.authentication.MyAuthenticationProvider;
 import com.exfantasy.template.security.service.MyUserDetailsService;
 
@@ -35,6 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyAuthenticationProvider myAuthenticationProvider;
+    
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.usernameParameter("email")
             	.passwordParameter("password")
             	.defaultSuccessUrl("/main", true) // 登入成功後導向
+//            	.failureHandler(myAuthenticationFailureHandler)  這邊 mark 掉, JavaFx 無法用 http status code 來判斷登入失敗
             .and()
             	.logout().permitAll() // 這邊 permitAll 不能拿掉, 會有問題!!
             	.logoutSuccessUrl("/login?logout") // 登出成功後導回 login 頁面並帶參數 logout
