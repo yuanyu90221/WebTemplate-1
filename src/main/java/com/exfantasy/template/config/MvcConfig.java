@@ -25,17 +25,16 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	 */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-    	// 若改為上面這三個, 可以測 Spring Security, 直接從 home 要導向 hello, 一定要經過 login
+    	// 測試用
+//    	registry.addViewController("/hello").setViewName("examples/hello");
 //        registry.addViewController("/").setViewName("examples/home");
 //        registry.addViewController("/home").setViewName("examples/home");
-//        registry.addViewController("/login").setViewName("login");
+//        registry.addViewController("/login").setViewName("examples/first_login");
     	
-    	registry.addViewController("/hello").setViewName("examples/hello");
-
+        // 正式用
+    	registry.addViewController("/register").setViewName("register");
     	registry.addViewController("/").setViewName("login");
-    	registry.addViewController("/home").setViewName("login");
-    	
-        registry.addViewController("/register").setViewName("register");
+    	registry.addViewController("/login").setViewName("login");
         registry.addViewController("/main").setViewName("main");
     }
     

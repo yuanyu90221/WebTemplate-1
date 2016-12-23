@@ -37,9 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenticationProvider myAuthenticationProvider;
 
-    @Autowired
-    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -49,15 +46,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.antMatchers("/register").permitAll() // 允許未經過登入存取註冊頁面
             	.antMatchers("/user/do_register").permitAll() // 允許未經過登入透過 api 註冊
             	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
-            	.and()
-            .formLogin()
+            .and()
+            	.formLogin()
             	.loginPage("/login").permitAll()
+            	.usernameParameter("email")
+            	.passwordParameter("password")
             	.defaultSuccessUrl("/main", true) // 登入成功後導向
-            	.failureHandler(myAuthenticationFailureHandler) // 登入失敗處理
-            	.and()
-            .logout().permitAll()
-            	.and()
-            .csrf().disable();
+            .and()
+            	.logout().permitAll()
+            	.logoutSuccessUrl("/login?logout")
+            .and()
+            	.csrf().disable();
     }
     
     @Override

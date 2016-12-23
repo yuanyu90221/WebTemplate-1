@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html 
+	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>$$$ Earn Money $$$</title>
@@ -23,14 +24,11 @@
 <body>
 	<div class="container">
 		<div class="card card-container">
-			<p th:if="${param.error}">
-				Bad Credentials
-			</p>
 			<img id="profile-img" class="profile-img-card" src="/images/login/avatar_2x.png" />
 			<p id="profile-name" class="profile-name-card"></p>
 			<form class="form-signin" th:action="@{/login}" method="post">
 				<span id="reauth-email" class="reauth-email"></span>
-				<input type="email" name="username" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus" />
+				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus" />
 				<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required" />
 				<div id="remember" class="checkbox">
 					<label>
@@ -42,6 +40,12 @@
 			<a href="#" class="forgot-password">
 				Forgot the password?
 			</a>
+			<div th:if="${param.error}">
+		        Invalid email and password.
+		    </div>
+		    <div th:if="${param.logout}">
+		        You have been logged out.
+		    </div>
    		</div>	<!-- /card-container -->
 	</div>	<!-- /container -->
 </body>
