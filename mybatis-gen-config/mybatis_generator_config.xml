@@ -86,15 +86,6 @@
 			selectByExampleQueryId="false">
 		</table>
 		
-		<!-- Table: product -->
-		<table schema="testing" tableName="product" domainObjectName="Product"
-			enableCountByExample="true" enableUpdateByExample="true"
-			enableDeleteByExample="true" enableSelectByExample="true"
-			selectByExampleQueryId="false">
-			
-			<generatedKey column="prod_id" sqlStatement="MySql" identity="true" />
-		</table>
-		
 		<!-- Table: consume -->
 		<table schema="testing" tableName="consume" domainObjectName="Consume"
 			enableCountByExample="true" enableUpdateByExample="true"

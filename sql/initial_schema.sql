@@ -18,13 +18,6 @@ CREATE TABLE `user_roles` (
   CONSTRAINT unique_role UNIQUE (`user_id`, `role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product` (
-  `prod_id` int(10) NOT NULL AUTO_INCREMENT,
-  `prod_name` varchar(10) NOT NULL,
-  PRIMARY KEY (`prod_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `consume`;
 CREATE TABLE `consume` (
   `user_id` int(10) NOT NULL,
