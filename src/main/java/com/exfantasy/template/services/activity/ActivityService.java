@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.mybatis.mapper.ActivityMapper;
+import com.exfantasy.template.mybatis.mapper.JoinActivitiesMapper;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.ActivityExample;
 import com.exfantasy.template.mybatis.model.ActivityExample.Criteria;
+import com.exfantasy.template.mybatis.model.JoinActivitiesKey;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.vo.request.ActivityVo;
 
@@ -24,6 +26,9 @@ public class ActivityService {
 	
 	@Autowired
 	private ActivityMapper activityMapper;
+	
+	@Autowired
+	private JoinActivitiesMapper joinActivitiesMapper;
 
 	/**
 	 * <pre>
@@ -37,6 +42,11 @@ public class ActivityService {
 	public void createActivity(User user, ActivityVo activityVo) {
 		Activity activity = convertActivityVoToModel(user, activityVo);
 		activityMapper.insert(activity);
+		
+		JoinActivitiesKey joinActivity = new JoinActivitiesKey();
+		joinActivity.setUserId(user.getUserId());
+		joinActivity.setActivityId(activity.getActivityId());
+		joinActivitiesMapper.insert(joinActivity);
 	}
 
 	/**
