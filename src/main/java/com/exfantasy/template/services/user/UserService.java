@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -147,6 +149,23 @@ public class UserService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserByReplace(User user) {
         return userMapper.updateByPrimaryKey(user);
+    }
+    
+    /**
+     * <pre>
+     * 取得登入者資訊
+     * 
+     * <a href="https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/">從 Spring Security 取得登入者資訊</a>
+     * 
+     * </pre>
+     * 
+     * @return
+     */
+    public User getLoginUser() {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = queryUserByEmail(email);
+		return user;
     }
     
 }

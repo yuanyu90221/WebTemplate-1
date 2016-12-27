@@ -1,9 +1,9 @@
 package com.exfantasy.template.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
+import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.activity.ActivityService;
 import com.exfantasy.template.services.user.UserService;
@@ -42,7 +43,7 @@ public class ActivityController {
 	 * 建立活動
 	 * </pre>
 	 * 
-	 * @param activityVo 前端發過來建立活動所需資料, 參考物建: <code>{@link com.exfantasy.template.vo.request.ActivityVo}</code>
+	 * @param activityVo 前端發過來建立活動所需資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ActivityVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
 	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
@@ -57,11 +58,26 @@ public class ActivityController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User user = userService.queryUserByEmail(email);
+		User user = userService.getLoginUser();
 		
 		activityService.createActivity(user, activityVo);
 		return new RespCommon(ResultCode.SUCCESS, "Create activity succeed");
+	}
+	
+	/**
+	 * <pre>
+	 * 查詢登入者所建立的活動
+	 * </pre>
+	 * 
+	 * @return <code>{@link com.exfantasy.template.mybatis.model.Activity}</code> 活動資訊
+	 */
+	@RequestMapping(value = "/get_created_activities", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢使用者所建立的活動", notes = "查詢使用者所建立的活動", response = Activity.class)
+	public @ResponseBody List<Activity> getCreatedActivities() {
+		User user = userService.getLoginUser();
+		
+		List<Activity> activities = activityService.getCreatedActivities(user);
+		
+		return activities;
 	}
 }

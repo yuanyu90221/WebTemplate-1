@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -74,10 +72,7 @@ public class ConsumeController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		// https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User user = userService.queryUserByEmail(email);
+		User user = userService.getLoginUser();
 		
 		consumeService.addConsume(user, consumeVo);
 		return new RespCommon(ResultCode.SUCCESS, "Add consume data succeed");
@@ -103,9 +98,7 @@ public class ConsumeController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User user = userService.queryUserByEmail(email);
+		User user = userService.getLoginUser();
 		
 		consumeService.updConsume(user, consumeVo);
 		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
@@ -131,9 +124,7 @@ public class ConsumeController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User user = userService.queryUserByEmail(email);
+		User user = userService.getLoginUser();
 		
 		consumeService.delConsume(user, consumeVo);
 		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
@@ -171,11 +162,10 @@ public class ConsumeController {
 			setEndDateTime(endDate);
 		}
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User user = userService.queryUserByEmail(email);
+		User user = userService.getLoginUser();
 		
 		List<Consume> consumes = consumeService.getConsume(user, startDate, endDate, type, prodName, lotteryNo);
+
 		return consumes;
 	}
 	

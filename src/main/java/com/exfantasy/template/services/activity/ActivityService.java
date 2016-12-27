@@ -1,6 +1,7 @@
 package com.exfantasy.template.services.activity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.mybatis.mapper.ActivityMapper;
 import com.exfantasy.template.mybatis.model.Activity;
+import com.exfantasy.template.mybatis.model.ActivityExample;
+import com.exfantasy.template.mybatis.model.ActivityExample.Criteria;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.vo.request.ActivityVo;
 
@@ -54,5 +57,21 @@ public class ActivityService {
 		activity.setLongitude(activityVo.getLongitude());
 		activity.setAttendeeNum(activityVo.getAttendeeNum());
 		return activity;
+	}
+
+	/**
+	 * <pre>
+	 * 查詢使用者所建立的活動
+	 * </pre>
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public List<Activity> getCreatedActivities(User user) {
+		ActivityExample example = new ActivityExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCreateUserIdEqualTo(user.getUserId());
+		List<Activity> activities = activityMapper.selectByExample(example);
+		return activities;
 	}
 }
