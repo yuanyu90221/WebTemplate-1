@@ -50,3 +50,17 @@ CREATE TABLE `mail_template` (
   `tail` text NOT NULL,
   PRIMARY KEY (`template_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `activities`;
+CREATE TABLE `activities` (
+  `activity_id` int(10) NOT NULL AUTO_INCREMENT,
+  `create_user_id` int(10) NOT NULL,
+  `create_date` date NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `desc` varchar(50) NOT NULL,
+  `start_datetime` datetime NOT NULL,
+  `latitude` decimal(10,6) NOT NULL,
+  `longitude` decimal(10,6) NOT NULL,
+  `attendee_num` decimal(5,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

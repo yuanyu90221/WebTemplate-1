@@ -10,7 +10,8 @@ public enum MapClassFieldsDef {
 	CONSUME("Consume", MapFieldsOfConsume.values()),
 	RECEIPT_REWARD("ReceiptReward", MapFieldsOfReceiptReward.values()),
 	MAIL_TEMPLATE("MailTemplate", MapFieldsOfMailTemplate.values()),
-	MAIL_TEMPLATE_WITH_BLOB("MailTemplateWithBLOBs", MapFieldsOfMailTemplate.values())
+	MAIL_TEMPLATE_WITH_BLOB("MailTemplateWithBLOBs", MapFieldsOfMailTemplate.values()),
+	ACTIVITY("Activity", MapFieldsOfActivity.values())
 	;
 	
 	private String className;

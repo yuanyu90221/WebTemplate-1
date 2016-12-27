@@ -109,5 +109,14 @@
 			enableDeleteByExample="false" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 		</table>
+		
+		<!-- Table: activities -->
+		<table schema="testing" tableName="activities" domainObjectName="Activity" 
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+			
+			<generatedKey column="activity_id" sqlStatement="MySql" identity="true" />
+		</table>
 	</context>
 </generatorConfiguration>
