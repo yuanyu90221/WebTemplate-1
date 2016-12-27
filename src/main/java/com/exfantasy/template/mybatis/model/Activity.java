@@ -18,7 +18,7 @@ public class Activity {
     private String title;
 
     @ApiModelProperty(notes = "活動描述", required = true)
-    private String desc;
+    private String description;
 
     @ApiModelProperty(notes = "活動開始時間", required = true)
     private Date startDatetime;
@@ -64,12 +64,12 @@ public class Activity {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public Date getStartDatetime() {
@@ -120,7 +120,7 @@ public class Activity {
             && (this.getCreateUserId() == null ? other.getCreateUserId() == null : this.getCreateUserId().equals(other.getCreateUserId()))
             && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
-            && (this.getDesc() == null ? other.getDesc() == null : this.getDesc().equals(other.getDesc()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStartDatetime() == null ? other.getStartDatetime() == null : this.getStartDatetime().equals(other.getStartDatetime()))
             && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
             && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
@@ -135,7 +135,7 @@ public class Activity {
         result = prime * result + ((getCreateUserId() == null) ? 0 : getCreateUserId().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
-        result = prime * result + ((getDesc() == null) ? 0 : getDesc().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStartDatetime() == null) ? 0 : getStartDatetime().hashCode());
         result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
         result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());

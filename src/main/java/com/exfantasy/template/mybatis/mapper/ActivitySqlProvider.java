@@ -25,8 +25,8 @@ public class ActivitySqlProvider {
             sql.VALUES("title", "#{title,jdbcType=VARCHAR}");
         }
         
-        if (record.getDesc() != null) {
-            sql.VALUES("desc", "#{desc,jdbcType=VARCHAR}");
+        if (record.getDescription() != null) {
+            sql.VALUES("description", "#{description,jdbcType=VARCHAR}");
         }
         
         if (record.getStartDatetime() != null) {
@@ -58,7 +58,7 @@ public class ActivitySqlProvider {
         sql.SELECT("create_user_id");
         sql.SELECT("create_date");
         sql.SELECT("title");
-        sql.SELECT("desc");
+        sql.SELECT("description");
         sql.SELECT("start_datetime");
         sql.SELECT("latitude");
         sql.SELECT("longitude");
@@ -89,8 +89,8 @@ public class ActivitySqlProvider {
             sql.SET("title = #{title,jdbcType=VARCHAR}");
         }
         
-        if (record.getDesc() != null) {
-            sql.SET("desc = #{desc,jdbcType=VARCHAR}");
+        if (record.getDescription() != null) {
+            sql.SET("description = #{description,jdbcType=VARCHAR}");
         }
         
         if (record.getStartDatetime() != null) {

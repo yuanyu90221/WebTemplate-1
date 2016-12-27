@@ -26,13 +26,13 @@ public interface ActivityMapper {
 
     @Insert({
         "insert into activities (create_user_id, create_date, ",
-        "title, desc, start_datetime, ",
-        "latitude, longitude, ",
-        "attendee_num)",
+        "title, description, ",
+        "start_datetime, latitude, ",
+        "longitude, attendee_num)",
         "values (#{createUserId,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, ",
-        "#{title,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, #{startDatetime,jdbcType=TIMESTAMP}, ",
-        "#{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL}, ",
-        "#{attendeeNum,jdbcType=DECIMAL})"
+        "#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, ",
+        "#{startDatetime,jdbcType=TIMESTAMP}, #{latitude,jdbcType=DECIMAL}, ",
+        "#{longitude,jdbcType=DECIMAL}, #{attendeeNum,jdbcType=DECIMAL})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="activityId", before=false, resultType=Integer.class)
     int insert(Activity record);
@@ -47,7 +47,7 @@ public interface ActivityMapper {
         @Result(column="create_user_id", property="createUserId", jdbcType=JdbcType.INTEGER),
         @Result(column="create_date", property="createDate", jdbcType=JdbcType.DATE),
         @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
-        @Result(column="desc", property="desc", jdbcType=JdbcType.VARCHAR),
+        @Result(column="description", property="description", jdbcType=JdbcType.VARCHAR),
         @Result(column="start_datetime", property="startDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="latitude", property="latitude", jdbcType=JdbcType.DECIMAL),
         @Result(column="longitude", property="longitude", jdbcType=JdbcType.DECIMAL),
@@ -57,8 +57,8 @@ public interface ActivityMapper {
 
     @Select({
         "select",
-        "activity_id, create_user_id, create_date, title, desc, start_datetime, latitude, ",
-        "longitude, attendee_num",
+        "activity_id, create_user_id, create_date, title, description, start_datetime, ",
+        "latitude, longitude, attendee_num",
         "from activities",
         "where activity_id = #{activityId,jdbcType=INTEGER}"
     })
@@ -67,7 +67,7 @@ public interface ActivityMapper {
         @Result(column="create_user_id", property="createUserId", jdbcType=JdbcType.INTEGER),
         @Result(column="create_date", property="createDate", jdbcType=JdbcType.DATE),
         @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
-        @Result(column="desc", property="desc", jdbcType=JdbcType.VARCHAR),
+        @Result(column="description", property="description", jdbcType=JdbcType.VARCHAR),
         @Result(column="start_datetime", property="startDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="latitude", property="latitude", jdbcType=JdbcType.DECIMAL),
         @Result(column="longitude", property="longitude", jdbcType=JdbcType.DECIMAL),
@@ -83,7 +83,7 @@ public interface ActivityMapper {
         "set create_user_id = #{createUserId,jdbcType=INTEGER},",
           "create_date = #{createDate,jdbcType=DATE},",
           "title = #{title,jdbcType=VARCHAR},",
-          "desc = #{desc,jdbcType=VARCHAR},",
+          "description = #{description,jdbcType=VARCHAR},",
           "start_datetime = #{startDatetime,jdbcType=TIMESTAMP},",
           "latitude = #{latitude,jdbcType=DECIMAL},",
           "longitude = #{longitude,jdbcType=DECIMAL},",

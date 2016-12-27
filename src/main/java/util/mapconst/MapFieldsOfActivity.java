@@ -9,7 +9,7 @@ public enum MapFieldsOfActivity implements MapFields {
 	
 	TITLE("title", "活動標題"),
 	
-	DESC("desc", "活動描述"),
+	DESCRIPTION("description", "活動描述"),
 	
 	START_DATETIME("startDatetime", "活動開始時間"),
 	

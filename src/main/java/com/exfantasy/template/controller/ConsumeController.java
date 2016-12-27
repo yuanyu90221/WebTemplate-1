@@ -66,7 +66,7 @@ public class ConsumeController {
 	@RequestMapping(value = "/add_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "新增記帳資料", notes = "新增記帳資料", response = RespCommon.class)
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "consumeVo", value = "新增記帳資料需填入", required = true, dataType = "ConsumeVo")
+		@ApiImplicitParam(name = "consumeVo", value = "新增記帳需填入資料", required = true, dataType = "ConsumeVo")
 	})
 	public @ResponseBody RespCommon addConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
 		if (result.hasErrors()) {

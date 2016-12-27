@@ -29,14 +29,17 @@ public class ConsumeVoDeserializer extends JsonDeserializer<ConsumeVo> {
 		ObjectCodec oc = jp.getCodec();
 	    JsonNode node = oc.readTree(jp);
 	    
-	    String consumeDate = node.get("consumeDate").asText();
-	    final LocalDate localDate = LocalDate.parse(consumeDate);
-	    final Integer type = node.get("type").asInt();
-	    final String prodName = node.get("prodName").asText();
-	    final Long amount = node.get("amount").asLong();
-	    final String lotteryNo = node.get("lotteryNo").asText();
+	    String sConsumeDate = node.get("consumeDate") != null ? node.get("consumeDate").asText() : null;
+	    LocalDate consumeDate = null;
+	    if (sConsumeDate != null) {
+	    	consumeDate = LocalDate.parse(sConsumeDate);
+	    }
+	    final Integer type = node.get("type") != null ? node.get("type").asInt() : null;
+	    final String prodName = node.get("prodName") != null ? node.get("prodName").asText() : null;
+	    final Long amount = node.get("amount") != null ? node.get("amount").asLong() : null;
+	    final String lotteryNo = node.get("lotteryNo") != null ? node.get("lotteryNo").asText() : null;
 		
-		return new ConsumeVo(localDate, type, prodName, amount, lotteryNo);
+		return new ConsumeVo(consumeDate, type, prodName, amount, lotteryNo);
 	}
 
 }

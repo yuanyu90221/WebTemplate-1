@@ -57,7 +57,7 @@ CREATE TABLE `activities` (
   `create_user_id` int(10) NOT NULL,
   `create_date` date NOT NULL,
   `title` varchar(50) NOT NULL,
-  `desc` varchar(50) NOT NULL,
+  `description` varchar(50) NOT NULL,
   `start_datetime` datetime NOT NULL,
   `latitude` decimal(10,6) NOT NULL,
   `longitude` decimal(10,6) NOT NULL,
