@@ -50,6 +50,10 @@ public class AddModelFieldsAnnotationPlugin extends PluginAdapter {
 		String annotationToSet = annotationString;
 		
 		MapClassFieldsDef mapClass = MapClassFieldsDef.convert(topLevelClass.getType().getShortName());
+		if (mapClass == null) {
+			System.err.println("Cannot get MapClassFieldsDef with topLevelClass name: " + topLevelClass.getType().getShortName());
+			System.exit(1);
+		}
 
 		String note = mapClass.getNote(field.getName());
 		if (note != null) {

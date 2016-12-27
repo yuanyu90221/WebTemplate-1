@@ -64,3 +64,10 @@ CREATE TABLE `activities` (
   `attendee_num` decimal(5,0) NOT NULL DEFAULT 0,
   PRIMARY KEY (`activity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `join_activities`;
+CREATE TABLE `join_activities` (
+  `user_id` int(10) NOT NULL,
+  `activity_id` int(10) NOT NULL,
+  PRIMARY KEY (`user_id`, `activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
