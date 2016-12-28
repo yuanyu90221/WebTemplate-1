@@ -13,19 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
+import com.exfantasy.template.mybatis.custom.CustomActivityMessagesMapper;
 import com.exfantasy.template.mybatis.mapper.ActivityMapper;
-import com.exfantasy.template.mybatis.mapper.ActivityMessagesMapper;
 import com.exfantasy.template.mybatis.mapper.JoinActivitiesMapper;
 import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.ActivityExample;
 import com.exfantasy.template.mybatis.model.ActivityMessages;
-import com.exfantasy.template.mybatis.model.ActivityMessagesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesKey;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.vo.request.ActivityVo;
+import com.exfantasy.template.vo.response.ActivityMessagesResp;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -42,7 +42,7 @@ public class ActivityService {
 	private JoinActivitiesMapper joinActivitiesMapper;
 	
 	@Autowired
-	private ActivityMessagesMapper activityMessagesMapper;
+	private CustomActivityMessagesMapper customActivityMessagesMapper;
 
 	/**
 	 * <pre>
@@ -270,7 +270,7 @@ public class ActivityService {
 		activityMessage.setCreateDatetime(new Date());
 		activityMessage.setMsg(message);
 		
-		activityMessagesMapper.insert(activityMessage);
+		customActivityMessagesMapper.insert(activityMessage);
 	}
 
 	/**
@@ -281,10 +281,7 @@ public class ActivityService {
 	 * @param activityId
 	 * @return
 	 */
-	public List<ActivityMessages> getActivityMessages(Integer activityId) {
-		ActivityMessagesExample example = new ActivityMessagesExample();
-		example.createCriteria().andActivityIdEqualTo(activityId);
-		List<ActivityMessages> activityMessages = activityMessagesMapper.selectByExample(example);
-		return activityMessages;
+	public List<ActivityMessagesResp> getActivityMessages(Integer activityId) {
+		return customActivityMessagesMapper.selectActivityMessagesRespByActivityId(activityId);
 	}
 }
