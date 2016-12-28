@@ -89,10 +89,15 @@ public class ActivityService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void joinActivity(Integer userId, Integer activityId) {
-		List<JoinActivitiesKey> joinedActivities = getJoinedActivitiesByUserId(userId);
+		// 若此查詢為空, 但表此活動不存在
+		Activity activity = getActivityByActivityId(activityId);
+		if (activity == null) {
+			throw new OperationException(ResultCode.ACTIVIY_NOT_EXISTED);
+		}
 		
 		// 若此查詢不為空, 但表此活動此使用者已經參加
-		if (joinedActivities.size() != 0) {
+		JoinActivitiesKey joinedActivity = getJoinedActivitiesByUserIdAndActivityId(userId, activityId);
+		if (joinedActivity != null) {
 			throw new OperationException(ResultCode.ACTIVITY_ALREADY_JOINED);
 		}
 		
@@ -100,6 +105,40 @@ public class ActivityService {
 		record.setUserId(userId);
 		record.setActivityId(activityId);
 		joinActivitiesMapper.insert(record);
+	}
+
+	/**
+	 * <pre>
+	 * 根據活動 ID 取得對應活動
+	 * </pre>
+	 * 
+	 * @param activityId
+	 * @return
+	 */
+	private Activity getActivityByActivityId(Integer activityId) {
+		ActivityExample activityExample = new ActivityExample();
+		activityExample.createCriteria()
+			.andActivityIdEqualTo(activityId);
+		List<Activity> activity = activityMapper.selectByExample(activityExample);
+		return activity.size() != 0 ? activity.get(0) : null;
+	}
+
+	/**
+	 * <pre>
+	 * 根據使用者 ID 及活動 ID 取得參加資訊
+	 * </pre>
+	 * 
+	 * @param userId
+	 * @param activityId
+	 * @return
+	 */
+	private JoinActivitiesKey getJoinedActivitiesByUserIdAndActivityId(Integer userId, Integer activityId) {
+		JoinActivitiesExample joinActivitiesExample = new JoinActivitiesExample();
+		joinActivitiesExample.createCriteria()
+			.andUserIdEqualTo(userId)
+			.andActivityIdEqualTo(activityId);
+		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinActivitiesExample);
+		return joinedActivities.size() != 0 ? joinedActivities.get(0) : null;
 	}
 
 	/**
