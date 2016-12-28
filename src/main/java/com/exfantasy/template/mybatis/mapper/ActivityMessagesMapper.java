@@ -26,9 +26,9 @@ public interface ActivityMessagesMapper {
 
     @Insert({
         "insert into activity_messages (activity_id, create_user_id, ",
-        "create_date, msg)",
+        "create_datetime, msg)",
         "values (#{activityId,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER}, ",
-        "#{createDate,jdbcType=DATE}, #{msg,jdbcType=VARCHAR})"
+        "#{createDatetime,jdbcType=TIMESTAMP}, #{msg,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="msgId", before=false, resultType=Integer.class)
     int insert(ActivityMessages record);
@@ -42,14 +42,14 @@ public interface ActivityMessagesMapper {
         @Result(column="msg_id", property="msgId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="activity_id", property="activityId", jdbcType=JdbcType.INTEGER),
         @Result(column="create_user_id", property="createUserId", jdbcType=JdbcType.INTEGER),
-        @Result(column="create_date", property="createDate", jdbcType=JdbcType.DATE),
+        @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
     })
     List<ActivityMessages> selectByExample(ActivityMessagesExample example);
 
     @Select({
         "select",
-        "msg_id, activity_id, create_user_id, create_date, msg",
+        "msg_id, activity_id, create_user_id, create_datetime, msg",
         "from activity_messages",
         "where msg_id = #{msgId,jdbcType=INTEGER}"
     })
@@ -57,7 +57,7 @@ public interface ActivityMessagesMapper {
         @Result(column="msg_id", property="msgId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="activity_id", property="activityId", jdbcType=JdbcType.INTEGER),
         @Result(column="create_user_id", property="createUserId", jdbcType=JdbcType.INTEGER),
-        @Result(column="create_date", property="createDate", jdbcType=JdbcType.DATE),
+        @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
     })
     ActivityMessages selectByPrimaryKey(Integer msgId);
@@ -69,7 +69,7 @@ public interface ActivityMessagesMapper {
         "update activity_messages",
         "set activity_id = #{activityId,jdbcType=INTEGER},",
           "create_user_id = #{createUserId,jdbcType=INTEGER},",
-          "create_date = #{createDate,jdbcType=DATE},",
+          "create_datetime = #{createDatetime,jdbcType=TIMESTAMP},",
           "msg = #{msg,jdbcType=VARCHAR}",
         "where msg_id = #{msgId,jdbcType=INTEGER}"
     })

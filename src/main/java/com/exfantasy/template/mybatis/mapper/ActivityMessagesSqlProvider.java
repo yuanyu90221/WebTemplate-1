@@ -21,8 +21,8 @@ public class ActivityMessagesSqlProvider {
             sql.VALUES("create_user_id", "#{createUserId,jdbcType=INTEGER}");
         }
         
-        if (record.getCreateDate() != null) {
-            sql.VALUES("create_date", "#{createDate,jdbcType=DATE}");
+        if (record.getCreateDatetime() != null) {
+            sql.VALUES("create_datetime", "#{createDatetime,jdbcType=TIMESTAMP}");
         }
         
         if (record.getMsg() != null) {
@@ -41,7 +41,7 @@ public class ActivityMessagesSqlProvider {
         }
         sql.SELECT("activity_id");
         sql.SELECT("create_user_id");
-        sql.SELECT("create_date");
+        sql.SELECT("create_datetime");
         sql.SELECT("msg");
         sql.FROM("activity_messages");
         applyWhere(sql, example, false);
@@ -65,8 +65,8 @@ public class ActivityMessagesSqlProvider {
             sql.SET("create_user_id = #{createUserId,jdbcType=INTEGER}");
         }
         
-        if (record.getCreateDate() != null) {
-            sql.SET("create_date = #{createDate,jdbcType=DATE}");
+        if (record.getCreateDatetime() != null) {
+            sql.SET("create_datetime = #{createDatetime,jdbcType=TIMESTAMP}");
         }
         
         if (record.getMsg() != null) {

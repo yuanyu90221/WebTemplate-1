@@ -20,6 +20,7 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.activity.ActivityService;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
+import com.exfantasy.template.vo.request.ActivityMessageVo;
 import com.exfantasy.template.vo.request.ActivityVo;
 import com.exfantasy.template.vo.response.RespCommon;
 
@@ -131,5 +132,32 @@ public class ActivityController {
 		List<User> joinedUsers = activityService.getJoinedUsers(activityId);
 		
 		return joinedUsers;
+	}
+	
+	/**
+	 * <pre>
+	 * 新增活動留言
+	 * </pre>
+	 * 
+	 * @param activityMsgVo 前端發過來對活動留言所需資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ActivityMessageVo}</code>
+	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 */
+	@RequestMapping(value = "/leave_message", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "對活動留言", notes = "對活動留言", response = RespCommon.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "activityMsgVo", value = "對活動留言需填入資料", required = true, dataType = "ActivityMessageVo")
+	})
+	public @ResponseBody RespCommon leaveMessage(@Validated @RequestBody final ActivityMessageVo activityMsgVo, BindingResult result) {
+		if (result.hasErrors()) {
+			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
+			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
+		}
+		
+		User user = userService.getLoginUser();
+		
+		activityService.leaveMessage(user.getUserId(), activityMsgVo.getActivityId(), activityMsgVo.getMessage());
+		
+		return new RespCommon(ResultCode.SUCCESS, "Leave message succeed");
 	}
 }

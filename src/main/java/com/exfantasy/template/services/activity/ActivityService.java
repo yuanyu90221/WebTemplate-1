@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.mapper.ActivityMapper;
+import com.exfantasy.template.mybatis.mapper.ActivityMessagesMapper;
 import com.exfantasy.template.mybatis.mapper.JoinActivitiesMapper;
 import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.ActivityExample;
+import com.exfantasy.template.mybatis.model.ActivityMessages;
 import com.exfantasy.template.mybatis.model.JoinActivitiesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesKey;
 import com.exfantasy.template.mybatis.model.User;
@@ -37,6 +39,9 @@ public class ActivityService {
 	
 	@Autowired
 	private JoinActivitiesMapper joinActivitiesMapper;
+	
+	@Autowired
+	private ActivityMessagesMapper activityMessagesMapper;
 
 	/**
 	 * <pre>
@@ -240,5 +245,30 @@ public class ActivityService {
 		joinActivitiesExample.createCriteria().andActivityIdEqualTo(activityId);
 		List<JoinActivitiesKey> joinedUsers = joinActivitiesMapper.selectByExample(joinActivitiesExample);
 		return joinedUsers;
+	}
+
+	/**
+	 * <pre>
+	 * 對某一個活動留言
+	 * </pre>
+	 * 
+	 * @param userId
+	 * @param activityId
+	 * @param message
+	 */
+	public void leaveMessage(Integer userId, Integer activityId, String message) {
+		// 若此查詢為空, 但表此活動不存在
+		Activity activity = getActivityByActivityId(activityId);
+		if (activity == null) {
+			throw new OperationException(ResultCode.ACTIVITY_NOT_EXISTED);
+		}
+		
+		ActivityMessages activityMessage = new ActivityMessages();
+		activityMessage.setActivityId(activityId);
+		activityMessage.setCreateUserId(userId);
+		activityMessage.setCreateDatetime(new Date());
+		activityMessage.setMsg(message);
+		
+		activityMessagesMapper.insert(activityMessage);
 	}
 }

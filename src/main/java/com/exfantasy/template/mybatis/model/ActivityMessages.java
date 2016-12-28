@@ -10,11 +10,11 @@ public class ActivityMessages {
     @ApiModelProperty(notes = "活動 ID", required = true)
     private Integer activityId;
 
-    @ApiModelProperty(notes = "建立活動的使用者 ID", required = true)
+    @ApiModelProperty(notes = "建立留言的使用者 ID", required = true)
     private Integer createUserId;
 
-    @ApiModelProperty(notes = "建立活動日期", required = true)
-    private Date createDate;
+    @ApiModelProperty(notes = "建立留言的日期時間", required = true)
+    private Date createDatetime;
 
     @ApiModelProperty(notes = "留言", required = true)
     private String msg;
@@ -43,12 +43,12 @@ public class ActivityMessages {
         this.createUserId = createUserId;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreateDatetime() {
+        return createDatetime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateDatetime(Date createDatetime) {
+        this.createDatetime = createDatetime;
     }
 
     public String getMsg() {
@@ -74,7 +74,7 @@ public class ActivityMessages {
         return (this.getMsgId() == null ? other.getMsgId() == null : this.getMsgId().equals(other.getMsgId()))
             && (this.getActivityId() == null ? other.getActivityId() == null : this.getActivityId().equals(other.getActivityId()))
             && (this.getCreateUserId() == null ? other.getCreateUserId() == null : this.getCreateUserId().equals(other.getCreateUserId()))
-            && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
+            && (this.getCreateDatetime() == null ? other.getCreateDatetime() == null : this.getCreateDatetime().equals(other.getCreateDatetime()))
             && (this.getMsg() == null ? other.getMsg() == null : this.getMsg().equals(other.getMsg()));
     }
 
@@ -85,7 +85,7 @@ public class ActivityMessages {
         result = prime * result + ((getMsgId() == null) ? 0 : getMsgId().hashCode());
         result = prime * result + ((getActivityId() == null) ? 0 : getActivityId().hashCode());
         result = prime * result + ((getCreateUserId() == null) ? 0 : getCreateUserId().hashCode());
-        result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
+        result = prime * result + ((getCreateDatetime() == null) ? 0 : getCreateDatetime().hashCode());
         result = prime * result + ((getMsg() == null) ? 0 : getMsg().hashCode());
         return result;
     }

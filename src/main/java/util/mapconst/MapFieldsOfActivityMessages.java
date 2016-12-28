@@ -5,9 +5,9 @@ public enum MapFieldsOfActivityMessages implements MapFields {
 	
 	ACTIVITY_ID("activityId", "活動 ID"),
 	
-	CREATE_USER_ID("createUserId", "建立活動的使用者 ID"),
+	CREATE_USER_ID("createUserId", "建立留言的使用者 ID"),
 	
-	CREATE_DATE("createDate", "建立活動日期"),
+	CREATE_DATETIME("createDatetime", "建立留言的日期時間"),
 	
 	MSG("msg", "留言")
 	
