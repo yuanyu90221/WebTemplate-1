@@ -90,6 +90,8 @@ public class ActivityService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void joinActivity(Integer userId, Integer activityId) {
 		List<JoinActivitiesKey> joinedActivities = getJoinedActivitiesByUserId(userId);
+		
+		// 若此查詢不為空, 但表此活動此使用者已經參加
 		if (joinedActivities.size() != 0) {
 			throw new OperationException(ResultCode.ACTIVITY_ALREADY_JOINED);
 		}
@@ -132,6 +134,7 @@ public class ActivityService {
 			joinedActivitiesId.add(joinedActivityId);
 		}
 		
+		// 有可能此 User 未建立且未參與任何活動
 		List<Activity> activities = new ArrayList<>();
 		if (joinedActivitiesId.size() != 0) {
 			ActivityExample activityExample = new ActivityExample();
@@ -153,16 +156,19 @@ public class ActivityService {
 	public List<User> getJoinedUsers(Integer activityId) {
 		List<JoinActivitiesKey> joinedUsers = getJoinedUsersByActivityId(activityId);
 		
-		// 這邊 size 至少為 1, 因為建立者一定參與
 		List<Integer> joinedUsersId = new ArrayList<>();
 		for (JoinActivitiesKey joinedUser : joinedUsers) {
 			Integer joinedUserId = joinedUser.getUserId();
 			joinedUsersId.add(joinedUserId);
 		}
-		
-		UserExample userExample = new UserExample();
-		userExample.createCriteria().andUserIdIn(joinedUsersId);
-		List<User> usersInfo = userMapper.selectByExample(userExample);
+
+		// 有可能傳入一個未存在的 ActivityId, 所以還是判斷一下
+		List<User> usersInfo = new ArrayList<>();
+		if (joinedUsersId.size() != 0) {
+			UserExample userExample = new UserExample();
+			userExample.createCriteria().andUserIdIn(joinedUsersId);
+			usersInfo = userMapper.selectByExample(userExample);
+		}
 		
 		return usersInfo;
 	}
