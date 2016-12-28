@@ -80,4 +80,21 @@ public class ActivityController {
 		
 		return activities;
 	}
+	
+	/**
+	 * <pre>
+	 * 查詢使用者所有參與的活動
+	 * </pre>
+	 * 
+	 * @return <code>{@link com.exfantasy.template.mybatis.model.Activity}</code> 活動資訊
+	 */
+	@RequestMapping(value = "/get_joined_activities", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢使用者參與的所有的活動", notes = "查詢使用者參與的所有的活動", response = Activity.class)
+	public @ResponseBody List<Activity> getJoinedActivities() {
+		User user = userService.getLoginUser();
+		
+		List<Activity> activities = activityService.getJoinedActivities(user);
+		
+		return activities;
+	}
 }

@@ -1,5 +1,6 @@
 package com.exfantasy.template.services.activity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import com.exfantasy.template.mybatis.mapper.ActivityMapper;
 import com.exfantasy.template.mybatis.mapper.JoinActivitiesMapper;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.ActivityExample;
-import com.exfantasy.template.mybatis.model.ActivityExample.Criteria;
+import com.exfantasy.template.mybatis.model.JoinActivitiesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesKey;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.vo.request.ActivityVo;
@@ -79,9 +80,40 @@ public class ActivityService {
 	 */
 	public List<Activity> getCreatedActivities(User user) {
 		ActivityExample example = new ActivityExample();
-		Criteria criteria = example.createCriteria();
+		com.exfantasy.template.mybatis.model.ActivityExample.Criteria criteria = example.createCriteria();
 		criteria.andCreateUserIdEqualTo(user.getUserId());
 		List<Activity> activities = activityMapper.selectByExample(example);
+		return activities;
+	}
+
+	/**
+	 * <pre>
+	 * 查詢使用者參與的所有的活動
+	 * </pre>
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public List<Activity> getJoinedActivities(User user) {
+		JoinActivitiesExample joinedActivitiesExample = new JoinActivitiesExample();
+		com.exfantasy.template.mybatis.model.JoinActivitiesExample.Criteria joindActivitiesCriteria = joinedActivitiesExample.createCriteria();
+		joindActivitiesCriteria.andUserIdEqualTo(user.getUserId());
+		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinedActivitiesExample);
+		
+		List<Integer> joinedActivitiesId = new ArrayList<>();
+		for (JoinActivitiesKey joinedActivitie : joinedActivities) {
+			Integer joinedActivityId = joinedActivitie.getActivityId();
+			joinedActivitiesId.add(joinedActivityId);
+		}
+		
+		List<Activity> activities = new ArrayList<>();
+		if (joinedActivitiesId.size() != 0) {
+			ActivityExample activitiesExample = new ActivityExample();
+			com.exfantasy.template.mybatis.model.ActivityExample.Criteria activitiesCriteria = activitiesExample.createCriteria();
+			activitiesCriteria.andActivityIdIn(joinedActivitiesId);
+			activities = activityMapper.selectByExample(activitiesExample);
+		}
+		
 		return activities;
 	}
 }
