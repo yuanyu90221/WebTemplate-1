@@ -184,7 +184,7 @@ public class ActivityService {
 	
 	/**
 	 * <pre>
-	 * 根據 ActivityId 查詢已參與的使用者
+	 * 根據 activityId 查詢已參與的使用者
 	 * </pre>
 	 * 
 	 * @param activityId
