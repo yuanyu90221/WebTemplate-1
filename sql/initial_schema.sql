@@ -71,3 +71,13 @@ CREATE TABLE `join_activities` (
   `activity_id` int(10) NOT NULL,
   PRIMARY KEY (`user_id`, `activity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `activity_messages`;
+CREATE TABLE `activity_messages` (
+  `msg_id` int(10) NOT NULL AUTO_INCREMENT,
+  `activity_id` int(10) NOT NULL,
+  `create_user_id` int(10) NOT NULL,
+  `create_date` date NOT NULL,
+  `msg` varchar(200) NOT NULL,
+  PRIMARY KEY (`msg_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

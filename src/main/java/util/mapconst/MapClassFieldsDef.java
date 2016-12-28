@@ -12,7 +12,8 @@ public enum MapClassFieldsDef {
 	MAIL_TEMPLATE("MailTemplate", MapFieldsOfMailTemplate.values()),
 	MAIL_TEMPLATE_WITH_BLOB("MailTemplateWithBLOBs", MapFieldsOfMailTemplate.values()),
 	ACTIVITY("Activity", MapFieldsOfActivity.values()),
-	JOIN_ACTIVITIES_KEY("JoinActivitiesKey", MapFieldsOfJoinActivities.values())
+	JOIN_ACTIVITIES_KEY("JoinActivitiesKey", MapFieldsOfJoinActivities.values()),
+	ACTIVITY_MESSAGES("ActivityMessages", MapFieldsOfActivityMessages.values())
 	;
 	
 	private String className;
