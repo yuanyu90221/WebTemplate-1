@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.mapper.ActivityMapper;
 import com.exfantasy.template.mybatis.mapper.JoinActivitiesMapper;
 import com.exfantasy.template.mybatis.model.Activity;
@@ -95,10 +97,7 @@ public class ActivityService {
 	 * @return
 	 */
 	public List<Activity> getJoinedActivities(User user) {
-		JoinActivitiesExample joinedActivitiesExample = new JoinActivitiesExample();
-		com.exfantasy.template.mybatis.model.JoinActivitiesExample.Criteria joindActivitiesCriteria = joinedActivitiesExample.createCriteria();
-		joindActivitiesCriteria.andUserIdEqualTo(user.getUserId());
-		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinedActivitiesExample);
+		List<JoinActivitiesKey> joinedActivities = getJoinedActivitiesByUserId(user.getUserId());
 		
 		List<Integer> joinedActivitiesId = new ArrayList<>();
 		for (JoinActivitiesKey joinedActivitie : joinedActivities) {
@@ -115,5 +114,33 @@ public class ActivityService {
 		}
 		
 		return activities;
+	}
+
+	private List<JoinActivitiesKey> getJoinedActivitiesByUserId(Integer userId) {
+		JoinActivitiesExample joinedActivitiesExample = new JoinActivitiesExample();
+		com.exfantasy.template.mybatis.model.JoinActivitiesExample.Criteria joindActivitiesCriteria = joinedActivitiesExample.createCriteria();
+		joindActivitiesCriteria.andUserIdEqualTo(userId);
+		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinedActivitiesExample);
+		return joinedActivities;
+	}
+
+	/**
+	 * <pre>
+	 * 參加某一個活動
+	 * </pre>
+	 * 
+	 * @param userId
+	 * @param activityId
+	 */
+	public void joinActivity(Integer userId, Integer activityId) {
+		List<JoinActivitiesKey> joinedActivities = getJoinedActivitiesByUserId(userId);
+		if (joinedActivities.size() != 0) {
+			throw new OperationException(ResultCode.ACTIVITY_ALREADY_JOINED);
+		}
+		
+		JoinActivitiesKey record = new JoinActivitiesKey();
+		record.setUserId(userId);
+		record.setActivityId(activityId);
+		joinActivitiesMapper.insert(record);
 	}
 }

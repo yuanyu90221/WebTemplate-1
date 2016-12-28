@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.cnst.ResultCode;
@@ -69,7 +68,7 @@ public class ActivityController {
 	
 	/**
 	 * <pre>
-	 * TODO 參加活動
+	 * 參加活動
 	 * </pre>
 	 * 
 	 * @param activityId 欲參加的活動 ID
@@ -77,8 +76,11 @@ public class ActivityController {
 	 */
 	@RequestMapping(value = "/joinActivity/{activityId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "參加活動", notes = "參加活動", response = RespCommon.class)
-	public @ResponseBody RespCommon joinActivity(@ApiParam("欲參加的活動 ID") @PathVariable("activityId") Long activityId) {
-		System.out.println("In joinActivity with activityId: " + activityId);
+	public @ResponseBody RespCommon joinActivity(@ApiParam("欲參加的活動 ID") @PathVariable("activityId") Integer activityId) {
+		User user = userService.getLoginUser();
+		
+		activityService.joinActivity(user.getUserId(), activityId);
+		
 		return new RespCommon(ResultCode.SUCCESS, "Join activity succeed");
 	}
 	

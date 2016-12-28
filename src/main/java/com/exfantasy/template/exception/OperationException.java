@@ -34,4 +34,12 @@ public class OperationException extends RuntimeException {
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("error-code: ").append(resultCode).append(", ")
+			  .append("error-msg: ").append(errorMessage);
+		return buffer.toString();
+	}
 }

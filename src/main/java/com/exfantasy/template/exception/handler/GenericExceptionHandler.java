@@ -30,8 +30,8 @@ public class GenericExceptionHandler {
 	@ExceptionHandler(OperationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public RespCommon handleCustomException(OperationException ex) {
-		logger.error("OperationException raised", ex);
+	public RespCommon handleOperationException(OperationException ex) {
+		logger.error("OperationException raised, error-code: <{}>, error-msg: <{}>", ex.getErrorCode(), ex.getErrorMessage());
 		return new RespCommon(ex);
 	}
 	

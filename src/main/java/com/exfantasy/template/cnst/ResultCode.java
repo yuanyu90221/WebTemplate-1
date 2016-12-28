@@ -21,6 +21,9 @@ public enum ResultCode {
 	
 	/** Code: 3001, Message: 資料重複 */
 	DUPLICATE_KEY(3001, "Data already existed"),
+	
+	/** Code: 5001, Message: 這個活動已經參加 */
+	ACTIVITY_ALREADY_JOINED(5001, "The activity already joined"),
 
 	/** Code: 4444, Message: 無權限操作 */
 	ACCESS_DENIED(4444, ""),
