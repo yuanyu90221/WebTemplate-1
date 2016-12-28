@@ -7,9 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.cnst.ResultCode;
@@ -26,6 +28,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Controller
 @RequestMapping(value = "/activity")
@@ -62,6 +65,21 @@ public class ActivityController {
 		
 		activityService.createActivity(user, activityVo);
 		return new RespCommon(ResultCode.SUCCESS, "Create activity succeed");
+	}
+	
+	/**
+	 * <pre>
+	 * TODO 參加活動
+	 * </pre>
+	 * 
+	 * @param activityId 欲參加的活動 ID
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 */
+	@RequestMapping(value = "/joinActivity/{activityId}", method = RequestMethod.PUT)
+	@ApiOperation(value = "參加活動", notes = "參加活動", response = RespCommon.class)
+	public @ResponseBody RespCommon joinActivity(@ApiParam("欲參加的活動 ID") @PathVariable("activityId") Long activityId) {
+		System.out.println("In joinActivity with activityId: " + activityId);
+		return new RespCommon(ResultCode.SUCCESS, "Join activity succeed");
 	}
 	
 	/**
