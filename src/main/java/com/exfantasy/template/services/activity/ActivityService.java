@@ -15,17 +15,22 @@ import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.mapper.ActivityMapper;
 import com.exfantasy.template.mybatis.mapper.JoinActivitiesMapper;
+import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.ActivityExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesKey;
 import com.exfantasy.template.mybatis.model.User;
+import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.vo.request.ActivityVo;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ActivityService {
 	private static final Logger logger = LoggerFactory.getLogger(ActivityService.class);
+	
+	@Autowired
+    private UserMapper userMapper;
 	
 	@Autowired
 	private ActivityMapper activityMapper;
@@ -104,10 +109,9 @@ public class ActivityService {
 	 * @return
 	 */
 	public List<Activity> getCreatedActivities(User user) {
-		ActivityExample example = new ActivityExample();
-		com.exfantasy.template.mybatis.model.ActivityExample.Criteria criteria = example.createCriteria();
-		criteria.andCreateUserIdEqualTo(user.getUserId());
-		List<Activity> activities = activityMapper.selectByExample(example);
+		ActivityExample activityExample = new ActivityExample();
+		activityExample.createCriteria().andCreateUserIdEqualTo(user.getUserId());
+		List<Activity> activities = activityMapper.selectByExample(activityExample);
 		return activities;
 	}
 
@@ -130,13 +134,37 @@ public class ActivityService {
 		
 		List<Activity> activities = new ArrayList<>();
 		if (joinedActivitiesId.size() != 0) {
-			ActivityExample activitiesExample = new ActivityExample();
-			com.exfantasy.template.mybatis.model.ActivityExample.Criteria activitiesCriteria = activitiesExample.createCriteria();
-			activitiesCriteria.andActivityIdIn(joinedActivitiesId);
-			activities = activityMapper.selectByExample(activitiesExample);
+			ActivityExample activityExample = new ActivityExample();
+			activityExample.createCriteria().andActivityIdIn(joinedActivitiesId);
+			activities = activityMapper.selectByExample(activityExample);
 		}
 		
 		return activities;
+	}
+	
+	/**
+	 * <pre>
+	 * 查詢參與活動的所有使用者
+	 * </pre>
+	 * 
+	 * @param activityId
+	 * @return
+	 */
+	public List<User> getJoinedUsers(Integer activityId) {
+		List<JoinActivitiesKey> joinedUsers = getJoinedUsersByActivityId(activityId);
+		
+		// 這邊 size 至少為 1, 因為建立者一定參與
+		List<Integer> joinedUsersId = new ArrayList<>();
+		for (JoinActivitiesKey joinedUser : joinedUsers) {
+			Integer joinedUserId = joinedUser.getUserId();
+			joinedUsersId.add(joinedUserId);
+		}
+		
+		UserExample userExample = new UserExample();
+		userExample.createCriteria().andUserIdIn(joinedUsersId);
+		List<User> usersInfo = userMapper.selectByExample(userExample);
+		
+		return usersInfo;
 	}
 
 	/**
@@ -148,10 +176,24 @@ public class ActivityService {
 	 * @return
 	 */
 	private List<JoinActivitiesKey> getJoinedActivitiesByUserId(Integer userId) {
-		JoinActivitiesExample joinedActivitiesExample = new JoinActivitiesExample();
-		com.exfantasy.template.mybatis.model.JoinActivitiesExample.Criteria joindActivitiesCriteria = joinedActivitiesExample.createCriteria();
-		joindActivitiesCriteria.andUserIdEqualTo(userId);
-		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinedActivitiesExample);
+		JoinActivitiesExample joinActivitiesExample = new JoinActivitiesExample();
+		joinActivitiesExample.createCriteria().andUserIdEqualTo(userId);
+		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinActivitiesExample);
 		return joinedActivities;
+	}
+	
+	/**
+	 * <pre>
+	 * 根據 ActivityId 查詢已參與的使用者
+	 * </pre>
+	 * 
+	 * @param activityId
+	 * @return
+	 */
+	private List<JoinActivitiesKey> getJoinedUsersByActivityId(Integer activityId) {
+		JoinActivitiesExample joinActivitiesExample = new JoinActivitiesExample();
+		joinActivitiesExample.createCriteria().andActivityIdEqualTo(activityId);
+		List<JoinActivitiesKey> joinedUsers = joinActivitiesMapper.selectByExample(joinActivitiesExample);
+		return joinedUsers;
 	}
 }

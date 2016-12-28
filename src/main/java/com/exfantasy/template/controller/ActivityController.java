@@ -117,4 +117,19 @@ public class ActivityController {
 		
 		return activities;
 	}
+	
+	/**
+	 * <pre>
+	 * 查詢活動的所有參與者
+	 * </pre>
+	 * 
+	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 使用者資訊
+	 */
+	@RequestMapping(value = "/get_joined_users/{activityId}", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢活動的所有參與者", notes = "查詢活動的所有參與者", response = User.class)
+	public @ResponseBody List<User> getJoinedUsers(@ApiParam("欲查詢的活動 ID") @PathVariable("activityId") Integer activityId) {
+		List<User> joinedUsers = activityService.getJoinedUsers(activityId);
+		
+		return joinedUsers;
+	}
 }
