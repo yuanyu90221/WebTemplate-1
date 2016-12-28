@@ -1,1 +1,3 @@
-有些 keyword 不要使用, 像是欄位名稱弄成 desc, 會找到死
+1.	有些 keyword 不要使用, 像是欄位名稱弄成 desc, 會找到死
+
+2.	如果要寫自己的語法, 到 com.exfantasy.template.mybatis.custom 新增一個 CustomXXXXMapper 繼承產生出來的 Mapper, 所有 server 則改為使用 CustomXXXXMapper

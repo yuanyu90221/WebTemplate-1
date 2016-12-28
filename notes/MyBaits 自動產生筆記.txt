@@ -1,20 +1,17 @@
-1. 
-	當 table schema 改變, 
-	
-	先把 
-		src/main/java -> com.exfantasy.template.mybatis
+當 table schema 改變:
 
-	底下的東西全殺掉
-	
-2. 
-	到 util.GenerateMyBatisCode 上按右鍵 Run as Application
-	
+1.	先新增 util.mapconst.MapClassFieldsDef 對應資料
+
+2.  到 util.GenerateMyBatisCode 上按右鍵 Run as Application
+ 
 ----------------------------------------------------------------
 
-mybatis_generator_config.xml
+<注意事項>
 
-其中 javaClientGenerator 的  type 改為 "ANNOTATEDMAPPER",
+	mybatis_generator_config.xml
 
-因使用 XMLMAPPER, 
+	其中 javaClientGenerator 的  type 改為 "ANNOTATEDMAPPER",
 
-用 gradle 包出來的 jar 檔啟動會有問題, 暫時先改用 ANNOTATEDMAPPER
+	因使用 XMLMAPPER, 
+
+	用 gradle 包出來的 jar 檔啟動會有問題, 暫時先改用 ANNOTATEDMAPPER
