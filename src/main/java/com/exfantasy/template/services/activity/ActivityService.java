@@ -20,6 +20,7 @@ import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.ActivityExample;
 import com.exfantasy.template.mybatis.model.ActivityMessages;
+import com.exfantasy.template.mybatis.model.ActivityMessagesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesExample;
 import com.exfantasy.template.mybatis.model.JoinActivitiesKey;
 import com.exfantasy.template.mybatis.model.User;
@@ -270,5 +271,20 @@ public class ActivityService {
 		activityMessage.setMsg(message);
 		
 		activityMessagesMapper.insert(activityMessage);
+	}
+
+	/**
+	 * <pre>
+	 * 查詢某一個活動的所有留言
+	 * </pre>
+	 * 
+	 * @param activityId
+	 * @return
+	 */
+	public List<ActivityMessages> getActivityMessages(Integer activityId) {
+		ActivityMessagesExample example = new ActivityMessagesExample();
+		example.createCriteria().andActivityIdEqualTo(activityId);
+		List<ActivityMessages> activityMessages = activityMessagesMapper.selectByExample(example);
+		return activityMessages;
 	}
 }

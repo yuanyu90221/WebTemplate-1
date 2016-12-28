@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.Activity;
+import com.exfantasy.template.mybatis.model.ActivityMessages;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.activity.ActivityService;
 import com.exfantasy.template.services.user.UserService;
@@ -124,6 +125,7 @@ public class ActivityController {
 	 * 查詢活動的所有參與者
 	 * </pre>
 	 * 
+	 * @param activityId 欲查詢的活動 ID
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 使用者資訊
 	 */
 	@RequestMapping(value = "/get_joined_users/{activityId}", method = RequestMethod.GET)
@@ -159,5 +161,21 @@ public class ActivityController {
 		activityService.leaveMessage(user.getUserId(), activityMsgVo.getActivityId(), activityMsgVo.getMessage());
 		
 		return new RespCommon(ResultCode.SUCCESS, "Leave message succeed");
+	}
+	
+	/**
+	 * <pre>
+	 * 查詢某一個活動的所有留言
+	 * </pre>
+	 * 
+	 * @param activityId 欲查詢的活動 ID
+	 * @return <code>{@link com.exfantasy.template.mybatis.model.ActivityMessages}</code> 活動的所有留言
+	 */
+	@RequestMapping(value = "/get_activity_messages/{activityId}", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢活動的所有留言", notes = "查詢活動的所有留言", response = ActivityMessages.class)
+	public @ResponseBody List<ActivityMessages> getActivityMessages(@ApiParam("欲查詢的活動 ID") @PathVariable("activityId") Integer activityId) {
+		List<ActivityMessages> activityMessages = activityService.getActivityMessages(activityId);
+		
+		return activityMessages;
 	}
 }
