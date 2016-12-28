@@ -53,7 +53,9 @@ public class ActivityService {
 	}
 
 	/**
+	 * <pre>
 	 * 將前端傳過來的消費資料物件轉換成 mybatis model
+	 * </pre>
 	 * 
 	 * @param user
 	 * @param activityVo
@@ -116,6 +118,14 @@ public class ActivityService {
 		return activities;
 	}
 
+	/**
+	 * <pre>
+	 * 根據 userId 查詢已參與的活動
+	 * </pre>
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	private List<JoinActivitiesKey> getJoinedActivitiesByUserId(Integer userId) {
 		JoinActivitiesExample joinedActivitiesExample = new JoinActivitiesExample();
 		com.exfantasy.template.mybatis.model.JoinActivitiesExample.Criteria joindActivitiesCriteria = joinedActivitiesExample.createCriteria();
