@@ -76,6 +76,27 @@ public class ActivityService {
 
 	/**
 	 * <pre>
+	 * 參加某一個活動
+	 * </pre>
+	 * 
+	 * @param userId
+	 * @param activityId
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
+	public void joinActivity(Integer userId, Integer activityId) {
+		List<JoinActivitiesKey> joinedActivities = getJoinedActivitiesByUserId(userId);
+		if (joinedActivities.size() != 0) {
+			throw new OperationException(ResultCode.ACTIVITY_ALREADY_JOINED);
+		}
+		
+		JoinActivitiesKey record = new JoinActivitiesKey();
+		record.setUserId(userId);
+		record.setActivityId(activityId);
+		joinActivitiesMapper.insert(record);
+	}
+
+	/**
+	 * <pre>
 	 * 查詢使用者所建立的活動
 	 * </pre>
 	 * 
@@ -132,25 +153,5 @@ public class ActivityService {
 		joindActivitiesCriteria.andUserIdEqualTo(userId);
 		List<JoinActivitiesKey> joinedActivities = joinActivitiesMapper.selectByExample(joinedActivitiesExample);
 		return joinedActivities;
-	}
-
-	/**
-	 * <pre>
-	 * 參加某一個活動
-	 * </pre>
-	 * 
-	 * @param userId
-	 * @param activityId
-	 */
-	public void joinActivity(Integer userId, Integer activityId) {
-		List<JoinActivitiesKey> joinedActivities = getJoinedActivitiesByUserId(userId);
-		if (joinedActivities.size() != 0) {
-			throw new OperationException(ResultCode.ACTIVITY_ALREADY_JOINED);
-		}
-		
-		JoinActivitiesKey record = new JoinActivitiesKey();
-		record.setUserId(userId);
-		record.setActivityId(activityId);
-		joinActivitiesMapper.insert(record);
 	}
 }
