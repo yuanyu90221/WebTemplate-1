@@ -92,7 +92,7 @@ public class ActivityService {
 		// 若此查詢為空, 但表此活動不存在
 		Activity activity = getActivityByActivityId(activityId);
 		if (activity == null) {
-			throw new OperationException(ResultCode.ACTIVIY_NOT_EXISTED);
+			throw new OperationException(ResultCode.ACTIVITY_NOT_EXISTED);
 		}
 		
 		// 若此查詢不為空, 但表此活動此使用者已經參加

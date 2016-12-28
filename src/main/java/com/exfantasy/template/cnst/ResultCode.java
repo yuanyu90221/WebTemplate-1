@@ -23,7 +23,7 @@ public enum ResultCode {
 	DUPLICATE_KEY(3001, "Data already existed"),
 	
 	/** Code: 5001, Message: 此活動不存在 */
-	ACTIVIY_NOT_EXISTED(5001, "The activity is not existed"),
+	ACTIVITY_NOT_EXISTED(5001, "The activity is not existed"),
 
 	/** Code: 5002, Message: 這個活動已經參加 */
 	ACTIVITY_ALREADY_JOINED(5002, "The activity already joined"),
