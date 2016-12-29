@@ -30,6 +30,12 @@ public enum ResultCode {
 
 	/** Code: 4444, Message: 無權限操作 */
 	ACCESS_DENIED(4444, ""),
+	
+	/** Code: 9001, Message: 檔案為空 */
+	FILE_IS_EMPTY(9001, "File is empty"),
+	
+	/** Code: 9002, Message: 上傳檔案失敗 */
+	UPLOAD_FILE_FAILED(9002, "Upload file failed"),
 
 	/** Code: 9999, Message: 系統發生錯誤 */
 	SYSTEM_EXCEPTION(9999, "")

@@ -14,15 +14,23 @@ spring:
 
         # Connection Setting
         # Ref: http://stackoverflow.com/questions/30451470/connection-to-db-dies-after-424-in-spring-boot-jpa-hibernate
-        max-active: 5
-        initial-size: 3
+        # Ref: https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
+        max-active: 10
         max-idle: 5
-        min-idle: 3
+        min-idle: 2
+        initial-size: 5
+        removeAbandoned: true
         test-while-idle: true
         test-on-borrow: true
         validation-query: "SELECT 1"
         connection-test-query: "SELECT 1"
-
+    
+    # http://stackoverflow.com/questions/37540028/how-to-set-the-max-size-of-upload-file
+    http:
+        multipart:
+            max-file-size: 10MB
+            max_request-size: 10MB
+        
 # -------- Mail Config --------
 mail:
     username: exfantasy7wolves

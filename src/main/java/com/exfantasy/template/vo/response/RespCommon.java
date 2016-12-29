@@ -27,6 +27,11 @@ public class RespCommon {
 		this.data = data;
 	}
 	
+	public RespCommon(ResultCode resultCode) {
+		this.resultCode = resultCode;
+		this.data = resultCode.getMessage();
+	}
+	
 	public RespCommon(OperationException ex) {
 		this.resultCode = ex.getErrorCode();
 		this.data = ex.getErrorMessage();

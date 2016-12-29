@@ -1,7 +1,11 @@
 package com.exfantasy.template.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
@@ -40,17 +45,8 @@ import io.swagger.annotations.ApiOperation;
 @Api("UserController - 使用者相關 API")
 public class UserController {
 	
-//	@Autowired(required = true)
-//	private HttpServletRequest request;
-
 	@Autowired
 	private UserService userService;
-	
-//	@RequestMapping(value = "/register", method = RequestMethod.GET)
-//	public String returnUserPage(Model model) {
-//		model.addAttribute("registerVo", new RegisterVo());
-//		return "register";
-//	}
 	
 	/**
 	 * <pre>
@@ -103,4 +99,37 @@ public class UserController {
 		return userService.queryUserRolesByEmail(email);
 	}
 
+	/**
+	 * <pre>
+	 * 上傳檔案
+	 * </pre>
+	 * 
+	 * @param file
+	 * @return
+	 */
+	@RequestMapping(value = "/upload_file", method = RequestMethod.POST)
+	@ApiOperation(value = "上傳檔案")
+	public @ResponseBody RespCommon updatePhoto(@RequestParam(value = "file", required = true) MultipartFile file) {
+		if (!file.isEmpty()) {
+			BufferedOutputStream stream = null;
+			File fileToStore = new File("D:/" + file.getOriginalFilename());
+			if (fileToStore.exists()) {
+				fileToStore.delete();
+			}
+			try {
+				byte[] bytes = file.getBytes();
+				stream = new BufferedOutputStream(new FileOutputStream(fileToStore));
+				stream.write(bytes);
+				return new RespCommon(ResultCode.SUCCESS, "Upload file succeed");
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+			}
+			finally {
+				IOUtils.closeQuietly(stream);
+			}
+		}
+		return new RespCommon(ResultCode.FILE_IS_EMPTY);
+	}
 }
