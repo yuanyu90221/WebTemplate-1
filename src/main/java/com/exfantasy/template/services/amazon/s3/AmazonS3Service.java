@@ -16,6 +16,7 @@ public class AmazonS3Service {
 	private static final Logger logger = LoggerFactory.getLogger(AmazonS3Service.class);
 
 	private AmazonS3 amazonS3;
+	private boolean isEnabled;
 	
 	@Autowired
 	public AmazonS3Service(AmazonS3Config config) {
@@ -23,10 +24,19 @@ public class AmazonS3Service {
 		String secretKey = config.getSecretKey();
 		String bucket = config.getBucket();
 
-		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-		amazonS3 = new AmazonS3Client(awsCredentials);
-		amazonS3.createBucket(bucket);
+		if (accessKey != null && secretKey != null && bucket != null) {
+			AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+			amazonS3 = new AmazonS3Client(awsCredentials);
+			amazonS3.createBucket(bucket);
 		
-		logger.info("Using S3 Bucket: {}", bucket);
+			logger.info(">>>>> Using S3 Bucket: {}", bucket);
+			
+			isEnabled = true;
+		}
+		else {
+			logger.warn(">>>>> Cannot find Amazon S3 config setting, won't initialize AmazonS3 Service");
+			
+			isEnabled = false;
+		}
 	}
 }
