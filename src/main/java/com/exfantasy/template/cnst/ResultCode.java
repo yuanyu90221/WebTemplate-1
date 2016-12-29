@@ -22,20 +22,24 @@ public enum ResultCode {
 	/** Code: 3001, Message: 資料重複 */
 	DUPLICATE_KEY(3001, "Data already existed"),
 	
+	/** Code: 4444, Message: 無權限操作 */
+	ACCESS_DENIED(4444, ""),
+	
 	/** Code: 5001, Message: 此活動不存在 */
 	ACTIVITY_NOT_EXISTED(5001, "The activity is not existed"),
 
 	/** Code: 5002, Message: 這個活動已經參加 */
 	ACTIVITY_ALREADY_JOINED(5002, "The activity already joined"),
 
-	/** Code: 4444, Message: 無權限操作 */
-	ACCESS_DENIED(4444, ""),
 	
-	/** Code: 9001, Message: 檔案為空 */
-	FILE_IS_EMPTY(9001, "File is empty"),
+	/** Code: 8001, Message: 檔案為空 */
+	FILE_IS_EMPTY(8001, "File is empty"),
 	
-	/** Code: 9002, Message: 上傳檔案失敗 */
-	UPLOAD_FILE_FAILED(9002, "Upload file failed"),
+	/** Code: 8002, Message: 上傳檔案失敗 */
+	UPLOAD_FILE_FAILED(8002, "Upload file failed"),
+	
+	/** Code: 9001, Message: Amazon S3 服務不允許使用 */
+	AMAZON_S3_IS_NOT_ENABLED(9001, "Amazon S3 service is not enabled"),
 
 	/** Code: 9999, Message: 系統發生錯誤 */
 	SYSTEM_EXCEPTION(9999, "")

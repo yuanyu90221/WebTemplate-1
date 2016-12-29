@@ -40,9 +40,9 @@ mail:
 aws:
     s3:
         bucket: tommy-web-service
-        accessKey: AKIAJFF63NJWTN55KNDQ
-        secretKey: 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            
-        
+        accessKey: AKIAJQZ4F7CE5S34MF7Q
+        secretKey: 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
+
 # -------- Custom Config --------    
 custom:
     admins:

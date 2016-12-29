@@ -1,11 +1,7 @@
 package com.exfantasy.template.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -101,35 +97,21 @@ public class UserController {
 
 	/**
 	 * <pre>
-	 * 上傳檔案
+	 * 上傳大頭照
 	 * </pre>
 	 * 
-	 * @param file
+	 * @param multipartFile
 	 * @return
 	 */
-	@RequestMapping(value = "/upload_file", method = RequestMethod.POST)
-	@ApiOperation(value = "上傳檔案")
-	public @ResponseBody RespCommon updatePhoto(@RequestParam(value = "file", required = true) MultipartFile file) {
-		if (!file.isEmpty()) {
-			BufferedOutputStream stream = null;
-			File fileToStore = new File("D:/" + file.getOriginalFilename());
-			if (fileToStore.exists()) {
-				fileToStore.delete();
-			}
-			try {
-				byte[] bytes = file.getBytes();
-				stream = new BufferedOutputStream(new FileOutputStream(fileToStore));
-				stream.write(bytes);
-				return new RespCommon(ResultCode.SUCCESS, "Upload file succeed");
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
-			}
-			finally {
-				IOUtils.closeQuietly(stream);
-			}
+	@RequestMapping(value = "/upload_profile_image", method = RequestMethod.POST)
+	@ApiOperation(value = "上傳大頭貼")
+	public @ResponseBody RespCommon updateProfileImage(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
+		if (!multipartFile.isEmpty()) {
+			userService.uploadProfileImage(multipartFile);
+			return new RespCommon(ResultCode.SUCCESS, "Upload profile image succeed");
 		}
-		return new RespCommon(ResultCode.FILE_IS_EMPTY);
+		else {
+			return new RespCommon(ResultCode.FILE_IS_EMPTY);
+		}
 	}
 }

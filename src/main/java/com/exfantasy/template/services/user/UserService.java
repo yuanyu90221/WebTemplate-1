@@ -1,5 +1,7 @@
 package com.exfantasy.template.services.user;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
@@ -24,6 +27,8 @@ import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
+import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
+import com.exfantasy.template.util.FileConvertUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
 
 /**
@@ -39,6 +44,8 @@ import com.exfantasy.template.vo.request.RegisterVo;
 public class UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
+	private final String PROFILE_IMAGE_NAME = "profileImage.jpg";
+	
     @Autowired
     private UserMapper userMapper;
     
@@ -47,7 +54,10 @@ public class UserService {
     
     @Autowired
     private CustomConfig customConfig;
-
+    
+    @Autowired
+	private AmazonS3Service amazonS3Service;
+    
     /**
      * <pre>
      * 註冊新的使用者
@@ -173,5 +183,44 @@ public class UserService {
 		User user = queryUserByEmail(email);
 		return user;
     }
+
+    /**
+     * <pre>
+     * 上傳大頭照
+     * </pre>
+     * 
+     * @param multipartFile
+     */
+	public void uploadProfileImage(MultipartFile multipartFile) {
+		File profileImage = null;
+		try {
+			profileImage = FileConvertUtil.convert(multipartFile);
+		} catch (IOException e) {
+			logger.error("Convert MultipartFile to File failed", e);
+			throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+		}
+			
+		String profileImageFilePath = getProfileImageFilePath();
+		
+		long startTime = System.currentTimeMillis();
+		logger.info(">>>>> Prepare to upload profile image to Amazon S3, file-path: <{}>, file-lengh: <{}>", profileImageFilePath, profileImage.length());
+
+		amazonS3Service.uploadFile(profileImageFilePath, profileImage);
+		
+		long timeSpent = System.currentTimeMillis() - startTime;
+		logger.info("<<<<< Upload profile image to Amazon S3 done, time-spent: <{} ms>", timeSpent);
+	}
+	
+	/**
+	 * <pre>
+	 * 取得要儲存在 Amazon S3 的檔案位置
+	 * </pre>
+	 * 
+	 * @return
+	 */
+	private String getProfileImageFilePath() {
+		User user = getLoginUser();
+		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
+	}
     
 }
