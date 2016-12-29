@@ -114,4 +114,19 @@ public class UserController {
 			return new RespCommon(ResultCode.FILE_IS_EMPTY);
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * 刪除大頭照
+	 * </pre>
+	 * 
+	 * @param multipartFile
+	 * @return
+	 */
+	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
+	@ApiOperation(value = "刪除大頭貼")
+	public @ResponseBody RespCommon deleteProfileImage() {
+		userService.deleteProfileImage();
+		return new RespCommon(ResultCode.SUCCESS, "Delete profile image succeed");
+	}
 }

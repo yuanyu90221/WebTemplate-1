@@ -71,4 +71,8 @@ public class AmazonS3Service {
 			throw new OperationException(ResultCode.AMAZON_S3_IS_NOT_ENABLED);
 		}
 	}
+	
+	public void deleteFile(String filePath) {
+		amazonS3.deleteObject(bucket, filePath);
+	}
 }

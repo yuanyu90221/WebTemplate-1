@@ -200,15 +200,33 @@ public class UserService {
 			throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 		}
 			
-		String profileImageFilePath = getProfileImageFilePath();
+		String s3ProfileImagePathName = getS3ProfileImagePathName();
 		
 		long startTime = System.currentTimeMillis();
-		logger.info(">>>>> Prepare to upload profile image to Amazon S3, file-path: <{}>, file-lengh: <{}>", profileImageFilePath, profileImage.length());
+		logger.info(
+			">>>>> Prepare to upload profile image to Amazon S3, original-file-name: <{}>, file-lengh: <{}>, save-file-path: <{}>, ",
+			profileImage.getName(), profileImage.length(), s3ProfileImagePathName);
 
-		amazonS3Service.uploadFile(profileImageFilePath, profileImage);
+		amazonS3Service.uploadFile(s3ProfileImagePathName, profileImage);
+		
+		if (profileImage.exists()) {
+			logger.info(">>>>> Detected file name: <{}> existed, try to delete it...", profileImage.getName());
+			profileImage.delete();
+			logger.info("<<<<< Delete file name: <{}> succeed", profileImage.getName());
+		}
 		
 		long timeSpent = System.currentTimeMillis() - startTime;
 		logger.info("<<<<< Upload profile image to Amazon S3 done, time-spent: <{} ms>", timeSpent);
+	}
+	
+	/**
+	 * <pre>
+	 * 刪除大頭照
+	 * </pre>
+	 */
+	public void deleteProfileImage() {
+		String s3ProfileImagePathName = getS3ProfileImagePathName();
+		amazonS3Service.deleteFile(s3ProfileImagePathName);
 	}
 	
 	/**
@@ -218,7 +236,7 @@ public class UserService {
 	 * 
 	 * @return
 	 */
-	private String getProfileImageFilePath() {
+	private String getS3ProfileImagePathName() {
 		User user = getLoginUser();
 		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
 	}
