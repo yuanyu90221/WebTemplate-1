@@ -12,15 +12,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 /**
  * <pre>
@@ -66,18 +76,36 @@ public class AmazonS3Service {
 		return putObjectResult;
 	}
 
+	/**
+	 * <pre>
+	 * 上傳單一檔案到 Amazon S3 並指定路徑及檔名
+	 * </pre>
+	 * 
+	 * @param multipartFile 要上傳的檔案
+	 * @param folderAndName 指定上傳至 Amazon S3 存放路徑及檔名
+	 * @return 上傳結果
+	 * @throws IOException
+	 */
 	public PutObjectResult upload(MultipartFile multipartFile, String folderAndName) throws IOException {
 		return upload(multipartFile.getInputStream(), folderAndName);
 	}
 
-	public List<PutObjectResult> upload(MultipartFile[] multipartFiles) {
+	/**
+	 * <pre>
+	 * 上傳多個檔案到 Amazon S3
+	 * </pre>
+	 * 
+	 * @param multipartFiles 要上傳的檔案
+	 * @param email 使用者 email, 這些檔案將會放到 Amazon S3 對應 email 目錄底下
+	 * @return 上傳結果
+	 */
+	public List<PutObjectResult> upload(MultipartFile[] multipartFiles, String email) {
 		List<PutObjectResult> putObjectResults = new ArrayList<>();
 
 		Arrays.stream(multipartFiles)
 			  .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
 			  .forEach(multipartFile -> {
-				  	// FIXME 再看看要怎麼調的好
-					String folderAndName = multipartFile.getOriginalFilename();
+					String folderAndName = email + "/" + multipartFile.getOriginalFilename();
 					try {
 						PutObjectResult putObjectResult 
 							= upload(multipartFile.getInputStream(), folderAndName);
@@ -93,7 +121,52 @@ public class AmazonS3Service {
 		return putObjectResults;
 	}
 
-	public void deleteFile(String filePath) {
-		amazonS3Client.deleteObject(bucket, filePath);
+	/**
+	 * <pre>
+	 * 從 Amazon S3 刪除一個檔案
+	 * </pre>
+	 * 
+	 * @param folderAndName 指定想從 Amazon S3 刪除檔案的存放路徑及檔名
+	 */
+	public void deleteFile(String folderAndName) {
+		amazonS3Client.deleteObject(bucket, folderAndName);
+	}
+	
+	public ResponseEntity<byte[]> download(String folderAndName) throws IOException {
+        GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, folderAndName);
+
+        long startTime = System.currentTimeMillis();
+        logger.info(">>>> Try to get file: <{}> from Amazon S3", folderAndName);
+        
+        S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
+        
+        logger.info("<<<< Get file: <{}> from Amazon S3 succeed, time-spent: <{} ms>", folderAndName, System.currentTimeMillis() - startTime);
+
+        S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+
+        byte[] bytes = IOUtils.toByteArray(objectInputStream);
+
+//        String fileName = URLEncoder.encode(folderAndName, "UTF-8").replaceAll("\\+", "%20");
+        String fileName = "profileImage.jpg";
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        httpHeaders.setContentLength(bytes.length);
+        httpHeaders.setContentDispositionFormData("attachment", fileName);
+
+        return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+    }
+	
+	public List<S3ObjectSummary> list() {
+		long startTime = System.currentTimeMillis();
+        logger.info(">>>> Try to get bucket: <{}> list from Amazon S3", bucket);
+		
+		ObjectListing objectListing = amazonS3Client.listObjects(new ListObjectsRequest().withBucketName(bucket));
+		
+		logger.info(">>>> Get bucket: <{}> list from Amazon S3 succeed, time-spent: <{} ms>", bucket, System.currentTimeMillis() - startTime);
+
+        List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
+
+        return s3ObjectSummaries;
 	}
 }
