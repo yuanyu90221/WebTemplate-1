@@ -24,6 +24,8 @@ ext {
 	
 	swaggerVersion = '2.2.2'
 	
+	apacheCommonsIoVersion = '2.5'
+	
 	junitVersion = '4.+'
 }
 
@@ -110,6 +112,9 @@ dependencies {
 	
 	// --------- AWS java sdk s3 ---------
 	compile "com.amazonaws:aws-java-sdk-s3"
+	
+	// --------- Apache commons-io ----------
+	compile "commons-io:commons-io:${apacheCommonsIoVersion}"
 	
 	// --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"

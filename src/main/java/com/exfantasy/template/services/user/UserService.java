@@ -1,6 +1,5 @@
 package com.exfantasy.template.services.user;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +27,6 @@ import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
-import com.exfantasy.template.util.FileConvertUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
 
 /**
@@ -192,27 +190,16 @@ public class UserService {
      * @param multipartFile
      */
 	public void uploadProfileImage(MultipartFile multipartFile) {
-		File profileImage = null;
-		try {
-			profileImage = FileConvertUtil.convert(multipartFile);
-		} catch (IOException e) {
-			logger.error("Convert MultipartFile to File failed", e);
-			throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
-		}
-			
-		String s3ProfileImagePathName = getS3ProfileImagePathName();
-		
-		long startTime = System.currentTimeMillis();
-		logger.info(
-			">>>>> Prepare to upload profile image to Amazon S3, original-file-name: <{}>, file-lengh: <{}>, save-file-path: <{}>, ",
-			profileImage.getName(), profileImage.length(), s3ProfileImagePathName);
+		String s3ProfileImageFolderAndName = getS3ProfileImagePathName();
 
-		amazonS3Service.uploadFile(s3ProfileImagePathName, profileImage);
-		
-		if (profileImage.exists()) {
-			logger.info(">>>>> Detected file name: <{}> existed, try to delete it...", profileImage.getName());
-			profileImage.delete();
-			logger.info("<<<<< Delete file name: <{}> succeed", profileImage.getName());
+		long startTime = System.currentTimeMillis();
+		logger.info(">>>>> Prepare to upload profile image to Amazon S3, save-file-path: <{}>", s3ProfileImageFolderAndName);
+
+		try {
+			amazonS3Service.upload(multipartFile, s3ProfileImageFolderAndName);
+		} catch (IOException e) {
+			logger.error("Upload profile file image to Amazon S3 failed", e);
+			throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 		}
 		
 		long timeSpent = System.currentTimeMillis() - startTime;
