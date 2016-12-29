@@ -34,7 +34,14 @@ spring:
 # -------- Mail Config --------
 mail:
     username: exfantasy7wolves
-    password: meywlnxyckgerkgw        
+    password: meywlnxyckgerkgw
+    
+# -------- Amazon S3 Config --------
+aws:
+    s3:
+        bucket: exfantasy-web-template
+        accessKey: AKIAJFF63NJWTN55KNDQ
+        secretKey: 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            
         
 # -------- Custom Config --------    
 custom:
