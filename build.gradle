@@ -26,6 +26,8 @@ ext {
 	
 	apacheCommonsIoVersion = '2.5'
 	
+	dropboxApiVersion = '2.1.1'
+	
 	junitVersion = '4.+'
 }
 
@@ -115,6 +117,9 @@ dependencies {
 	
 	// --------- Apache commons-io ----------
 	compile "commons-io:commons-io:${apacheCommonsIoVersion}"
+	
+	// --------- Dropbox Api ---------
+	compile "com.dropbox.core:dropbox-core-sdk:${dropboxApiVersion}"
 	
 	// --------- ??? 暫時沒在用, 不過好像不錯用 ??? --------- 
 	compile "com.google.guava:guava:${googleGuavaVersion}"
