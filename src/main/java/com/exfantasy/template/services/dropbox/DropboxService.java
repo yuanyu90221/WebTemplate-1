@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.DeleteErrorException;
+import com.dropbox.core.v2.files.ListFolderErrorException;
+import com.dropbox.core.v2.files.ListFolderResult;
+import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.files.UploadErrorException;
 import com.dropbox.core.v2.users.FullAccount;
 
@@ -26,7 +29,6 @@ import com.dropbox.core.v2.users.FullAccount;
  */
 @Service
 public class DropboxService {
-	
 	private static final Logger logger = LoggerFactory.getLogger(DropboxService.class);
 	
 	@Autowired
@@ -62,7 +64,44 @@ public class DropboxService {
 	}
 	
 	private void upload(InputStream inputStream, String pathAndName) throws UploadErrorException, DbxException, IOException {
+		boolean alreadyContains = alreadyContains(pathAndName);
+		if (alreadyContains) {
+			logger.warn("----> Discover that the file is already existed, path and name: <{}>, try to delete it", pathAndName);
+			delete(pathAndName);
+			logger.warn("<---- Delete the existed file succeed, path and name: <{}>", pathAndName);
+		}
 		dropboxClient.files().uploadBuilder(pathAndName).uploadAndFinish(inputStream);
+	}
+	
+	private boolean alreadyContains(String pathAndName) throws ListFolderErrorException, DbxException {
+		int lastIndexOf = pathAndName.lastIndexOf("/");
+		String folderPath = pathAndName.substring(0, lastIndexOf);
+		String folderName = folderPath.substring(1, folderPath.length());
+		String fileName = pathAndName.substring(lastIndexOf + 1, pathAndName.length());
+		
+		boolean foundFolder = foundFolder(folderName);
+		
+		if (foundFolder) {
+			ListFolderResult result = dropboxClient.files().listFolder(folderPath);
+			for (Metadata metadata : result.getEntries()) {
+				String existedFileName = metadata.getName();
+				if (existedFileName.equals(fileName)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean foundFolder(String folderName) throws ListFolderErrorException, DbxException {
+		ListFolderResult result = dropboxClient.files().listFolder("");
+		for (Metadata metadata : result.getEntries()) {
+			String existedFolder = metadata.getName();
+			if (existedFolder.equals(folderName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void delete(String pathAndName) throws DeleteErrorException, DbxException {
