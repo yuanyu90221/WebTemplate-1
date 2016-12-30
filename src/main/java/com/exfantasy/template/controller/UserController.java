@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
@@ -107,8 +108,8 @@ public class UserController {
 	@ApiOperation(value = "上傳大頭貼")
 	public @ResponseBody RespCommon updateProfileImage(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
 		if (!multipartFile.isEmpty()) {
-			userService.uploadProfileImage(multipartFile);
-			return new RespCommon(ResultCode.SUCCESS, "Upload profile image succeed");
+			CloudStorage cloudStorage = userService.uploadProfileImage(multipartFile);
+			return new RespCommon(ResultCode.SUCCESS, "Upload profile image to " + cloudStorage + " succeed");
 		}
 		else {
 			return new RespCommon(ResultCode.FILE_IS_EMPTY);
@@ -126,7 +127,7 @@ public class UserController {
 	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
 	@ApiOperation(value = "刪除大頭貼")
 	public @ResponseBody RespCommon deleteProfileImage() {
-		userService.deleteProfileImage();
-		return new RespCommon(ResultCode.SUCCESS, "Delete profile image succeed");
+		CloudStorage cloudStorage = userService.deleteProfileImage();
+		return new RespCommon(ResultCode.SUCCESS, "Delete profile image from " + cloudStorage + " succeed");
 	}
 }

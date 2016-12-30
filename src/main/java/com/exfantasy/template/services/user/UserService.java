@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.config.CustomConfig;
@@ -184,18 +185,24 @@ public class UserService {
      * 上傳大頭照到雲端空間
      * </pre>
      * 
-     * @param multipartFile
+     * @param multipartFile 欲上傳的大頭照
+     * 
+     * @return {@link CloudStorage} 最後儲存的雲端空間
      */
-	public void uploadProfileImage(MultipartFile multipartFile) {
-		fileService.uploadProfileImage(multipartFile);
+	public CloudStorage uploadProfileImage(MultipartFile multipartFile) {
+		CloudStorage cloudStorage = fileService.uploadProfileImage(multipartFile);
+		return cloudStorage;
 	}
 	
 	/**
 	 * <pre>
 	 * 從雲端空間刪除大頭照
 	 * </pre>
+	 * 
+	 * @return {@link CloudStorage} 最後儲存的雲端空間
 	 */
-	public void deleteProfileImage() {
-		fileService.deleteProfileImage();
+	public CloudStorage deleteProfileImage() {
+		CloudStorage cloudStorage = fileService.deleteProfileImage();
+		return cloudStorage;
 	}
 }

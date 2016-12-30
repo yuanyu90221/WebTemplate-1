@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
@@ -35,10 +36,14 @@ public class FileService {
      * 上傳檔案到 Amazon S3 或 Dropbox
      * </pre>
      * 
-     * @param multipartFile
-     * @param pathAndName
+     * @param multipartFile 欲上傳的檔案
+     * @param pathAndName 欲儲存的路徑
+     * 
+     * @return {@link CloudStorage} 最後上傳的雲端空間
      */
-    public void uploadFile(MultipartFile multipartFile, String pathAndName) {
+    public CloudStorage uploadFile(MultipartFile multipartFile, String pathAndName) {
+    	CloudStorage cloudStorage = null;
+    	
     	String originalFileName = multipartFile.getOriginalFilename();
     	
     	boolean uploadToAmazonS3Succeed;
@@ -50,6 +55,7 @@ public class FileService {
     			
     			logger.info("<<<<< Upload file to Amazon S3 succeed, original file name: <{}>, Amazon S3 path and name: <{}>", originalFileName, pathAndName);
     			
+    			cloudStorage = CloudStorage.AMAZON_S3;
     			uploadToAmazonS3Succeed = true;
     		}
     		catch (Exception e) {
@@ -72,11 +78,14 @@ public class FileService {
 				
 				logger.info("<<<<< Upload file to Dropbox succeed, original file name: <{}>, Dropbox path and name: <{}>", originalFileName, pathAndName);
 				
+				cloudStorage = CloudStorage.DROPBOX;
+				
 			} catch (Exception e) {
 				logger.error("~~~~~ Upload file to Dropbox failed, original file name: <{}>, Dropbox path and name: <{}>, error-msg: <{}>", e.getMessage());
 				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 			}
 		}
+    	return cloudStorage;
     }
     
     /**
@@ -84,11 +93,14 @@ public class FileService {
      * 上傳大頭照到 Amazon S3 或 Dropbox
      * </pre>
      * 
-     * @param multipartFile
+     * @param multipartFile 欲上傳的檔案
+     * 
+     * @return {@link CloudStorage} 最後儲存的雲端空間
      */
-    public void uploadProfileImage(MultipartFile multipartFile) {
+    public CloudStorage uploadProfileImage(MultipartFile multipartFile) {
     	String pathAndName = getProfileImagePathAndName();
-		uploadFile(multipartFile, pathAndName);
+		CloudStorage cloudStorage = uploadFile(multipartFile, pathAndName);
+		return cloudStorage;
 	}
     
     /**
@@ -96,8 +108,13 @@ public class FileService {
 	 * 從 Amazon S3 或 Dropbox 刪除大頭照
 	 * </pre>
 	 * 
+	 * @param pathAndName 欲刪除的路徑
+	 * 
+	 * @return {@link CloudStorage} 最後刪除的雲端空間
 	 */
-	public void deleteFile(String pathAndName) {
+	public CloudStorage deleteFile(String pathAndName) {
+		CloudStorage cloudStorage = null;
+		
 		boolean deleteFromAmazonS3Succeed;
 		if (amazonS3Service.isEnable()) {
 			try {
@@ -107,6 +124,7 @@ public class FileService {
 				
 				logger.info("<<<<< Delete file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
 				
+				cloudStorage = CloudStorage.AMAZON_S3;
 				deleteFromAmazonS3Succeed = true;
 			}
 			catch (Exception e) {
@@ -128,22 +146,28 @@ public class FileService {
 				deleteFileFromDropbox(pathAndName);
 				
 				logger.info("<<<<< Delete file from Dropbox succeed, Dropbox path and name: <{}>", pathAndName);
+				
+				cloudStorage = CloudStorage.DROPBOX;
 
 			} catch (Exception e) {
 				logger.error("~~~~~ Delete file from dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", e.getMessage());
 				throw new OperationException(ResultCode.DELETE_FILE_FAILED);
 			}
 		}
+		return cloudStorage;
 	}
 
 	/**
      * <pre>
-     * 從 Amazon S3 或 Dropbox 刪除檔案
+     * 從 Amazon S3 或 Dropbox 刪除大頭照
      * </pre>
+     * 
+	 * @return {@link CloudStorage} 最後刪除的雲端空間 
      */
-    public void deleteProfileImage() {
+    public CloudStorage deleteProfileImage() {
     	String pathAndName = getProfileImagePathAndName();
-    	deleteFile(pathAndName);
+    	CloudStorage cloudStorage = deleteFile(pathAndName);
+    	return cloudStorage;
     }
     
     /**
@@ -155,8 +179,9 @@ public class FileService {
 	 * 			
 	 * </pre>
 	 * 
-	 * @param multipartFile
-	 * @param pathAndName
+	 * @param multipartFile 欲上傳的檔案
+	 * @param pathAndName 欲放在 Amazon S3 的路徑
+	 * 
 	 * @throws IOException 
 	 */
 	private void uploadFileToAmazonS3(MultipartFile multipartFile, String pathAndName) throws IOException {
@@ -178,8 +203,9 @@ public class FileService {
 	 * 
 	 * </pre>
 	 * 
-	 * @param multipartFile
-	 * @param pathAndName
+	 * @param multipartFile 欲上傳的檔案
+	 * @param pathAndName 欲放在 Dropbox 的路徑
+	 * 
 	 * @throws Exception
 	 */
 	private void uploadFileToDropbox(MultipartFile multipartFile, String pathAndName) throws Exception {
@@ -196,6 +222,8 @@ public class FileService {
 	 * <pre>
 	 * 從 Amazon S3 刪除檔案
 	 * </pre>
+	 * 
+	 * @param pathAndName 欲刪除 Amazon S3 的檔案路徑
 	 * 
 	 * @throws Exception 
 	 */
@@ -214,8 +242,9 @@ public class FileService {
 	 * 從 Dropbox 刪除檔案
 	 * </pre>
 	 * 
-	 * @throws Exception 
+	 * @param pathAndName 欲刪除 Dropbox 的檔案路徑
 	 * 
+	 * @throws Exception 
 	 */
 	private void deleteFileFromDropbox(String pathAndName) throws Exception {
 		long startTime = System.currentTimeMillis();
@@ -229,7 +258,7 @@ public class FileService {
 
 	/**
 	 * <pre>
-	 * 取得要儲存檔案位置
+	 * 取得要儲存大頭照的檔案位置
 	 * </pre>
 	 * 
 	 * @return
