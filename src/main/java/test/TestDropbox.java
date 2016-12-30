@@ -63,7 +63,7 @@ public class TestDropbox {
 	
 	private void getContentsOfFolder() throws ListFolderErrorException, DbxException {
 		System.out.println("===== Try to get contents of folder =====");
-		
+			
 		ListFolderResult result = client.files().listFolder("");
 		while (true) {
 		    for (Metadata metadata : result.getEntries()) {

@@ -1,6 +1,5 @@
 package com.exfantasy.template.services.user;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -26,8 +25,7 @@ import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
-import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
-import com.exfantasy.template.services.dropbox.DropboxService;
+import com.exfantasy.template.services.file.FileService;
 import com.exfantasy.template.vo.request.RegisterVo;
 
 /**
@@ -43,8 +41,6 @@ import com.exfantasy.template.vo.request.RegisterVo;
 public class UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
-	private final String PROFILE_IMAGE_NAME = "profileImage.jpg";
-	
     @Autowired
     private UserMapper userMapper;
     
@@ -55,10 +51,7 @@ public class UserService {
     private CustomConfig customConfig;
     
     @Autowired
-	private AmazonS3Service amazonS3Service;
-    
-    @Autowired
-    private DropboxService dropboxService;
+    private FileService fileService;
     
     /**
      * <pre>
@@ -188,48 +181,21 @@ public class UserService {
 
     /**
      * <pre>
-     * 上傳大頭照到 AmazonS3
+     * 上傳大頭照到雲端空間
      * </pre>
      * 
      * @param multipartFile
      */
-	public void uploadProfileImageToAmazonS3(MultipartFile multipartFile) {
-		String s3ProfileImageFolderAndName = getProfileImagePathName();
-
-		long startTime = System.currentTimeMillis();
-		logger.info(">>>>> Prepare to upload profile image to Amazon S3, save-file-path: <{}>", s3ProfileImageFolderAndName);
-
-		try {
-			amazonS3Service.upload(multipartFile, s3ProfileImageFolderAndName);
-		} catch (IOException e) {
-			logger.error("Upload profile file image to Amazon S3 failed", e);
-			throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
-		}
-		
-		long timeSpent = System.currentTimeMillis() - startTime;
-		logger.info("<<<<< Upload profile image to Amazon S3 done, time-spent: <{} ms>", timeSpent);
+	public void uploadProfileImage(MultipartFile multipartFile) {
+		fileService.uploadProfileImage(multipartFile);
 	}
 	
 	/**
 	 * <pre>
-	 * 從 AmazonS3 刪除大頭照
+	 * 從雲端空間刪除大頭照
 	 * </pre>
 	 */
-	public void deleteProfileImageFromAmazonS3() {
-		String s3ProfileImagePathName = getProfileImagePathName();
-		amazonS3Service.deleteFile(s3ProfileImagePathName);
+	public void deleteProfileImage() {
+		fileService.deleteProfileImage();
 	}
-	
-	/**
-	 * <pre>
-	 * 取得要儲存檔案位置
-	 * </pre>
-	 * 
-	 * @return
-	 */
-	private String getProfileImagePathName() {
-		User user = getLoginUser();
-		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
-	}
-    
 }

@@ -57,6 +57,10 @@ public class AmazonS3Service {
 
 	@Value("${aws.s3.bucket}")
 	private String bucket;
+	
+	private boolean isEnable = true;
+	
+	private String errorMsg;
 
 	private PutObjectResult upload(InputStream inputStream, String folderAndName) throws IOException {
 		ObjectMetadata metadata = new ObjectMetadata();
@@ -74,6 +78,22 @@ public class AmazonS3Service {
 		IOUtils.closeQuietly(inputStream);
 
 		return putObjectResult;
+	}
+	
+	public void setDisable() {
+		this.isEnable = false;
+	}
+	
+	public boolean isEnable() {
+		return this.isEnable;
+	}
+	
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+	
+	public String getErrorMsg() {
+		return this.errorMsg;
 	}
 
 	/**
@@ -128,7 +148,7 @@ public class AmazonS3Service {
 	 * 
 	 * @param folderAndName 指定想從 Amazon S3 刪除檔案的存放路徑及檔名
 	 */
-	public void deleteFile(String folderAndName) {
+	public void deleteFile(String folderAndName) throws Exception {
 		amazonS3Client.deleteObject(bucket, folderAndName);
 	}
 	

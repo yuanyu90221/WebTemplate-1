@@ -119,9 +119,9 @@ public class TestController {
 		return "Response your data: " + data;
 	}
 	
-	@RequestMapping(value = "/testGetFileFromAmazonS3", method = RequestMethod.GET)
+	@RequestMapping(value = "/testAmazonS3GetFile", method = RequestMethod.GET)
 	@ApiOperation(value = "測試從 Amazon S3 取回檔案", response = byte[].class)
-	public ResponseEntity<byte[]> testGetFileFromAmazonS3(@RequestParam(value = "folderAndName", required = true) String folderAndName) {
+	public ResponseEntity<byte[]> testAmazonS3GetFile(@RequestParam(value = "folderAndName", required = true) String folderAndName) {
 		ResponseEntity<byte[]> downloadedFile;
 		try {
 			downloadedFile = amazonS3Service.download(folderAndName);
@@ -132,16 +132,16 @@ public class TestController {
 		return downloadedFile;
 	}
 	
-	@RequestMapping(value = "/testListAmazonS3", method = RequestMethod.GET)
-	@ApiOperation(value = "測試從 Amazon S3 list 出所有資訊")
-	public @ResponseBody List<S3ObjectSummary> testListAmazonS3() {
+	@RequestMapping(value = "/testAmazonS3ListFiles", method = RequestMethod.GET)
+	@ApiOperation(value = "測試從 Amazon S3 list 出所有檔案資訊")
+	public @ResponseBody List<S3ObjectSummary> testAmazonS3ListFiles() {
 		List<S3ObjectSummary> list = amazonS3Service.list();
 		return list;
 	}
 	
-	@RequestMapping(value = "/testShowDropboxAccountInformation", method = RequestMethod.GET)
-	@ApiOperation(value = "測試 log Dropbox Account 資訊")
-	public @ResponseBody String testShowDropboxAccountInformation() {
-		return dropboxService.showAccountInformation();
+	@RequestMapping(value = "/testDropboxGetAccountInformation", method = RequestMethod.GET)
+	@ApiOperation(value = "測試取出 Dropbox Account 資訊")
+	public @ResponseBody String testDropboxGetAccountInformation() {
+		return dropboxService.getAccountInformation();
 	}
 }

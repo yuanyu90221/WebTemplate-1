@@ -38,11 +38,14 @@ public enum ResultCode {
 	/** Code: 8002, Message: 上傳檔案失敗 */
 	UPLOAD_FILE_FAILED(8002, "Upload file failed"),
 	
+	/** Code: 8003, Message: 刪除檔案失敗 */
+	DELETE_FILE_FAILED(8002, "Delte file failed"),
+	
 	/** Code: 9001, Message: Amazon S3 服務不允許使用 */
-	AMAZON_S3_IS_NOT_ENABLED(9001, "Amazon S3 service is not enabled"),
+	AMAZON_S3_SERVICE_IS_NOT_AVAILABLE(9001, "Amazon S3 service is not avaiable"),
 
 	/** Code: 9999, Message: 系統發生錯誤 */
-	SYSTEM_EXCEPTION(9999, "")
+	SYSTEM_EXCEPTION(9999, ""),
 	;
 	
 	private final int code;
