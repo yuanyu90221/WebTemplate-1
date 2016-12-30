@@ -17,6 +17,9 @@ import com.dropbox.core.v2.users.FullAccount;
 public class TestDropbox {
 	private DbxClientV2 client;
 	
+	private static final String FILE_TO_UPLOAD = "D:/小丑女.jpg";
+	private static final String DROP_BOX_SAVE_PATH = "/tommy.yeh1112@gmail.com/ClownWoman.jpg";
+
 	public TestDropbox(String accessToken) {
 		DbxRequestConfig config = DbxRequestConfig.newBuilder("TommyTest").build();
 		client = new DbxClientV2(config, accessToken);
@@ -25,22 +28,27 @@ public class TestDropbox {
 	private void start() throws DbxException, IOException {
 		getAccountInformation();
 		
+		System.out.println();
+		
 		tryingUpload();
+		
+		System.out.println();
 
 		getContentsOfFolder();
 	}
 
 	private void tryingUpload() throws UploadErrorException, DbxException, IOException {
-		System.out.println("------ Try to upload file to DropBox ------");
+		System.out.println("===== Trying to upload file to DropBox =====");
 		System.out.println(">>>>> Try to upload file to DropBox");
-		try (InputStream in = new FileInputStream("D:/Test.txt")) {
-			FileMetadata meradata = client.files().uploadBuilder("/Test.txt").uploadAndFinish(in);
-		}
+		try (InputStream in = new FileInputStream(FILE_TO_UPLOAD)) {
+			FileMetadata metadata = client.files().uploadBuilder(DROP_BOX_SAVE_PATH).uploadAndFinish(in);
+			System.out.println("Dropbox information -> Name: " + metadata.getName() + ", PathDisplay: " + metadata.getPathDisplay());
+		} 
 		System.out.println("<<<<< Upload file to dropbox done");
 	}
 
 	private void getAccountInformation() throws DbxException {
-		System.out.println("------ Try to get DropBox account information ------");
+		System.out.println("===== Try to get DropBox account information =====");
 		
 		FullAccount account = client.users().getCurrentAccount();
 		System.out.println("Account Id: " + account.getAccountId());
@@ -54,7 +62,7 @@ public class TestDropbox {
 	}
 	
 	private void getContentsOfFolder() throws ListFolderErrorException, DbxException {
-		System.out.println("------- Try to get contents of folder -------");
+		System.out.println("===== Try to get contents of folder =====");
 		
 		ListFolderResult result = client.files().listFolder("");
 		while (true) {
