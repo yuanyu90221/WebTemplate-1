@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
-import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
+import com.exfantasy.template.services.amazon.AmazonS3Service;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.user.UserService;
 

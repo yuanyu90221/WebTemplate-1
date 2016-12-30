@@ -1,4 +1,4 @@
-package com.exfantasy.template.services.amazon.s3;
+package com.exfantasy.template.services.amazon;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

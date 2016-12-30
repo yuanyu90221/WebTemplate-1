@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
-import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
+import com.exfantasy.template.services.amazon.AmazonS3Service;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.vo.response.RespCommon;
