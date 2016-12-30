@@ -31,7 +31,13 @@ import com.exfantasy.template.vo.request.RegisterVo;
 
 /**
  * <pre>
- * 處理使用者相關邏輯 
+ * 處理使用者相關邏輯
+ * 
+ * Cache 機制使用參考:
+ * <a href="https://spring.io/guides/gs/caching/">Caching Data with Spring</a>
+ * <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html#cache-spel-context">Cache Document</a>
+ * <a href="http://javasampleapproach.com/spring-framework/cache-data-spring-cache-using-spring-boot">Spring Boot Cache Example</a>
+ *  
  * </pre>
  * 
  * @author tommy.feng
@@ -89,12 +95,6 @@ public class UserService {
     /**
      * <pre>
      * 根據傳入的 email 查詢對應使用者
-     * 
-     * 此 Method 有 cache 機制
-     * 
-     * <a href="https://spring.io/guides/gs/caching/">Caching Data with Spring</a>
-     * <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html#cache-spel-context">Cache Document</a>
-     * 
      * </pre>
      * 
      * @param email
@@ -102,6 +102,7 @@ public class UserService {
      */
     @Cacheable(cacheNames = "users", key = "#email")
 	public User queryUserByEmail(String email) {
+    	logger.info(">>>>>>>>>>>>> IN queryUserByEmail");
 		UserExample example = new UserExample();
 		example.createCriteria().andEmailEqualTo(email);
 		List<User> user = userMapper.selectByExample(example);
@@ -116,6 +117,7 @@ public class UserService {
 	 * @param email
 	 * @return
 	 */
+    @Cacheable(cacheNames = "userRolesByEmail", key = "#email")
 	public List<UserRole> queryUserRolesByEmail(String email) {
 		User user = queryUserByEmail(email);
 		if (user == null) {
@@ -132,6 +134,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
+    @Cacheable(cacheNames = "userRolesById", key = "#user.getUserId()")
 	public List<UserRole> queryUserRoles(User user) {
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
