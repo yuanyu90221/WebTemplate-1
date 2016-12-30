@@ -2,12 +2,6 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
     datasource:
-        # Local database
-        # url: jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
-        # username: tommy
-        # password: 7Kcr4iv3
-
-        # Heroku ClearDB
         url: ${DB_URL}
         username: ${DB_USERNAME}
         password: ${DB_PASSWORD}
