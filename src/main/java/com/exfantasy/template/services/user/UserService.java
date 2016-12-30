@@ -168,11 +168,13 @@ public class UserService {
      * 
      * <a href="https://spring.io/guides/gs/caching/">Caching Data with Spring</a>
      * 
+     * Bug: 這樣 cache 不同 session 會抓到重複的
+     * 
      * </pre>
      * 
      * @return
      */
-    @Cacheable("loginUser")
+//    @Cacheable("loginUser")
     public User getLoginUser() {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
