@@ -9,6 +9,7 @@ WebTemplate
 		-DDB_PASSWORD=7Kcr4iv3
 		-DMAIL_USERNAME=exfantasy7wolves
 		-DMAIL_PASSWORD=meywlnxyckgerkgw
+		-DDROPBOX_ACCESS_TOKEN=QCui-bxEe6QAAAAAAAH3a6Qu7Se97gGIgxZ0_pEnYNBPfBmtbzjrgS6QU297mbzi
 	
 TestDropbox
 	

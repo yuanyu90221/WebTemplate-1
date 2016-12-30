@@ -21,6 +21,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
+import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.vo.response.RespCommon;
 
@@ -47,6 +48,9 @@ public class TestController {
 	
 	@Autowired
 	private AmazonS3Service amazonS3Service;
+	
+	@Autowired
+	private DropboxService dropboxService;
 	
 	/**
 	 * <pre>
@@ -133,5 +137,11 @@ public class TestController {
 	public @ResponseBody List<S3ObjectSummary> testListAmazonS3() {
 		List<S3ObjectSummary> list = amazonS3Service.list();
 		return list;
+	}
+	
+	@RequestMapping(value = "/testShowDropboxAccountInformation", method = RequestMethod.GET)
+	@ApiOperation(value = "測試 log Dropbox Account 資訊")
+	public @ResponseBody String testShowDropboxAccountInformation() {
+		return dropboxService.showAccountInformation();
 	}
 }

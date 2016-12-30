@@ -107,7 +107,7 @@ public class UserController {
 	@ApiOperation(value = "上傳大頭貼")
 	public @ResponseBody RespCommon updateProfileImage(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
 		if (!multipartFile.isEmpty()) {
-			userService.uploadProfileImage(multipartFile);
+			userService.uploadProfileImageToAmazonS3(multipartFile);
 			return new RespCommon(ResultCode.SUCCESS, "Upload profile image succeed");
 		}
 		else {
@@ -126,7 +126,7 @@ public class UserController {
 	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
 	@ApiOperation(value = "刪除大頭貼")
 	public @ResponseBody RespCommon deleteProfileImage() {
-		userService.deleteProfileImage();
+		userService.deleteProfileImageFromAmazonS3();
 		return new RespCommon(ResultCode.SUCCESS, "Delete profile image succeed");
 	}
 }

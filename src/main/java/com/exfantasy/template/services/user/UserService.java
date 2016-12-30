@@ -27,6 +27,7 @@ import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.services.amazon.s3.AmazonS3Service;
+import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.vo.request.RegisterVo;
 
 /**
@@ -55,6 +56,9 @@ public class UserService {
     
     @Autowired
 	private AmazonS3Service amazonS3Service;
+    
+    @Autowired
+    private DropboxService dropboxService;
     
     /**
      * <pre>
@@ -184,13 +188,13 @@ public class UserService {
 
     /**
      * <pre>
-     * 上傳大頭照
+     * 上傳大頭照到 AmazonS3
      * </pre>
      * 
      * @param multipartFile
      */
-	public void uploadProfileImage(MultipartFile multipartFile) {
-		String s3ProfileImageFolderAndName = getS3ProfileImagePathName();
+	public void uploadProfileImageToAmazonS3(MultipartFile multipartFile) {
+		String s3ProfileImageFolderAndName = getProfileImagePathName();
 
 		long startTime = System.currentTimeMillis();
 		logger.info(">>>>> Prepare to upload profile image to Amazon S3, save-file-path: <{}>", s3ProfileImageFolderAndName);
@@ -208,22 +212,22 @@ public class UserService {
 	
 	/**
 	 * <pre>
-	 * 刪除大頭照
+	 * 從 AmazonS3 刪除大頭照
 	 * </pre>
 	 */
-	public void deleteProfileImage() {
-		String s3ProfileImagePathName = getS3ProfileImagePathName();
+	public void deleteProfileImageFromAmazonS3() {
+		String s3ProfileImagePathName = getProfileImagePathName();
 		amazonS3Service.deleteFile(s3ProfileImagePathName);
 	}
 	
 	/**
 	 * <pre>
-	 * 取得要儲存在 Amazon S3 的檔案位置
+	 * 取得要儲存檔案位置
 	 * </pre>
 	 * 
 	 * @return
 	 */
-	private String getS3ProfileImagePathName() {
+	private String getProfileImagePathName() {
 		User user = getLoginUser();
 		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
 	}
