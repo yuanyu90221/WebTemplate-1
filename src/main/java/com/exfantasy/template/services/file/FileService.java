@@ -42,26 +42,36 @@ public class FileService {
     	boolean uploadToAmazonS3Succeed;
     	if (amazonS3Service.isEnable()) {
     		try {
+    			logger.info(">>>>> Trying to upload file to Amazon S3, path and name: <{}>", pathAndName);
+    			
     			uploadFileToAmazonS3(multipartFile, pathAndName);
+    			
+    			logger.info("<<<<< Upload file to Amazon S3 succeed, path and name: <{}>", pathAndName);
+    			
     			uploadToAmazonS3Succeed = true;
     		}
     		catch (Exception e) {
     			amazonS3Service.setDisable();
     			amazonS3Service.setErrorMsg(e.getMessage());
-    			logger.warn("Upload file to Amazon S3 failed, path and name: <{}>, try to upload to dropbox, error-msg: <{}>", pathAndName, e.getMessage());
+    			logger.warn("~~~~~ Upload file to Amazon S3 failed, path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage());
     			uploadToAmazonS3Succeed = false;
     		} 
     	}
     	else {
-    		logger.warn("Amazon S3 service is not available, try to upload to dropbox, error-msg: <{}>", amazonS3Service.getErrorMsg());
+    		logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
     		uploadToAmazonS3Succeed = false;
     	}
     	
     	if (!uploadToAmazonS3Succeed) {
 			try {
+				logger.info(">>>>> Trying to upload file to Dropbox, path and name: <{}>", pathAndName);
+				
 				uploadFileToDropbox(multipartFile, pathAndName);
+				
+				logger.info("<<<<< Upload file to Dropbox succeed, path and name: <{}>", pathAndName);
+				
 			} catch (Exception e) {
-				logger.error("Upload file to dropbox failed, path and name: <{}>, error-msg: <{}>", e.getMessage());
+				logger.error("~~~~~ Upload file to dropbox failed, path and name: <{}>, error-msg: <{}>", e.getMessage());
 				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 			}
 		}
@@ -89,26 +99,36 @@ public class FileService {
 		boolean deleteFromAmazonS3Succeed;
 		if (amazonS3Service.isEnable()) {
 			try {
+				logger.info(">>>>> Trying to delete file from Amazon S3, path and name: <{}>", pathAndName);
+				
 				deleteFileFromAmazonS3(pathAndName);
+				
+				logger.info("<<<<< Delete file from Amazon S3, path and name: <{}>", pathAndName);
+				
 				deleteFromAmazonS3Succeed = true;
 			}
 			catch (Exception e) {
 				amazonS3Service.setDisable();
 				amazonS3Service.setErrorMsg(e.getMessage());
-				logger.error("Delete file from Amazon S3 failed, path and name: <{}>, try to delete from dropbox, error-msg: <{}>", e.getMessage());
+				logger.error("~~~~~ Delete file from Amazon S3 failed, path and name: <{}>, try to delete from dropbox, error-msg: <{}>", e.getMessage());
 				deleteFromAmazonS3Succeed = false;
 			}
 		}
 		else {
-			logger.warn("Amazon S3 service is not available, try to delete from dropbox, error-msg: <{}>", amazonS3Service.getErrorMsg());
+			logger.warn("~~~~~ Amazon S3 service is not available, try to delete from dropbox, error-msg: <{}>", amazonS3Service.getErrorMsg());
 			deleteFromAmazonS3Succeed = false;
 		}
 		
 		if (!deleteFromAmazonS3Succeed) {
 			try {
+				logger.info(">>>>> Trying to delete file from Dropbox, path and name: <{}>", pathAndName);
+				
 				deleteFileFromDropbox(pathAndName);
+				
+				logger.info("<<<<< Delete file from Dropbox succeed, path and name: <{}>", pathAndName);
+
 			} catch (Exception e) {
-				logger.error("Delete file from dropbox failed, path and name: <{}>, error-msg: <{}>", e.getMessage());
+				logger.error("~~~~~ Delete file from dropbox failed, path and name: <{}>, error-msg: <{}>", e.getMessage());
 				throw new OperationException(ResultCode.DELETE_FILE_FAILED);
 			}
 		}
@@ -139,12 +159,12 @@ public class FileService {
 	 */
 	private void uploadFileToAmazonS3(MultipartFile multipartFile, String pathAndName) throws IOException {
 		long startTime = System.currentTimeMillis();
-		logger.info(">>>>> Prepare to upload file to Amazon S3, save-file-path: <{}>", pathAndName);
+		logger.info("-----> Prepare to upload file to Amazon S3, save-file-path: <{}>", pathAndName);
 
 		amazonS3Service.upload(multipartFile, pathAndName);
 		
 		long timeSpent = System.currentTimeMillis() - startTime;
-		logger.info("<<<<< Upload file to Amazon S3 done, time-spent: <{} ms>", timeSpent);
+		logger.info("<----- Upload file to Amazon S3 done, time-spent: <{} ms>", timeSpent);
 	}
 	
 	/**
@@ -162,12 +182,12 @@ public class FileService {
 	 */
 	private void uploadFileToDropbox(MultipartFile multipartFile, String pathAndName) throws Exception {
 		long startTime = System.currentTimeMillis();
-		logger.info(">>>>> Prepare to upload file to Dropbox, save-file-path: <{}>", pathAndName);
+		logger.info("----> Prepare to upload file to Dropbox, save-file-path: <{}>", pathAndName);
 		
 		dropboxService.upload(multipartFile, pathAndName);
 		
 		long timeSpent = System.currentTimeMillis() - startTime;
-		logger.info("<<<<< Upload file to Dropbox done, time-spent: <{} ms>", timeSpent);
+		logger.info("<---- Upload file to Dropbox done, time-spent: <{} ms>", timeSpent);
 	}
 	
 	/**
@@ -178,7 +198,13 @@ public class FileService {
 	 * @throws Exception 
 	 */
 	private void deleteFileFromAmazonS3(String pathAndName) throws Exception {
+		long startTime = System.currentTimeMillis();
+		logger.info("----> Prepare to delete file from Amazon S3, save-file-path: <{}>", pathAndName);
+		
 		amazonS3Service.deleteFile(pathAndName);
+		
+		long timeSpent = System.currentTimeMillis() - startTime;
+		logger.info("<---- Delete file from Amazon S3 done, time-spent: <{} ms>", timeSpent);
 	}
 
 	/**
@@ -190,7 +216,13 @@ public class FileService {
 	 * 
 	 */
 	private void deleteFileFromDropbox(String pathAndName) throws Exception {
+		long startTime = System.currentTimeMillis();
+		logger.info("----> Prepare to delete file from Dropbox, save-file-path: <{}>", pathAndName);
+		
 		dropboxService.delete(pathAndName);
+		
+		long timeSpent = System.currentTimeMillis() - startTime;
+		logger.info("<---- Delete file from Dropbox done, time-spent: <{} ms>", timeSpent);
 	}
 
 	/**
