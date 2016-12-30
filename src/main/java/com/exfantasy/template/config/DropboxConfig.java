@@ -11,7 +11,7 @@ import com.dropbox.core.v2.DbxClientV2;
  * <pre>
  * 關於 Dropbox 的設定
  * 
- * <a href="https://www.dropbox.com/developers/documentation/java#tutorial">Dropbox Java Tutorial</a>
+ * 參考: <a href="https://www.dropbox.com/developers/documentation/java#tutorial">Dropbox Java Tutorial</a>
  * </pre>
  * 
  * @author tommy.feng

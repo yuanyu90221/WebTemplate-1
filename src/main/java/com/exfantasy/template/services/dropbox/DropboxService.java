@@ -15,6 +15,15 @@ import com.dropbox.core.v2.files.DeleteErrorException;
 import com.dropbox.core.v2.files.UploadErrorException;
 import com.dropbox.core.v2.users.FullAccount;
 
+/**
+ * <pre>
+ * 對 Dropbox 進行一些操作
+ * 
+ * 參考: <a href="https://www.dropbox.com/developers/documentation/java#tutorial">Dropbox Java Tutorial</a>
+ * </pre>
+ * @author tommy.feng
+ *
+ */
 @Service
 public class DropboxService {
 	
