@@ -27,8 +27,8 @@ spring:
         
 # -------- Mail Config --------
 mail:
-    username: exfantasy7wolves
-    password: meywlnxyckgerkgw
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     
 # -------- Amazon S3 Config --------
 aws:

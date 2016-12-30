@@ -2,4 +2,8 @@ Main class:
 	com.exfantasy.template.Application
 
 VM arguments:
-	-DDB_URL=jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true -DDB_USERNAME=tommy -DDB_PASSWORD=7Kcr4iv3
+	-DDB_URL=jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+	-DDB_USERNAME=tommy
+	-DDB_PASSWORD=7Kcr4iv3
+	-DMAIL_USERNAME=exfantasy7wolves
+	-DMAIL_PASSWORD=meywlnxyckgerkgw
