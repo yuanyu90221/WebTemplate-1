@@ -89,11 +89,18 @@ public class UserService {
     /**
      * <pre>
      * 根據傳入的 email 查詢對應使用者
+     * 
+     * 此 Method 有 cache 機制
+     * 
+     * <a href="https://spring.io/guides/gs/caching/">Caching Data with Spring</a>
+     * <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html#cache-spel-context">Cache Document</a>
+     * 
      * </pre>
      * 
      * @param email
      * @return
      */
+    @Cacheable(cacheNames = "users", key = "#email")
 	public User queryUserByEmail(String email) {
 		UserExample example = new UserExample();
 		example.createCriteria().andEmailEqualTo(email);
@@ -164,17 +171,10 @@ public class UserService {
      * 
      * <a href="https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/">從 Spring Security 取得登入者資訊</a>
      * 
-     * 此 Method 有 cache 機制
-     * 
-     * <a href="https://spring.io/guides/gs/caching/">Caching Data with Spring</a>
-     * 
-     * Bug: 這樣 cache 不同 session 會抓到重複的
-     * 
      * </pre>
      * 
      * @return
      */
-//    @Cacheable("loginUser")
     public User getLoginUser() {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
