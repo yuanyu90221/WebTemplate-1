@@ -18,17 +18,21 @@ public class TestDropbox {
 	}
 
 	private void start() throws DbxException, IOException {
-		getAllFileOfSpecificdFolder();
+		getAllFileOfSpecificdFolder("/tommy.yeh1112@gmail.com");
+		
+		System.out.print("\n\n");
 		
 		getAllFoldersAndFiles();
 		
-		getContentsOfFolders();
+		System.out.print("\n\n");
+		
+		getContentsOfRootFolders();
 	}
 
-	private void getAllFileOfSpecificdFolder() throws ListFolderErrorException, DbxException {
+	private void getAllFileOfSpecificdFolder(String folder) throws ListFolderErrorException, DbxException {
 		System.out.println("===== Try to get all files of specificed folder  =====");
 		
-		ListFolderResult result = client.files().listFolder("/tommy.yeh1112@gmail.com");
+		ListFolderResult result = client.files().listFolder(folder);
 		while (true) {
 			for (Metadata metadata : result.getEntries()) {
 				System.out.println("Name: " + metadata.getName());
@@ -67,8 +71,8 @@ public class TestDropbox {
 		}
 	}
 
-	private void getContentsOfFolders() throws ListFolderErrorException, DbxException {
-		System.out.println("===== Try to get contents of folders =====");
+	private void getContentsOfRootFolders() throws ListFolderErrorException, DbxException {
+		System.out.println("===== Try to get contents of root folders =====");
 			
 		ListFolderResult result = client.files().listFolder("");
 		while (true) {
