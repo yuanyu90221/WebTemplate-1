@@ -80,7 +80,7 @@ public class UserController {
 	 * @param email 用戶當初註冊的 email
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 用戶資訊 
 	 */
-	@RequestMapping(value = "/get_by_email", method = RequestMethod.GET)
+	@RequestMapping(value = "/get_user_by_email", method = RequestMethod.GET)
 	@ApiOperation(value = "使用 email 查詢用戶")
 	public @ResponseBody User queryUserByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserByEmail(email);
