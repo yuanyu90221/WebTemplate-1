@@ -19,6 +19,7 @@ import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserRole;
+import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
@@ -44,6 +45,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SessionService sessionService;
 	
 	/**
 	 * <pre>
@@ -95,6 +99,20 @@ public class UserController {
 	public @ResponseBody List<UserRole> queryUserRolesByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserRolesByEmail(email);
 	}
+	
+	/**
+	 * <pre>
+	 * 取得登入者的資訊
+	 * </pre>
+	 * 
+	 * @return {@link com.exfantasy.template.mybatis.model.User}
+	 */
+	@RequestMapping(value = "/get_my_information", method = RequestMethod.GET)
+	@ApiOperation(value = "取得我(登入者)的資訊")
+	public @ResponseBody User getMyInformation() {
+		return sessionService.getLoginUser();
+	}
+	
 
 	/**
 	 * <pre>

@@ -122,7 +122,7 @@ public class FileService {
 				
 				deleteFileFromAmazonS3(pathAndName);
 				
-				logger.info("<<<<< Delete file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+				logger.info("<<<<< Delete file from Amazon S3 succeed, Amazon S3 path and name: <{}>", pathAndName);
 				
 				cloudStorage = CloudStorage.AMAZON_S3;
 				deleteFromAmazonS3Succeed = true;
