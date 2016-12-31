@@ -18,7 +18,7 @@ import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.Activity;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.activity.ActivityService;
-import com.exfantasy.template.services.user.UserService;
+import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.ActivityMessageVo;
 import com.exfantasy.template.vo.request.ActivityVo;
@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiParam;
 public class ActivityController {
 	
 	@Autowired
-	private UserService userService;
+	private SessionService sessionService;
 	
 	@Autowired
 	private ActivityService activityService;
@@ -62,7 +62,7 @@ public class ActivityController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		activityService.createActivity(user, activityVo);
 		return new RespCommon(ResultCode.SUCCESS, "Create activity succeed");
@@ -79,7 +79,7 @@ public class ActivityController {
 	@RequestMapping(value = "/joinActivity/{activityId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "參加活動", notes = "參加活動", response = RespCommon.class)
 	public @ResponseBody RespCommon joinActivity(@ApiParam("欲參加的活動 ID") @PathVariable("activityId") Integer activityId) {
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		activityService.joinActivity(user.getUserId(), activityId);
 		
@@ -96,7 +96,7 @@ public class ActivityController {
 	@RequestMapping(value = "/get_created_activities", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢使用者所建立的活動", notes = "查詢使用者所建立的活動", response = Activity.class)
 	public @ResponseBody List<Activity> getCreatedActivities() {
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		List<Activity> activities = activityService.getCreatedActivities(user);
 		
@@ -113,7 +113,7 @@ public class ActivityController {
 	@RequestMapping(value = "/get_joined_activities", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢使用者參與的所有的活動", notes = "查詢使用者參與的所有的活動", response = Activity.class)
 	public @ResponseBody List<Activity> getJoinedActivities() {
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		List<Activity> activities = activityService.getJoinedActivities(user);
 		
@@ -156,7 +156,7 @@ public class ActivityController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		activityService.leaveMessage(user.getUserId(), activityMsgVo.getActivityId(), activityMsgVo.getMessage());
 		

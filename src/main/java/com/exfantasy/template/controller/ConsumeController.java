@@ -21,7 +21,7 @@ import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.consume.ConsumeService;
-import com.exfantasy.template.services.user.UserService;
+import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.util.ErrorMsgUtil;
 import com.exfantasy.template.vo.request.ConsumeVo;
 import com.exfantasy.template.vo.response.RespCommon;
@@ -47,7 +47,7 @@ import io.swagger.annotations.ApiOperation;
 public class ConsumeController {
 	
 	@Autowired
-	private UserService userService;
+	private SessionService sessionService;
 	
 	@Autowired
 	private ConsumeService consumeService;
@@ -72,7 +72,7 @@ public class ConsumeController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		consumeService.addConsume(user, consumeVo);
 		return new RespCommon(ResultCode.SUCCESS, "Add consume data succeed");
@@ -98,7 +98,7 @@ public class ConsumeController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		consumeService.updConsume(user, consumeVo);
 		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
@@ -124,7 +124,7 @@ public class ConsumeController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		consumeService.delConsume(user, consumeVo);
 		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
@@ -162,7 +162,7 @@ public class ConsumeController {
 			setEndDateTime(endDate);
 		}
 		
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		
 		List<Consume> consumes = consumeService.getConsume(user, startDate, endDate, type, prodName, lotteryNo);
 

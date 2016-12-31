@@ -14,7 +14,7 @@ import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.amazon.AmazonS3Service;
 import com.exfantasy.template.services.dropbox.DropboxService;
-import com.exfantasy.template.services.user.UserService;
+import com.exfantasy.template.services.session.SessionService;
 
 @Service
 public class FileService {
@@ -23,7 +23,7 @@ public class FileService {
 	private final String PROFILE_IMAGE_NAME = "profileImage.jpg";
 	
 	@Autowired
-	private UserService userService;
+	private SessionService sessionService;
 	
 	@Autowired
 	private AmazonS3Service amazonS3Service;
@@ -264,7 +264,7 @@ public class FileService {
 	 * @return
 	 */
 	private String getProfileImagePathAndName() {
-		User user = userService.getLoginUser();
+		User user = sessionService.getLoginUser();
 		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
 	}
 }
