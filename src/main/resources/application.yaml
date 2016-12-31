@@ -33,9 +33,9 @@ mail:
 # -------- Amazon S3 Config --------
 aws:
     s3:
-        bucket: tommy-web-service
-        accessKey: AKIAJ6ZV52IBT3NRKZJA
-        secretKey: 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
+        bucket: ${S3_BUCKET}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
         
 # -------- Dropbox Access Token --------
 dropbox:
