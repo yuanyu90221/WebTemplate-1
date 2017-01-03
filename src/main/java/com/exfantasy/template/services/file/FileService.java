@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -266,5 +267,20 @@ public class FileService {
 	private String getProfileImagePathAndName() {
 		User user = sessionService.getLoginUser();
 		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
+	}
+
+	/**
+	 * <pre>
+	 * 從雲端空間取得大頭照
+	 * </pre>
+	 * 
+	 * @param folderAndName
+	 * 
+	 * @return
+	 */
+	public ResponseEntity<byte[]> getProfileImage() {
+		String pathAndName = getProfileImagePathAndName();
+		ResponseEntity<byte[]> profileImage = amazonS3Service.download(pathAndName);
+		return profileImage;
 	}
 }

@@ -157,9 +157,9 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/get_profile_image", method = RequestMethod.GET)
 	@ApiOperation(value = "取得大頭貼", response = byte[].class)
-	public ResponseEntity<byte[]> getProfileImage(@RequestParam(value = "folderAndName", required = true) String folderAndName) {
+	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> downloadedFile = null;
-		// TODO 實作取得大頭貼
+		downloadedFile = userService.getProfileImage();
 		return downloadedFile;
 	}
 }

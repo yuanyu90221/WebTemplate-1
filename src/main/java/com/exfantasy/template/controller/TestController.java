@@ -123,12 +123,7 @@ public class TestController {
 	@ApiOperation(value = "測試從 Amazon S3 取回檔案", response = byte[].class)
 	public ResponseEntity<byte[]> testAmazonS3GetFile(@RequestParam(value = "folderAndName", required = true) String folderAndName) {
 		ResponseEntity<byte[]> downloadedFile;
-		try {
-			downloadedFile = amazonS3Service.download(folderAndName);
-		} catch (IOException e) {
-			logger.error("Try to download file from Amazon S3 with key: <{}> failed", folderAndName);
-			return null;
-		}
+		downloadedFile = amazonS3Service.download(folderAndName);
 		return downloadedFile;
 	}
 	

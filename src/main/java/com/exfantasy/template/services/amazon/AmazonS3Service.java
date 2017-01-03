@@ -102,12 +102,12 @@ public class AmazonS3Service {
 	 * </pre>
 	 * 
 	 * @param multipartFile 要上傳的檔案
-	 * @param folderAndName 指定上傳至 Amazon S3 存放路徑及檔名
+	 * @param pathAndName 指定上傳至 Amazon S3 存放路徑及檔名
 	 * @return 上傳結果
 	 * @throws IOException
 	 */
-	public PutObjectResult upload(MultipartFile multipartFile, String folderAndName) throws IOException {
-		return upload(multipartFile.getInputStream(), folderAndName);
+	public PutObjectResult upload(MultipartFile multipartFile, String pathAndName) throws IOException {
+		return upload(multipartFile.getInputStream(), pathAndName);
 	}
 
 	/**
@@ -146,25 +146,31 @@ public class AmazonS3Service {
 	 * 從 Amazon S3 刪除一個檔案
 	 * </pre>
 	 * 
-	 * @param folderAndName 指定想從 Amazon S3 刪除檔案的存放路徑及檔名
+	 * @param pathAndName 指定想從 Amazon S3 刪除檔案的存放路徑及檔名
 	 */
-	public void deleteFile(String folderAndName) throws Exception {
-		amazonS3Client.deleteObject(bucket, folderAndName);
+	public void deleteFile(String pathAndName) throws Exception {
+		amazonS3Client.deleteObject(bucket, pathAndName);
 	}
 	
-	public ResponseEntity<byte[]> download(String folderAndName) throws IOException {
-        GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, folderAndName);
+	public ResponseEntity<byte[]> download(String pathAndName) {
+        GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, pathAndName);
 
         long startTime = System.currentTimeMillis();
-        logger.info(">>>> Try to get file: <{}> from Amazon S3", folderAndName);
+        logger.info(">>>> Try to get file: <{}> from Amazon S3", pathAndName);
         
         S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
         
-        logger.info("<<<< Get file: <{}> from Amazon S3 succeed, time-spent: <{} ms>", folderAndName, System.currentTimeMillis() - startTime);
+        logger.info("<<<< Get file: <{}> from Amazon S3 succeed, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
 
         S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
 
-        byte[] bytes = IOUtils.toByteArray(objectInputStream);
+        byte[] bytes;
+		try {
+			bytes = IOUtils.toByteArray(objectInputStream);
+		} catch (IOException e) {
+			logger.error("IOException raised while transfer Amazon S3 objectInputStream to byte array", e);
+			return null;
+		}
 
 //        String fileName = URLEncoder.encode(folderAndName, "UTF-8").replaceAll("\\+", "%20");
 //        String fileName = "profileImage.jpg";
