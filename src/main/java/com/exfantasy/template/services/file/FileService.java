@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.dropbox.core.v2.files.FileMetadata;
 import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
@@ -332,7 +333,7 @@ public class FileService {
 				
 			} catch (Exception e) {
 				logger.error("~~~~~ Download file from Dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
-				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+				throw new OperationException(ResultCode.DOWNLOAD_FILE_FAILED);
 			}
 		}
 		return file;
@@ -406,8 +407,9 @@ public class FileService {
 				List<S3ObjectSummary> listFiles = amazonS3Service.listFiles(email);
 				for (S3ObjectSummary file : listFiles) {
 					ListFileResp listFileResp = new ListFileResp();
+					listFileResp.setCloudStorage(CloudStorage.AMAZON_S3);
 					listFileResp.setPathAndName(file.getKey());
-					listFileResp.setSize(file.getSize());
+					listFileResp.setFileSizeBytes(file.getSize());
 					listFileResp.setLastModified(file.getLastModified());
 					results.add(listFileResp);
 				}
@@ -431,13 +433,21 @@ public class FileService {
 			try {
 				logger.info(">>>>> Trying to list file from Dropbox, Dropbox path: <{}>", email);
 				
-				// TODO 完成 Dropbox service list folder method
+				List<FileMetadata> fileMetadatas = dropboxService.listFiles(email);
+				for (FileMetadata fileMetadata : fileMetadatas) {
+					ListFileResp listFileResp = new ListFileResp();
+					listFileResp.setCloudStorage(CloudStorage.DROPBOX);
+					listFileResp.setPathAndName(fileMetadata.getPathDisplay());
+					listFileResp.setFileSizeBytes(fileMetadata.getSize());
+					listFileResp.setLastModified(fileMetadata.getServerModified());
+					results.add(listFileResp);
+				}
 				
 				logger.info("<<<<< List file from Dropbox succeed, Dropbox path: <{}>", email);
 				
 			} catch (Exception e) {
 				logger.error("~~~~~ List file from Dropbox failed, Dropbox path: <{}>, error-msg: <{}>", email, e.getMessage(), e);
-				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+				throw new OperationException(ResultCode.LIST_FILE_FAILED);
 			}
 		}
 		return results;

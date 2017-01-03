@@ -3,6 +3,8 @@ package com.exfantasy.template.services.dropbox;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,13 @@ public class DropboxService {
 	@Autowired
     private DbxClientV2 dropboxClient;
 	
+	/**
+	 * <pre>
+	 * 取得 Dropbox 帳號資訊
+	 * </pre>
+	 * 
+	 * @return
+	 */
 	public String getAccountInformation() {
 		StringBuilder buffer = new StringBuilder();
 		try {
@@ -62,6 +71,17 @@ public class DropboxService {
 		}
 	}
 	
+	/**
+	 * <pre>
+	 * 上傳檔案到 Dropbox 指定目錄及路徑
+	 * </pre>
+	 * 
+	 * @param multipartFile 欲上傳的檔案
+	 * @param pathAndName 欲儲存於 Dropbox 的路徑
+	 * @throws UploadErrorException
+	 * @throws DbxException
+	 * @throws IOException
+	 */
 	public void upload(MultipartFile multipartFile, String pathAndName) throws UploadErrorException, DbxException, IOException {
 		if (!pathAndName.startsWith("/")) {
 			pathAndName = "/" + pathAndName;	
@@ -69,6 +89,17 @@ public class DropboxService {
 		upload(multipartFile.getInputStream(), pathAndName);
 	}
 	
+	/**
+	 * <pre>
+	 * 上傳檔案到 Dropbox 指定目錄及路徑
+	 * </pre>
+	 * 
+	 * @param inputStream file 取得的 inputStream
+	 * @param pathAndName 欲儲存於 Dropbox 的路徑
+	 * @throws UploadErrorException
+	 * @throws DbxException
+	 * @throws IOException
+	 */
 	private void upload(InputStream inputStream, String pathAndName) throws UploadErrorException, DbxException, IOException {
 		boolean alreadyContains = alreadyContains(pathAndName);
 		if (alreadyContains) {
@@ -136,5 +167,25 @@ public class DropboxService {
         httpHeaders.setContentType(MediaType.IMAGE_JPEG);
         httpHeaders.setContentLength(bytes.length);
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+	}
+
+	public List<FileMetadata> listFiles(String path) throws Exception {
+		List<FileMetadata> fileMetadatas = new ArrayList<>();
+		
+		if (!path.startsWith("/")) {
+			path = "/" + path;
+		}
+		
+		long startTime = System.currentTimeMillis();
+        logger.info(">>>>> Trying to list file from Dropbox, path: <{}>", path);
+		
+		ListFolderResult result = dropboxClient.files().listFolderBuilder(path).withIncludeMediaInfo(true).start();
+		
+		logger.info("<<<<< List file from Dropbox succeed, path: <{}>, time-spent: <{} ms>", path, System.currentTimeMillis() - startTime);
+		
+		for (Metadata metadata : result.getEntries()) {
+			fileMetadatas.add((FileMetadata) metadata);
+		}
+		return fileMetadatas;
 	}
 }

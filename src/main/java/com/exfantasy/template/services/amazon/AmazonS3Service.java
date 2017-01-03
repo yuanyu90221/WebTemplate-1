@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ListBucketAnalyticsConfigurationsRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -63,6 +62,16 @@ public class AmazonS3Service {
 	
 	private String errorMsg;
 
+	/**
+	 * <pre>
+	 * 上傳檔案到 Amazon S3
+	 * </pre>
+	 * 
+	 * @param inputStream
+	 * @param folderAndName 欲儲存 Bucket 的路徑
+	 * @return
+	 * @throws IOException
+	 */
 	private PutObjectResult upload(InputStream inputStream, String folderAndName) throws IOException {
 		logger.info(">>>>> Trying to upload file to Amazon S3, bucket: <{}>, folderAndName: <{}>", bucket, folderAndName);
 		
@@ -157,6 +166,15 @@ public class AmazonS3Service {
 		amazonS3Client.deleteObject(bucket, pathAndName);
 	}
 	
+	/**
+	 * <pre>
+	 * 從 Amazon S3 指定 path 和 name 下載檔案
+	 * </pre>
+	 * 
+	 * @param pathAndName 位於 Amazon S3 的路徑
+	 * @return
+	 * @throws Exception
+	 */
 	public ResponseEntity<byte[]> download(String pathAndName) throws Exception {
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, pathAndName);
 
@@ -183,6 +201,13 @@ public class AmazonS3Service {
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }
 	
+	/**
+	 * <pre>
+	 * 列出 bucket 底下的所有目錄及檔案
+	 * </pre>
+	 * 
+	 * @return
+	 */
 	public List<S3ObjectSummary> listBucketFiles() {
 		long startTime = System.currentTimeMillis();
         logger.info(">>>>> Trying to get list from Amazon S3, bucket: <{}>", bucket);
@@ -196,6 +221,14 @@ public class AmazonS3Service {
         return s3ObjectSummaries;
 	}
 	
+	/**
+	 * <pre>
+	 * 列出指定 folder 底下的所有目錄及檔案
+	 * </pre>
+	 * 
+	 * @param folder
+	 * @return
+	 */
 	public List<S3ObjectSummary> listFiles(String folder) {
 		long startTime = System.currentTimeMillis();
 		logger.info(">>>>> Trying to get list from Amazon S3, bucket: <{}>, marker: <{}>", bucket, folder);
