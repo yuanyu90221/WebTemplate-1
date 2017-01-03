@@ -50,4 +50,14 @@ public class FileController {
 			return new RespCommon(ResultCode.FILE_IS_EMPTY);
 		}
 	}
+	
+	/**
+	 * TODO 列出登入者雲端空間的檔案
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@ApiOperation(value = "檔案列表", notes = "列出雲端空間的檔案")
+	public @ResponseBody void listFiles() {
+		User user = sessionService.getLoginUser();
+		fileService.listFiles(user.getEmail());
+	}
 }

@@ -383,4 +383,16 @@ public class FileService {
 		
 		return file;
 	}
+
+	/**
+	 * <pre>
+	 * 列出登入者雲端空間的檔案
+	 * </pre>
+	 * 
+	 * @param email 登入者的 email 
+	 */
+	public void listFiles(String email) {
+		// TODO 列出登入者雲端空間的檔案
+		
+	}
 }
