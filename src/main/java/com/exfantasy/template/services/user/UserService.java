@@ -100,6 +100,7 @@ public class UserService {
      * @param oldPassword 輸入舊密碼驗證
      * @param newPassword 欲設定的新密碼
      */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changePassword(User loginUser, String oldPassword, String newPassword) {
 		String currentPassword = loginUser.getPassword();
 		if (!Password.encoder.matches(oldPassword, currentPassword)) {
