@@ -1,6 +1,8 @@
 package com.exfantasy.template.services.file;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
@@ -392,7 +395,45 @@ public class FileService {
 	 * @param email 登入者的 email 
 	 */
 	public void listFiles(String email) {
-		// TODO 列出登入者雲端空間的檔案
+		List<String> fileName = new ArrayList<>();
 		
+		boolean listFromAmazonS3Succeed;
+		if (amazonS3Service.isEnable()) {
+			try {
+				logger.info(">>>>> Trying to list file from Amazon S3, Amazon S3 path: <{}>", email);
+			
+				// FIXME 這邊要修
+				List<S3ObjectSummary> fileLists = amazonS3Service.list();
+				for (S3ObjectSummary file : fileLists) {
+				}
+				
+				logger.info(">>>>> List file from Amazon S3 succeed, Amazon S3 path: <{}>", email);
+			
+				listFromAmazonS3Succeed = true;
+			}
+			catch (Exception e) {
+				amazonS3Service.setDisable();
+				amazonS3Service.setErrorMsg(e.getMessage());
+				logger.warn("~~~~~ List file from Amazon S3 failed, Amazon S3 path: <{}>, error-msg: <{}>", email, e.getMessage());
+				listFromAmazonS3Succeed = false;
+			}
+		}
+		else {
+			logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
+			listFromAmazonS3Succeed = false;
+		}
+		if (!listFromAmazonS3Succeed) {
+			try {
+				logger.info(">>>>> Trying to list file from Dropbox, Dropbox path: <{}>", email);
+				
+				// TODO 完成 Dropbox service list folder method
+				
+				logger.info("<<<<< List file from Dropbox succeed, Dropbox path: <{}>", email);
+				
+			} catch (Exception e) {
+				logger.error("~~~~~ List file from Dropbox failed, Dropbox path: <{}>, error-msg: <{}>", email, e.getMessage(), e);
+				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+			}
+		}
 	}
 }

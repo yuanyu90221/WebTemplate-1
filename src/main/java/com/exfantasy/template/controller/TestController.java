@@ -131,9 +131,9 @@ public class TestController {
 		return downloadedFile;
 	}
 	
-	@RequestMapping(value = "/testAmazonS3ListFiles", method = RequestMethod.GET)
-	@ApiOperation(value = "測試從 Amazon S3 list 出所有檔案資訊")
-	public @ResponseBody List<S3ObjectSummary> testAmazonS3ListFiles() {
+	@RequestMapping(value = "/testAmazonS3ListBucketFiles", method = RequestMethod.GET)
+	@ApiOperation(value = "測試從 Amazon S3 list 出 bucekt 下所有檔案資訊")
+	public @ResponseBody List<S3ObjectSummary> testAmazonS3ListBucketFiles() {
 		List<S3ObjectSummary> list = amazonS3Service.list();
 		return list;
 	}
