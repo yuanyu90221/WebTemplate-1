@@ -239,7 +239,7 @@ public class UserService {
 	 * 從雲端空間刪除大頭照
 	 * </pre>
 	 * 
-	 * @return {@link CloudStorage} 最後儲存的雲端空間
+	 * @return {@link CloudStorage} 最後刪除的雲端空間
 	 */
 	public CloudStorage deleteProfileImage() {
 		CloudStorage cloudStorage = fileService.deleteProfileImage();

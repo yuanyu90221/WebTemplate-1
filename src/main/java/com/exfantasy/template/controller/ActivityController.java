@@ -76,7 +76,7 @@ public class ActivityController {
 	 * @param activityId 欲參加的活動 ID
 	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
-	@RequestMapping(value = "/joinActivity/{activityId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/join_activity/{activityId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "參加活動", notes = "參加活動", response = RespCommon.class)
 	public @ResponseBody RespCommon joinActivity(@ApiParam("欲參加的活動 ID") @PathVariable("activityId") Integer activityId) {
 		User user = sessionService.getLoginUser();
