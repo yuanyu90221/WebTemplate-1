@@ -82,7 +82,7 @@ public class UserController {
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 用戶資訊 
 	 */
 	@RequestMapping(value = "/get_user_by_email", method = RequestMethod.GET)
-	@ApiOperation(value = "使用 email 查詢用戶")
+	@ApiOperation(value = "使用 email 查詢用戶", notes = "使用 email 查詢用戶詳細資料", response = User.class)
 	public @ResponseBody User queryUserByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserByEmail(email);
 	}
@@ -96,7 +96,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/get_user_roles_by_email", method = RequestMethod.GET)
-	@ApiOperation(value = "使用 email 查詢用戶所擁有角色")
+	@ApiOperation(value = "使用 email 查詢用戶所擁有角色", notes = "使用 email 查詢用戶所擁有的角色", response = UserRole.class)
 	public @ResponseBody List<UserRole> queryUserRolesByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserRolesByEmail(email);
 	}
@@ -109,7 +109,7 @@ public class UserController {
 	 * @return {@link com.exfantasy.template.mybatis.model.User}
 	 */
 	@RequestMapping(value = "/get_my_information", method = RequestMethod.GET)
-	@ApiOperation(value = "取得我(登入者)的資訊")
+	@ApiOperation(value = "取得我(登入者)的資訊", notes = "查詢我(登入者)的詳細資料", response = User.class)
 	public @ResponseBody User getMyInformation() {
 		return sessionService.getLoginUser();
 	}
@@ -120,7 +120,7 @@ public class UserController {
 	 * </pre>
 	 */
 	@RequestMapping(value = "/change_password", method = RequestMethod.POST)
-	@ApiOperation(value = "修改密碼")
+	@ApiOperation(value = "修改密碼", notes = "修改現有密碼", response = RespCommon.class)
 	public @ResponseBody RespCommon changePassword(
 		@RequestParam(value = "oldPassword", required = true) String oldPassword, 
 		@RequestParam(value = "newPassword", required = true) String newPassword) {
@@ -134,7 +134,7 @@ public class UserController {
 	 * </pre>
 	 */
 	@RequestMapping(value = "/forgot_password", method = RequestMethod.GET)
-	@ApiOperation(value = "忘記密碼")
+	@ApiOperation(value = "忘記密碼", notes = "由系統產生新密碼並發信給使用者當時註冊的 email", response = RespCommon.class)
 	public @ResponseBody RespCommon forgotPassword(
 		@RequestParam(value = "email", required = true) String email) {
 		userService.forgotPassword(email);
@@ -151,7 +151,7 @@ public class UserController {
 	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/upload_profile_image", method = RequestMethod.POST)
-	@ApiOperation(value = "上傳大頭貼")
+	@ApiOperation(value = "上傳大頭貼", notes = "上傳大頭照", response = RespCommon.class)
 	public @ResponseBody RespCommon updateProfileImage(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
 		if (!multipartFile.isEmpty()) {
 			CloudStorage cloudStorage = userService.uploadProfileImage(multipartFile);
@@ -170,7 +170,7 @@ public class UserController {
 	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
-	@ApiOperation(value = "刪除大頭貼")
+	@ApiOperation(value = "刪除大頭貼", notes = "刪除已上傳的大頭照", response = RespCommon.class)
 	public @ResponseBody RespCommon deleteProfileImage() {
 		CloudStorage cloudStorage = userService.deleteProfileImage();
 		return new RespCommon(ResultCode.SUCCESS, "Delete profile image from " + cloudStorage + " succeed");
@@ -184,7 +184,7 @@ public class UserController {
 	 * @return ResponseEntity<byte[]> 檔案內容
 	 */
 	@RequestMapping(value = "/get_profile_image", method = RequestMethod.GET)
-	@ApiOperation(value = "取得大頭貼", response = byte[].class)
+	@ApiOperation(value = "取得大頭貼", notes = "取得已上傳的大頭照", response = byte[].class)
 	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> downloadedFile = null;
 		downloadedFile = userService.getProfileImage();
