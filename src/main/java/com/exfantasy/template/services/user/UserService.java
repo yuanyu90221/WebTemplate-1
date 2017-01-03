@@ -113,6 +113,17 @@ public class UserService {
 		userMapper.updateByPrimaryKeySelective(loginUser);
 	}
 
+    /**
+     * <pre>
+     * 忘記密碼
+     * </pre>
+     * 
+     * @param loginUser 登入者資訊
+     */
+	public void forgetPassword(User loginUser) {
+		// TODO 忘記密碼實作
+	}
+
 	/**
      * <pre>
      * 根據傳入的 email 查詢對應使用者

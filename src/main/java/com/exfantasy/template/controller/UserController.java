@@ -128,7 +128,18 @@ public class UserController {
 		return new RespCommon(ResultCode.SUCCESS, "Change password succeed");
 	}
  	
-
+	/**
+	 * <pre>
+	 * 忘記密碼
+	 * </pre>
+	 */
+	@RequestMapping(value = "/forget_password", method = RequestMethod.GET)
+	@ApiOperation(value = "忘記密碼")
+	public @ResponseBody RespCommon forgetPassword() {
+		userService.forgetPassword(sessionService.getLoginUser());
+		return new RespCommon(ResultCode.SUCCESS, "Send forget password mail succeed");
+	}
+	
 	/**
 	 * <pre>
 	 * 上傳大頭照
