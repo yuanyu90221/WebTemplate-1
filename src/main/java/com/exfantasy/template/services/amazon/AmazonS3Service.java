@@ -63,6 +63,8 @@ public class AmazonS3Service {
 	private String errorMsg;
 
 	private PutObjectResult upload(InputStream inputStream, String folderAndName) throws IOException {
+		logger.info(">>>>> Trying to upload file to Amazon S3, bucket: <{}>, folderAndName: <{}>", bucket, folderAndName);
+		
 		ObjectMetadata metadata = new ObjectMetadata();
 		byte[] bytes = IOUtils.toByteArray(inputStream);
 		metadata.setContentLength(bytes.length);
@@ -76,6 +78,8 @@ public class AmazonS3Service {
 		PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
 
 		IOUtils.closeQuietly(inputStream);
+		
+		logger.info(">>>>> Upload file to Amazon S3 succeed, bucket: <{}>, folderAndName: <{}>", bucket, folderAndName);
 
 		return putObjectResult;
 	}
@@ -156,11 +160,11 @@ public class AmazonS3Service {
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, pathAndName);
 
         long startTime = System.currentTimeMillis();
-        logger.info(">>>> Try to get file: <{}> from Amazon S3", pathAndName);
+        logger.info(">>>> Trying to download file from Amazon S3, pathAndName: <{}>", pathAndName);
         
         S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
         
-        logger.info("<<<< Get file: <{}> from Amazon S3 succeed, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
+        logger.info("<<<< Download file from Amazon S3 succeed, pathAndName: <{}>, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
 
         S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
 
@@ -180,11 +184,11 @@ public class AmazonS3Service {
 	
 	public List<S3ObjectSummary> list() {
 		long startTime = System.currentTimeMillis();
-        logger.info(">>>> Try to get bucket: <{}> list from Amazon S3", bucket);
+        logger.info(">>>> Trying to get list from Amazon S3, bucket: <{}>", bucket);
 		
 		ObjectListing objectListing = amazonS3Client.listObjects(new ListObjectsRequest().withBucketName(bucket));
 		
-		logger.info(">>>> Get bucket: <{}> list from Amazon S3 succeed, time-spent: <{} ms>", bucket, System.currentTimeMillis() - startTime);
+		logger.info(">>>> Get list from Amazon S3 succeed, bucket: <{}>, time-spent: <{} ms>", bucket, System.currentTimeMillis() - startTime);
 
         List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
 

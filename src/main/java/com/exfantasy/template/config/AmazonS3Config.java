@@ -1,5 +1,7 @@
 package com.exfantasy.template.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
  */
 @Configuration
 public class AmazonS3Config {
+	private static final Logger logger = LoggerFactory.getLogger(AmazonS3Config.class);
 
 	@Value("${aws.s3.accessKey}")
 	private String accessKey;
@@ -29,6 +32,8 @@ public class AmazonS3Config {
 
 	@Bean
 	public BasicAWSCredentials basicAWSCredentials() {
+		logger.info(">>>>> Amazon S3 access key: <{}>", accessKey);
+		logger.info(">>>>> Amazon S3 secret key: <{}>", secretKey);
 		return new BasicAWSCredentials(accessKey, secretKey);
 	}
 
