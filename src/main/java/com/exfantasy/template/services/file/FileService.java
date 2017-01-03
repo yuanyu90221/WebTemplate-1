@@ -322,7 +322,7 @@ public class FileService {
 			try {
 				logger.info(">>>>> Trying to download file from Dropbox, Dropbox path and name: <{}>", pathAndName);
 				
-				downloadFileFromDropbox(pathAndName);
+				file = downloadFileFromDropbox(pathAndName);
 				
 				logger.info("<<<<< Download file from Dropbox succeed, Dropbox path and name: <{}>", pathAndName);
 				
