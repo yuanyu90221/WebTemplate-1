@@ -133,10 +133,10 @@ public class UserController {
 	 * 忘記密碼
 	 * </pre>
 	 */
-	@RequestMapping(value = "/forget_password", method = RequestMethod.GET)
+	@RequestMapping(value = "/forgot_password", method = RequestMethod.GET)
 	@ApiOperation(value = "忘記密碼")
-	public @ResponseBody RespCommon forgetPassword() {
-		userService.forgetPassword(sessionService.getLoginUser());
+	public @ResponseBody RespCommon forgotPassword() {
+		userService.forgotPassword(sessionService.getLoginUser());
 		return new RespCommon(ResultCode.SUCCESS, "Send forget password mail succeed");
 	}
 	

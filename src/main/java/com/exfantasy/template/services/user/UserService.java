@@ -26,6 +26,7 @@ import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.services.file.FileService;
+import com.exfantasy.template.util.RandomUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
 
 /**
@@ -120,8 +121,9 @@ public class UserService {
      * 
      * @param loginUser 登入者資訊
      */
-	public void forgetPassword(User loginUser) {
+	public void forgotPassword(User loginUser) {
 		// TODO 忘記密碼實作
+		String randomPassword = RandomUtil.getRandomCode(6);
 	}
 
 	/**
