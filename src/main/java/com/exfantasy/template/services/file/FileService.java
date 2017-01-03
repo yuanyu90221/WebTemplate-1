@@ -327,7 +327,7 @@ public class FileService {
 				logger.info("<<<<< Download file from Dropbox succeed, Dropbox path and name: <{}>", pathAndName);
 				
 			} catch (Exception e) {
-				logger.error("~~~~~ Download file from Dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage());
+				logger.error("~~~~~ Download file from Dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
 				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 			}
 		}
