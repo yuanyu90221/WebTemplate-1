@@ -160,11 +160,11 @@ public class AmazonS3Service {
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, pathAndName);
 
         long startTime = System.currentTimeMillis();
-        logger.info(">>>> Trying to download file from Amazon S3, pathAndName: <{}>", pathAndName);
+        logger.info(">>>>> Trying to download file from Amazon S3, pathAndName: <{}>", pathAndName);
         
         S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
         
-        logger.info("<<<< Download file from Amazon S3 succeed, pathAndName: <{}>, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
+        logger.info("<<<<< Download file from Amazon S3 succeed, pathAndName: <{}>, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
 
         S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
 
@@ -184,11 +184,11 @@ public class AmazonS3Service {
 	
 	public List<S3ObjectSummary> list() {
 		long startTime = System.currentTimeMillis();
-        logger.info(">>>> Trying to get list from Amazon S3, bucket: <{}>", bucket);
+        logger.info(">>>>> Trying to get list from Amazon S3, bucket: <{}>", bucket);
 		
 		ObjectListing objectListing = amazonS3Client.listObjects(new ListObjectsRequest().withBucketName(bucket));
 		
-		logger.info(">>>> Get list from Amazon S3 succeed, bucket: <{}>, time-spent: <{} ms>", bucket, System.currentTimeMillis() - startTime);
+		logger.info("<<<<< Get list from Amazon S3 succeed, bucket: <{}>, time-spent: <{} ms>", bucket, System.currentTimeMillis() - startTime);
 
         List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
 

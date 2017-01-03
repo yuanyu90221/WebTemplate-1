@@ -123,13 +123,13 @@ public class DropboxService {
 		}
 
 		long startTime = System.currentTimeMillis();
-        logger.info(">>>> Trying to download file from Dropbox, pathAndName: <{}>", pathAndName);
+        logger.info(">>>>> Trying to download file from Dropbox, pathAndName: <{}>", pathAndName);
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
 		@SuppressWarnings("unused")
 		FileMetadata metedata = dropboxClient.files().download(pathAndName).download(baos);
 		
-		logger.info("<<<< Download file from Dropbox succeed, pathAndName: <{}>, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
+		logger.info("<<<<< Download file from Dropbox succeed, pathAndName: <{}>, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
 		
 		byte[] bytes = baos.toByteArray();
 		HttpHeaders httpHeaders = new HttpHeaders();
