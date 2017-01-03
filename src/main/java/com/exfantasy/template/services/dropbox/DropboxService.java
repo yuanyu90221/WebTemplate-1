@@ -1,11 +1,16 @@
 package com.exfantasy.template.services.dropbox;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.DeleteErrorException;
+import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderErrorException;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
@@ -113,7 +119,12 @@ public class DropboxService {
 	}
 
 	public ResponseEntity<byte[]> download(String pathAndName) throws Exception {
-		// TODO Dropbox download file
-		return null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+		FileMetadata metedata = dropboxClient.files().download(pathAndName).download(baos);
+		byte[] bytes = baos.toByteArray();
+		HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.IMAGE_JPEG);
+        httpHeaders.setContentLength(bytes.length);
+        return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
 	}
 }
