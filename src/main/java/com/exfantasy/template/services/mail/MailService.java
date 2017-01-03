@@ -102,12 +102,43 @@ public class MailService {
 		try {
 			sendMail(user.getEmail(), mailTemplate.getSubject(), mailContent);
 		} catch (MessagingException e) {
-			logger.warn("Send mail failed", e);
+			logger.warn("Send got it mail failed", e);
 		}
 	}
 
 	public void sendForgotPasswordMail(String email, String randomPassword) {
-		// TODO 寄出忘記密碼的信
+		// 暫存要填入 html 的參數
+		List<Object> args = new ArrayList<>();
 		
+		// {0} 為使用者 email
+		args.add(email);
+		
+		// {1} 為新產生密碼
+		args.add(randomPassword);
+		
+		// 取得 Mail Template
+		MailTemplateExample example = new MailTemplateExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andTypeEqualTo(MailTemplateType.forgotPassword.toString());
+		List<MailTemplateWithBLOBs> mailTemplates = mailTemplateMapper.selectByExampleWithBLOBs(example);
+		
+		MailTemplateWithBLOBs mailTemplate = mailTemplates.get(0);
+		
+		// 將新產生的密碼填入
+		StringBuilder mailContentBuffer = new StringBuilder();
+		mailContentBuffer.append(mailTemplate.getHeader());
+		mailContentBuffer.append(mailTemplate.getBodyHeader());
+		mailContentBuffer.append("{1}");
+		mailContentBuffer.append(mailTemplate.getBodyTail());
+		mailContentBuffer.append(mailTemplate.getTail());
+		
+		String mailContent = MessageFormat.format(mailContentBuffer.toString(), args.toArray(new Object[0]));
+		
+		// 發信
+		try {
+			sendMail(email, mailTemplate.getSubject(), mailContent);
+		} catch (MessagingException e) {
+			logger.warn("Send forgot password mail failed", e);
+		}
 	}
 }
