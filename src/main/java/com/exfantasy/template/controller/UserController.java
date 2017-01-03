@@ -135,8 +135,9 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/forgot_password", method = RequestMethod.GET)
 	@ApiOperation(value = "忘記密碼")
-	public @ResponseBody RespCommon forgotPassword() {
-		userService.forgotPassword(sessionService.getLoginUser());
+	public @ResponseBody RespCommon forgotPassword(
+		@RequestParam(value = "email", required = true) String email) {
+		userService.forgotPassword(email);
 		return new RespCommon(ResultCode.SUCCESS, "Send forget password mail succeed");
 	}
 	

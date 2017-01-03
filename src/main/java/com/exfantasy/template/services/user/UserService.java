@@ -119,11 +119,20 @@ public class UserService {
      * 忘記密碼
      * </pre>
      * 
-     * @param loginUser 登入者資訊
+     * @param email 當時註冊的 email
      */
-	public void forgotPassword(User loginUser) {
-		// TODO 忘記密碼實作
+	public void forgotPassword(String email) {
+		User user = queryUserByEmail(email);
+		if (user == null) {
+			throw new OperationException(ResultCode.CANNOT_FIND_REGISTERATION_INFO);
+		}
 		String randomPassword = RandomUtil.getRandomCode(6);
+		
+		/**
+		 * TODO 
+		 * 1. 將新產生的密碼寄信出去
+		 * 2. 更新 user 的密碼
+		 */
 	}
 
 	/**

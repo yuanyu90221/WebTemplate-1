@@ -25,6 +25,9 @@ public enum ResultCode {
 	/** Code: 2003, Message: 請確認新密碼不與舊密碼相同 */
 	PLS_CONFIRM_NEW_PASSWORD_NOT_SAME_AS_OLD_PASSWORD(2003, "Please confirm the new password not same as old password"),
 	
+	/** Code: 2004, Message: 找不到對應使用者 */
+	CANNOT_FIND_REGISTERATION_INFO(2004, "Cannot find registeration information by email you input"),
+	
 	/** Code: 3001, Message: 資料重複 */
 	DUPLICATE_KEY(3001, "Data already existed"),
 	
