@@ -19,6 +19,7 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.amazon.AmazonS3Service;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.session.SessionService;
+import com.exfantasy.template.vo.response.ListFileResp;
 
 @Service
 public class FileService {
@@ -394,17 +395,21 @@ public class FileService {
 	 * 
 	 * @param email 登入者的 email 
 	 */
-	public void listFiles(String email) {
-		List<String> fileName = new ArrayList<>();
+	public List<ListFileResp> listFiles(String email) {
+		List<ListFileResp> results = new ArrayList<>();
 		
 		boolean listFromAmazonS3Succeed;
 		if (amazonS3Service.isEnable()) {
 			try {
 				logger.info(">>>>> Trying to list file from Amazon S3, Amazon S3 path: <{}>", email);
 			
-				// FIXME 這邊要修
-				List<S3ObjectSummary> fileLists = amazonS3Service.list();
-				for (S3ObjectSummary file : fileLists) {
+				List<S3ObjectSummary> listFiles = amazonS3Service.listFiles(email);
+				for (S3ObjectSummary file : listFiles) {
+					ListFileResp listFileResp = new ListFileResp();
+					listFileResp.setPathAndName(file.getKey());
+					listFileResp.setSize(file.getSize());
+					listFileResp.setLastModified(file.getLastModified());
+					results.add(listFileResp);
 				}
 				
 				logger.info(">>>>> List file from Amazon S3 succeed, Amazon S3 path: <{}>", email);
@@ -435,5 +440,6 @@ public class FileService {
 				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 			}
 		}
+		return results;
 	}
 }

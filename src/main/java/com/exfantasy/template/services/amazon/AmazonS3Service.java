@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ListBucketAnalyticsConfigurationsRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -182,7 +183,7 @@ public class AmazonS3Service {
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }
 	
-	public List<S3ObjectSummary> list() {
+	public List<S3ObjectSummary> listBucketFiles() {
 		long startTime = System.currentTimeMillis();
         logger.info(">>>>> Trying to get list from Amazon S3, bucket: <{}>", bucket);
 		
@@ -193,5 +194,18 @@ public class AmazonS3Service {
         List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
 
         return s3ObjectSummaries;
+	}
+	
+	public List<S3ObjectSummary> listFiles(String folder) {
+		long startTime = System.currentTimeMillis();
+		logger.info(">>>>> Trying to get list from Amazon S3, bucket: <{}>, marker: <{}>", bucket, folder);
+		
+		ObjectListing objectListing = amazonS3Client.listObjects(new ListObjectsRequest().withBucketName(bucket).withMarker(folder));
+		
+		logger.info(">>>>> Get list from Amazon S3, bucket: <{}>, marker: <{}>, time-spent: <{} ms>", bucket, folder, System.currentTimeMillis() - startTime);
+		
+		List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
+		
+		return s3ObjectSummaries;
 	}
 }

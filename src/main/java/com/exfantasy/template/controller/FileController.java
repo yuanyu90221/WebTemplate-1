@@ -1,5 +1,7 @@
 package com.exfantasy.template.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.file.FileService;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.vo.response.RespCommon;
+import com.exfantasy.template.vo.response.ListFileResp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,13 +54,10 @@ public class FileController {
 		}
 	}
 	
-	/**
-	 * TODO 列出登入者雲端空間的檔案
-	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@ApiOperation(value = "檔案列表", notes = "列出雲端空間的檔案")
-	public @ResponseBody void listFiles() {
+	@ApiOperation(value = "檔案列表", notes = "列出雲端空間的檔案", response = ListFileResp.class)
+	public @ResponseBody List<ListFileResp> listFiles() {
 		User user = sessionService.getLoginUser();
-		fileService.listFiles(user.getEmail());
+		return fileService.listFiles(user.getEmail());
 	}
 }
