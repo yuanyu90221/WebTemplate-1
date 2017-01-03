@@ -167,13 +167,13 @@ public class AmazonS3Service {
         byte[] bytes = IOUtils.toByteArray(objectInputStream);
 
 //        String fileName = URLEncoder.encode(folderAndName, "UTF-8").replaceAll("\\+", "%20");
-        String fileName = "profileImage.jpg";
+//        String fileName = "profileImage.jpg";
 
         // http://stackoverflow.com/questions/5690228/spring-mvc-how-to-return-image-in-responsebody
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.IMAGE_JPEG);
         httpHeaders.setContentLength(bytes.length);
-        httpHeaders.setContentDispositionFormData("attachment", fileName);
+//        httpHeaders.setContentDispositionFormData("attachment", fileName);
 
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }

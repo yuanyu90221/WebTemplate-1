@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -120,7 +121,8 @@ public class UserController {
 	 * </pre>
 	 * 
 	 * @param multipartFile
-	 * @return
+	 * 
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/upload_profile_image", method = RequestMethod.POST)
 	@ApiOperation(value = "上傳大頭貼")
@@ -139,13 +141,25 @@ public class UserController {
 	 * 刪除大頭照
 	 * </pre>
 	 * 
-	 * @param multipartFile
-	 * @return
+	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
 	 */
 	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
 	@ApiOperation(value = "刪除大頭貼")
 	public @ResponseBody RespCommon deleteProfileImage() {
 		CloudStorage cloudStorage = userService.deleteProfileImage();
 		return new RespCommon(ResultCode.SUCCESS, "Delete profile image from " + cloudStorage + " succeed");
+	}
+	
+	/**
+	 * <pre>
+	 * 取得大頭照
+	 * </pre>
+	 */
+	@RequestMapping(value = "/get_profile_image", method = RequestMethod.GET)
+	@ApiOperation(value = "取得大頭貼", response = byte[].class)
+	public ResponseEntity<byte[]> getProfileImage(@RequestParam(value = "folderAndName", required = true) String folderAndName) {
+		ResponseEntity<byte[]> downloadedFile = null;
+		// TODO 實作取得大頭貼
+		return downloadedFile;
 	}
 }
