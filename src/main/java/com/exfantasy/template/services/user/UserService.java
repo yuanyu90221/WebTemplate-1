@@ -198,7 +198,7 @@ public class UserService {
 	 * 從雲端空間取得大頭照
 	 * </pre>
 	 * 
-	 * @return
+	 * @return ResponseEntity<byte[]> 大頭照
 	 */
 	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> profileImage = fileService.getProfileImage();

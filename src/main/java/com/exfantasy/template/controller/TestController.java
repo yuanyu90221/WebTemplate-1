@@ -1,6 +1,5 @@
 package com.exfantasy.template.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -123,7 +122,12 @@ public class TestController {
 	@ApiOperation(value = "測試從 Amazon S3 取回檔案", response = byte[].class)
 	public ResponseEntity<byte[]> testAmazonS3GetFile(@RequestParam(value = "folderAndName", required = true) String folderAndName) {
 		ResponseEntity<byte[]> downloadedFile;
-		downloadedFile = amazonS3Service.download(folderAndName);
+		try {
+			downloadedFile = amazonS3Service.download(folderAndName);
+		} catch (Exception e) {
+			logger.error("Try to download file from Amazon S3 with key: <{}> failed", folderAndName, e);
+			return null;
+		}
 		return downloadedFile;
 	}
 	

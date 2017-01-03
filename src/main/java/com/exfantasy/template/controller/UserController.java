@@ -154,6 +154,8 @@ public class UserController {
 	 * <pre>
 	 * 取得大頭照
 	 * </pre>
+	 * 
+	 * @return ResponseEntity<byte[]> 檔案內容
 	 */
 	@RequestMapping(value = "/get_profile_image", method = RequestMethod.GET)
 	@ApiOperation(value = "取得大頭貼", response = byte[].class)

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -109,5 +110,10 @@ public class DropboxService {
 			pathAndName = "/" + pathAndName;	
 		}
 		dropboxClient.files().delete(pathAndName);
+	}
+
+	public ResponseEntity<byte[]> download(String pathAndName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

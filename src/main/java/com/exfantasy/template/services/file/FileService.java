@@ -62,7 +62,7 @@ public class FileService {
     		catch (Exception e) {
     			amazonS3Service.setDisable();
     			amazonS3Service.setErrorMsg(e.getMessage());
-    			logger.warn("~~~~~ Upload file to Amazon S3 failed, original file name: <{}>, Amazon S3 path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage());
+    			logger.warn("~~~~~ Upload file to Amazon S3 failed, original file name: <{}>, Amazon S3 path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage(), e);
     			uploadToAmazonS3Succeed = false;
     		} 
     	}
@@ -82,7 +82,7 @@ public class FileService {
 				cloudStorage = CloudStorage.DROPBOX;
 				
 			} catch (Exception e) {
-				logger.error("~~~~~ Upload file to Dropbox failed, original file name: <{}>, Dropbox path and name: <{}>, error-msg: <{}>", e.getMessage());
+				logger.error("~~~~~ Upload file to Dropbox failed, original file name: <{}>, Dropbox path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage(), e);
 				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 			}
 		}
@@ -131,7 +131,7 @@ public class FileService {
 			catch (Exception e) {
 				amazonS3Service.setDisable();
 				amazonS3Service.setErrorMsg(e.getMessage());
-				logger.error("~~~~~ Delete file from Amazon S3 failed, Amazon S3 path and name: <{}>, try to delete from Dropbox, error-msg: <{}>", e.getMessage());
+				logger.error("~~~~~ Delete file from Amazon S3 failed, Amazon S3 path and name: <{}>, try to delete from Dropbox, error-msg: <{}>", pathAndName, e.getMessage(), e);
 				deleteFromAmazonS3Succeed = false;
 			}
 		}
@@ -151,7 +151,7 @@ public class FileService {
 				cloudStorage = CloudStorage.DROPBOX;
 
 			} catch (Exception e) {
-				logger.error("~~~~~ Delete file from dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", e.getMessage());
+				logger.error("~~~~~ Delete file from dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
 				throw new OperationException(ResultCode.DELETE_FILE_FAILED);
 			}
 		}
@@ -268,7 +268,7 @@ public class FileService {
 		User user = sessionService.getLoginUser();
 		return user.getEmail() + "/" + PROFILE_IMAGE_NAME;
 	}
-
+	
 	/**
 	 * <pre>
 	 * 從雲端空間取得大頭照
@@ -280,7 +280,107 @@ public class FileService {
 	 */
 	public ResponseEntity<byte[]> getProfileImage() {
 		String pathAndName = getProfileImagePathAndName();
-		ResponseEntity<byte[]> profileImage = amazonS3Service.download(pathAndName);
+		ResponseEntity<byte[]> profileImage = downloadFile(pathAndName);
 		return profileImage;
+	}
+
+	/**
+     * <pre>
+     * 從 Amazon S3 或 Dropbox 下載檔案
+     * </pre>
+     * 
+     * @param pathAndName 欲下載檔案的路徑
+     * 
+     * @return 檔案內容
+     */
+	public ResponseEntity<byte[]> downloadFile(String pathAndName) {
+		ResponseEntity<byte[]> file = null;
+		
+		boolean downloadFromAmazonS3Succeed;
+		if (amazonS3Service.isEnable()) {
+			try {
+				logger.info(">>>>> Trying to download file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+			
+				file = downloadFileFromAmazonS3(pathAndName);
+			
+				logger.info(">>>>> Download file from Amazon S3 succeed, Amazon S3 path and name: <{}>", pathAndName);
+			
+				downloadFromAmazonS3Succeed = true;
+			}
+			catch (Exception e) {
+				amazonS3Service.setDisable();
+				amazonS3Service.setErrorMsg(e.getMessage());
+				logger.warn("~~~~~ Download file from Amazon S3 failed, Amazon S3 path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage());
+				downloadFromAmazonS3Succeed = false;
+			}
+		}
+		else {
+			logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
+			downloadFromAmazonS3Succeed = false;
+		}
+		if (!downloadFromAmazonS3Succeed) {
+			try {
+				logger.info(">>>>> Trying to download file from Dropbox, Dropbox path and name: <{}>", pathAndName);
+				
+				downloadFileFromDropbox(pathAndName);
+				
+				logger.info("<<<<< Download file from Dropbox succeed, Dropbox path and name: <{}>", pathAndName);
+				
+			} catch (Exception e) {
+				logger.error("~~~~~ Download file from Dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage());
+				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+			}
+		}
+		return file;
+	}
+
+	/**
+	 * <pre>
+	 * 從 Amazon S3 取得檔案
+	 * </pre>
+	 * 
+	 * @param pathAndName 欲取得在 Amazon S3 的檔案路徑
+	 * 
+	 * @return ResponseEntity<byte[]> 檔案內容
+	 * 
+	 * @throws Exception 
+	 */
+	private ResponseEntity<byte[]> downloadFileFromAmazonS3(String pathAndName) throws Exception {
+		ResponseEntity<byte[]> file = null;
+		
+		long startTime = System.currentTimeMillis();
+		logger.info("----> Prepare to download file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+		
+		file = amazonS3Service.download(pathAndName);
+		
+		long timeSpent = System.currentTimeMillis() - startTime;
+		logger.info("<---- Download file from Amazon S3 done, time-spent: <{} ms>", timeSpent);
+		
+		return file;
+	}
+	
+	/**
+	 * <pre>
+	 * 從 Dropbox 取得檔案
+	 * </pre>
+	 * 
+	 * @param pathAndName 欲取得在 Dropbox 的檔案路徑
+	 * 
+	 * @return ResponseEntity<byte[]> 檔案內容
+	 * 
+	 * @throws Exception 
+	 */
+	private ResponseEntity<byte[]> downloadFileFromDropbox(String pathAndName) throws Exception {
+		ResponseEntity<byte[]> file = null;
+		
+		long startTime = System.currentTimeMillis();
+		logger.info("----> Prepare to download file from Dropbox, Dropbox path and name: <{}>", pathAndName);
+		
+		file = dropboxService.download(pathAndName);
+		
+		long timeSpent = System.currentTimeMillis() - startTime;
+		logger.info("<---- Download file from Dropbox done, time-spent: <{} ms>", timeSpent);
+		
+		return file;
 	}
 }

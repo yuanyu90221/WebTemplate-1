@@ -39,7 +39,10 @@ public enum ResultCode {
 	UPLOAD_FILE_FAILED(8002, "Upload file failed"),
 	
 	/** Code: 8003, Message: 刪除檔案失敗 */
-	DELETE_FILE_FAILED(8002, "Delte file failed"),
+	DELETE_FILE_FAILED(8003, "Delete file failed"),
+	
+	/** Code: 8004, Message: 下載檔案失敗 */
+	DOWNLOAD_FILE_FAILED(8004, "Download file failed"),
 	
 	/** Code: 9001, Message: Amazon S3 服務不允許使用 */
 	AMAZON_S3_SERVICE_IS_NOT_AVAILABLE(9001, "Amazon S3 service is not avaiable"),

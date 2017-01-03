@@ -152,7 +152,7 @@ public class AmazonS3Service {
 		amazonS3Client.deleteObject(bucket, pathAndName);
 	}
 	
-	public ResponseEntity<byte[]> download(String pathAndName) {
+	public ResponseEntity<byte[]> download(String pathAndName) throws Exception {
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, pathAndName);
 
         long startTime = System.currentTimeMillis();
@@ -164,13 +164,7 @@ public class AmazonS3Service {
 
         S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
 
-        byte[] bytes;
-		try {
-			bytes = IOUtils.toByteArray(objectInputStream);
-		} catch (IOException e) {
-			logger.error("IOException raised while transfer Amazon S3 objectInputStream to byte array", e);
-			return null;
-		}
+        byte[] bytes = IOUtils.toByteArray(objectInputStream);
 
 //        String fileName = URLEncoder.encode(folderAndName, "UTF-8").replaceAll("\\+", "%20");
 //        String fileName = "profileImage.jpg";
