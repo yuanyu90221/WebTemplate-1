@@ -112,7 +112,7 @@ public class DropboxService {
 		dropboxClient.files().delete(pathAndName);
 	}
 
-	public ResponseEntity<byte[]> download(String pathAndName) {
+	public ResponseEntity<byte[]> download(String pathAndName) throws Exception {
 		// TODO Dropbox download file
 		return null;
 	}
