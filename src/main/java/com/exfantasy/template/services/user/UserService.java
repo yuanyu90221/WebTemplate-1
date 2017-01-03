@@ -93,6 +93,27 @@ public class UserService {
     
     /**
      * <pre>
+     * 修改密碼
+     * </pre>
+     * 
+     * @param loginUser 登入者資訊
+     * @param oldPassword 輸入舊密碼驗證
+     * @param newPassword 欲設定的新密碼
+     */
+	public void changePassword(User loginUser, String oldPassword, String newPassword) {
+		String currentPassword = loginUser.getPassword();
+		if (!Password.encoder.matches(oldPassword, currentPassword)) {
+			throw new OperationException(ResultCode.PLS_CONFIRM_ORIG_PASSWORD);
+		}
+		if (oldPassword.equals(newPassword)) {
+			throw new OperationException(ResultCode.PLS_CONFIRM_NEW_PASSWORD_NOT_SAME_AS_OLD_PASSWORD);
+		}
+		loginUser.setPassword(Password.encrypt(newPassword));
+		userMapper.updateByPrimaryKeySelective(loginUser);
+	}
+
+	/**
+     * <pre>
      * 根據傳入的 email 查詢對應使用者
      * </pre>
      * 

@@ -114,6 +114,20 @@ public class UserController {
 		return sessionService.getLoginUser();
 	}
 	
+	/**
+	 * <pre>
+	 * 修改密碼
+	 * </pre>
+	 */
+	@RequestMapping(value = "/change_password", method = RequestMethod.POST)
+	@ApiOperation(value = "修改密碼")
+	public @ResponseBody RespCommon changePassword(
+		@RequestParam(value = "oldPassword", required = true) String oldPassword, 
+		@RequestParam(value = "newPassword", required = true) String newPassword) {
+		userService.changePassword(sessionService.getLoginUser(), oldPassword, newPassword);
+		return new RespCommon(ResultCode.SUCCESS, "Change password succeed");
+	}
+ 	
 
 	/**
 	 * <pre>

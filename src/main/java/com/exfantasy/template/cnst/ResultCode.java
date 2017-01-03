@@ -19,6 +19,12 @@ public enum ResultCode {
 	/** Code: 2001, Message: Email 已被使用 */
 	EMAIL_ALREADY_IN_USED(2001, "Email already in used"),
 	
+	/** Code: 2002, Message: 請確認原密碼 */
+	PLS_CONFIRM_ORIG_PASSWORD(2002, "Please confirm current password is correct"),
+	
+	/** Code: 2003, Message: 請確認新密碼不與舊密碼相同 */
+	PLS_CONFIRM_NEW_PASSWORD_NOT_SAME_AS_OLD_PASSWORD(2003, "Please confirm the new password not same as old password"),
+	
 	/** Code: 3001, Message: 資料重複 */
 	DUPLICATE_KEY(3001, "Data already existed"),
 	
@@ -30,7 +36,6 @@ public enum ResultCode {
 
 	/** Code: 5002, Message: 這個活動已經參加 */
 	ACTIVITY_ALREADY_JOINED(5002, "The activity already joined"),
-
 	
 	/** Code: 8001, Message: 檔案為空 */
 	FILE_IS_EMPTY(8001, "File is empty"),
