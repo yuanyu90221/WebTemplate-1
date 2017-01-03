@@ -105,4 +105,9 @@ public class MailService {
 			logger.warn("Send mail failed", e);
 		}
 	}
+
+	public void sendForgotPasswordMail(String email, String randomPassword) {
+		// TODO 寄出忘記密碼的信
+		
+	}
 }

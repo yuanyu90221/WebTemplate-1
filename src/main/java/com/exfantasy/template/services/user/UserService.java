@@ -26,6 +26,7 @@ import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.services.file.FileService;
+import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.util.RandomUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
 
@@ -59,6 +60,9 @@ public class UserService {
     
     @Autowired
     private FileService fileService;
+    
+    @Autowired
+    private MailService mailService;
     
     /**
      * <pre>
@@ -133,6 +137,7 @@ public class UserService {
 		 * 1. 將新產生的密碼寄信出去
 		 * 2. 更新 user 的密碼
 		 */
+		mailService.sendForgotPasswordMail(email, randomPassword);
 	}
 
 	/**
