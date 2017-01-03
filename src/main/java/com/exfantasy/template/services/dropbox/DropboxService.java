@@ -119,6 +119,9 @@ public class DropboxService {
 	}
 
 	public ResponseEntity<byte[]> download(String pathAndName) throws Exception {
+		if (!pathAndName.startsWith("/")) {
+			pathAndName = "/" + pathAndName;	
+		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
 		FileMetadata metedata = dropboxClient.files().download(pathAndName).download(baos);
 		byte[] bytes = baos.toByteArray();
