@@ -3,6 +3,7 @@ package com.exfantasy.template.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,7 +43,7 @@ public class FileController {
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	@ApiOperation(value = "上傳檔案", notes = "上傳檔案", response = RespCommon.class)
-	public @ResponseBody RespCommon updateProfileImage(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
+	public @ResponseBody RespCommon upload(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
 		if (!multipartFile.isEmpty()) {
 			User user = sessionService.getLoginUser();
 			String pathAndName = user.getEmail() + "/" + multipartFile.getOriginalFilename();
@@ -59,5 +60,11 @@ public class FileController {
 	public @ResponseBody List<ListFileResp> listFiles() {
 		User user = sessionService.getLoginUser();
 		return fileService.listFiles(user.getEmail());
+	}
+	
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	@ApiOperation(value = "下載檔案", notes = "下載檔案")
+	public ResponseEntity<byte[]> downloadFile(@RequestParam(value = "pathAndName", required = true) String pathAndName) {
+		return fileService.downloadFile(pathAndName);
 	}
 }

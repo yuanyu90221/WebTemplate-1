@@ -184,7 +184,7 @@ public class UserController {
 	 * @return ResponseEntity<byte[]> 檔案內容
 	 */
 	@RequestMapping(value = "/get_profile_image", method = RequestMethod.GET)
-	@ApiOperation(value = "取得大頭貼", notes = "取得已上傳的大頭照", response = byte[].class)
+	@ApiOperation(value = "取得大頭貼", notes = "取得已上傳的大頭照")
 	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> downloadedFile = null;
 		downloadedFile = userService.getProfileImage();
