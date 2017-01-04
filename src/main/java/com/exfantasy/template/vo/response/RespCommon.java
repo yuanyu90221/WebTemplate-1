@@ -16,10 +16,10 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "操作回應")
 public class RespCommon {
-	@ApiModelProperty(notes = "操作代碼", required = true)
+	@ApiModelProperty(notes = "操作代碼")
 	private ResultCode resultCode;
 	
-	@ApiModelProperty(notes = "回應資料", required = true)
+	@ApiModelProperty(notes = "回應資料")
 	private Object data;
 
 	public RespCommon(ResultCode resultCode, Object data) {

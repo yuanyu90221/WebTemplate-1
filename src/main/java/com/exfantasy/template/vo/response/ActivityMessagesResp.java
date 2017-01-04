@@ -7,12 +7,12 @@ import lombok.Data;
 
 @Data
 public class ActivityMessagesResp {
-	@ApiModelProperty(notes = "留言者的 email", required = true)
+	@ApiModelProperty(notes = "留言者的 email")
 	private String createUserEmail;
 	
-	@ApiModelProperty(notes = "留言日期時間", required = true)
+	@ApiModelProperty(notes = "留言日期時間")
 	private Date createDatetime;
 	
-	@ApiModelProperty(notes = "留言", required = true)
+	@ApiModelProperty(notes = "留言")
 	private String msg;
 }
