@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
-import com.exfantasy.template.services.amazon.AmazonS3Service;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.vo.response.RespCommon;
@@ -41,8 +40,8 @@ public class TestController {
 	@Autowired
 	private MailService mailService;
 	
-	@Autowired
-	private AmazonS3Service amazonS3Service;
+//	@Autowired
+//	private AmazonS3Service amazonS3Service;
 	
 	@Autowired
 	private DropboxService dropboxService;
