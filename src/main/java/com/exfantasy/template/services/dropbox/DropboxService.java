@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +24,7 @@ import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.files.UploadErrorException;
 import com.dropbox.core.v2.users.FullAccount;
+import com.exfantasy.template.util.FileUtil;
 
 /**
  * <pre>
@@ -203,10 +203,10 @@ public class DropboxService {
 		logger.info("<<<<< Download file from Dropbox succeed, pathAndName: <{}>, time-spent: <{} ms>", pathAndName, System.currentTimeMillis() - startTime);
 		
 		byte[] bytes = baos.toByteArray();
-		HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-        httpHeaders.setContentLength(bytes.length);
-        return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+
+		HttpHeaders httpHeaders = FileUtil.getHttpHeaderByFileName(pathAndName, bytes);
+		
+		return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
 	}
 
 	/**

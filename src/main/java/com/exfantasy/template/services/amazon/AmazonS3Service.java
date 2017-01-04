@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -31,6 +30,7 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.exfantasy.template.util.FileUtil;
 
 /**
  * <pre>
@@ -189,18 +189,11 @@ public class AmazonS3Service {
 
         byte[] bytes = IOUtils.toByteArray(objectInputStream);
 
-//        String fileName = URLEncoder.encode(folderAndName, "UTF-8").replaceAll("\\+", "%20");
-//        String fileName = "profileImage.jpg";
-
-        // http://stackoverflow.com/questions/5690228/spring-mvc-how-to-return-image-in-responsebody
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-        httpHeaders.setContentLength(bytes.length);
-//        httpHeaders.setContentDispositionFormData("attachment", fileName);
+        HttpHeaders httpHeaders = FileUtil.getHttpHeaderByFileName(pathAndName, bytes);
 
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }
-	
+
 	/**
 	 * <pre>
 	 * 列出 bucket 底下的所有目錄及檔案
