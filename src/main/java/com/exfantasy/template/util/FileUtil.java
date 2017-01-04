@@ -1,6 +1,8 @@
 package com.exfantasy.template.util;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,12 @@ public class FileUtil {
 		MediaType mediaType = MediaType.parseMediaType(sMediaType);
 		
 		logger.info("The file MediaType: <{}>", mediaType);
+		
+		try {
+			fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+		} catch (UnsupportedEncodingException e) {
+			logger.warn("UnsupportedEncodingException raised while encoding fileName with UTF-8", e);
+		}
 		
 		httpHeaders.setContentType(mediaType);
 		httpHeaders.setContentDispositionFormData("file", fileName);
