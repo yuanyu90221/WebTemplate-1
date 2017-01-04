@@ -1,6 +1,5 @@
 package com.exfantasy.template.services.file;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
-import com.exfantasy.template.services.amazon.AmazonS3Service;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.vo.response.ListFileResp;
@@ -31,8 +28,8 @@ public class FileService {
 	@Autowired
 	private SessionService sessionService;
 	
-	@Autowired
-	private AmazonS3Service amazonS3Service;
+//	@Autowired
+//	private AmazonS3Service amazonS3Service;
     
     @Autowired
     private DropboxService dropboxService;
@@ -52,31 +49,31 @@ public class FileService {
     	
     	String originalFileName = multipartFile.getOriginalFilename();
     	
-    	boolean uploadToAmazonS3Succeed;
-    	if (amazonS3Service.isEnable()) {
-    		try {
-    			logger.info(">>>>> Trying to upload file to Amazon S3, original file name: <{}>, Amazon S3 path and name: <{}>", originalFileName, pathAndName);
-    			
-    			uploadFileToAmazonS3(multipartFile, pathAndName);
-    			
-    			logger.info("<<<<< Upload file to Amazon S3 succeed, original file name: <{}>, Amazon S3 path and name: <{}>", originalFileName, pathAndName);
-    			
-    			cloudStorage = CloudStorage.AMAZON_S3;
-    			uploadToAmazonS3Succeed = true;
-    		}
-    		catch (Exception e) {
-    			amazonS3Service.setDisable();
-    			amazonS3Service.setErrorMsg(e.getMessage());
-    			logger.warn("~~~~~ Upload file to Amazon S3 failed, original file name: <{}>, Amazon S3 path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage(), e);
-    			uploadToAmazonS3Succeed = false;
-    		} 
-    	}
-    	else {
-    		logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
-    		uploadToAmazonS3Succeed = false;
-    	}
-    	
-    	if (!uploadToAmazonS3Succeed) {
+//    	boolean uploadToAmazonS3Succeed;
+//    	if (amazonS3Service.isEnable()) {
+//    		try {
+//    			logger.info(">>>>> Trying to upload file to Amazon S3, original file name: <{}>, Amazon S3 path and name: <{}>", originalFileName, pathAndName);
+//    			
+//    			uploadFileToAmazonS3(multipartFile, pathAndName);
+//    			
+//    			logger.info("<<<<< Upload file to Amazon S3 succeed, original file name: <{}>, Amazon S3 path and name: <{}>", originalFileName, pathAndName);
+//    			
+//    			cloudStorage = CloudStorage.AMAZON_S3;
+//    			uploadToAmazonS3Succeed = true;
+//    		}
+//    		catch (Exception e) {
+//    			amazonS3Service.setDisable();
+//    			amazonS3Service.setErrorMsg(e.getMessage());
+//    			logger.warn("~~~~~ Upload file to Amazon S3 failed, original file name: <{}>, Amazon S3 path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage(), e);
+//    			uploadToAmazonS3Succeed = false;
+//    		} 
+//    	}
+//    	else {
+//    		logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
+//    		uploadToAmazonS3Succeed = false;
+//    	}
+//    	
+//    	if (!uploadToAmazonS3Succeed) {
 			try {
 				logger.info(">>>>> Trying to upload file to Dropbox, original file name: <{}>, Dropbox path and name: <{}>", originalFileName, pathAndName);
 				
@@ -90,7 +87,7 @@ public class FileService {
 				logger.error("~~~~~ Upload file to Dropbox failed, original file name: <{}>, Dropbox path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage(), e);
 				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
 			}
-		}
+//		}
     	return cloudStorage;
     }
     
@@ -121,31 +118,31 @@ public class FileService {
 	public CloudStorage deleteFile(String pathAndName) {
 		CloudStorage cloudStorage = null;
 		
-		boolean deleteFromAmazonS3Succeed;
-		if (amazonS3Service.isEnable()) {
-			try {
-				logger.info(">>>>> Trying to delete file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
-				
-				deleteFileFromAmazonS3(pathAndName);
-				
-				logger.info("<<<<< Delete file from Amazon S3 succeed, Amazon S3 path and name: <{}>", pathAndName);
-				
-				cloudStorage = CloudStorage.AMAZON_S3;
-				deleteFromAmazonS3Succeed = true;
-			}
-			catch (Exception e) {
-				amazonS3Service.setDisable();
-				amazonS3Service.setErrorMsg(e.getMessage());
-				logger.error("~~~~~ Delete file from Amazon S3 failed, Amazon S3 path and name: <{}>, try to delete from Dropbox, error-msg: <{}>", pathAndName, e.getMessage(), e);
-				deleteFromAmazonS3Succeed = false;
-			}
-		}
-		else {
-			logger.warn("~~~~~ Amazon S3 service is not available, try to delete from Dropbox, error-msg: <{}>", amazonS3Service.getErrorMsg());
-			deleteFromAmazonS3Succeed = false;
-		}
-		
-		if (!deleteFromAmazonS3Succeed) {
+//		boolean deleteFromAmazonS3Succeed;
+//		if (amazonS3Service.isEnable()) {
+//			try {
+//				logger.info(">>>>> Trying to delete file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+//				
+//				deleteFileFromAmazonS3(pathAndName);
+//				
+//				logger.info("<<<<< Delete file from Amazon S3 succeed, Amazon S3 path and name: <{}>", pathAndName);
+//				
+//				cloudStorage = CloudStorage.AMAZON_S3;
+//				deleteFromAmazonS3Succeed = true;
+//			}
+//			catch (Exception e) {
+//				amazonS3Service.setDisable();
+//				amazonS3Service.setErrorMsg(e.getMessage());
+//				logger.error("~~~~~ Delete file from Amazon S3 failed, Amazon S3 path and name: <{}>, try to delete from Dropbox, error-msg: <{}>", pathAndName, e.getMessage(), e);
+//				deleteFromAmazonS3Succeed = false;
+//			}
+//		}
+//		else {
+//			logger.warn("~~~~~ Amazon S3 service is not available, try to delete from Dropbox, error-msg: <{}>", amazonS3Service.getErrorMsg());
+//			deleteFromAmazonS3Succeed = false;
+//		}
+//		
+//		if (!deleteFromAmazonS3Succeed) {
 			try {
 				logger.info(">>>>> Trying to delete file from Dropbox, Dropbox path and name: <{}>", pathAndName);
 				
@@ -159,7 +156,7 @@ public class FileService {
 				logger.error("~~~~~ Delete file from dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
 				throw new OperationException(ResultCode.DELETE_FILE_FAILED);
 			}
-		}
+//		}
 		return cloudStorage;
 	}
 
@@ -190,15 +187,15 @@ public class FileService {
 	 * 
 	 * @throws IOException 
 	 */
-	private void uploadFileToAmazonS3(MultipartFile multipartFile, String pathAndName) throws IOException {
-		long startTime = System.currentTimeMillis();
-		logger.info("-----> Prepare to upload file to Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
-
-		amazonS3Service.upload(multipartFile, pathAndName);
-		
-		long timeSpent = System.currentTimeMillis() - startTime;
-		logger.info("<----- Upload file to Amazon S3 done, time-spent: <{} ms>", timeSpent);
-	}
+//	private void uploadFileToAmazonS3(MultipartFile multipartFile, String pathAndName) throws IOException {
+//		long startTime = System.currentTimeMillis();
+//		logger.info("-----> Prepare to upload file to Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+//
+//		amazonS3Service.upload(multipartFile, pathAndName);
+//		
+//		long timeSpent = System.currentTimeMillis() - startTime;
+//		logger.info("<----- Upload file to Amazon S3 done, time-spent: <{} ms>", timeSpent);
+//	}
 	
 	/**
 	 * <pre>
@@ -233,15 +230,15 @@ public class FileService {
 	 * 
 	 * @throws Exception 
 	 */
-	private void deleteFileFromAmazonS3(String pathAndName) throws Exception {
-		long startTime = System.currentTimeMillis();
-		logger.info("----> Prepare to delete file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
-		
-		amazonS3Service.deleteFile(pathAndName);
-		
-		long timeSpent = System.currentTimeMillis() - startTime;
-		logger.info("<---- Delete file from Amazon S3 done, time-spent: <{} ms>", timeSpent);
-	}
+//	private void deleteFileFromAmazonS3(String pathAndName) throws Exception {
+//		long startTime = System.currentTimeMillis();
+//		logger.info("----> Prepare to delete file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+//		
+//		amazonS3Service.deleteFile(pathAndName);
+//		
+//		long timeSpent = System.currentTimeMillis() - startTime;
+//		logger.info("<---- Delete file from Amazon S3 done, time-spent: <{} ms>", timeSpent);
+//	}
 
 	/**
 	 * <pre>
@@ -301,29 +298,29 @@ public class FileService {
 	public ResponseEntity<byte[]> downloadFile(String pathAndName) {
 		ResponseEntity<byte[]> file = null;
 		
-		boolean downloadFromAmazonS3Succeed;
-		if (amazonS3Service.isEnable()) {
-			try {
-				logger.info(">>>>> Trying to download file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
-			
-				file = downloadFileFromAmazonS3(pathAndName);
-			
-				logger.info(">>>>> Download file from Amazon S3 succeed, Amazon S3 path and name: <{}>", pathAndName);
-			
-				downloadFromAmazonS3Succeed = true;
-			}
-			catch (Exception e) {
-				amazonS3Service.setDisable();
-				amazonS3Service.setErrorMsg(e.getMessage());
-				logger.warn("~~~~~ Download file from Amazon S3 failed, Amazon S3 path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage());
-				downloadFromAmazonS3Succeed = false;
-			}
-		}
-		else {
-			logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
-			downloadFromAmazonS3Succeed = false;
-		}
-		if (!downloadFromAmazonS3Succeed) {
+//		boolean downloadFromAmazonS3Succeed;
+//		if (amazonS3Service.isEnable()) {
+//			try {
+//				logger.info(">>>>> Trying to download file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+//			
+//				file = downloadFileFromAmazonS3(pathAndName);
+//			
+//				logger.info(">>>>> Download file from Amazon S3 succeed, Amazon S3 path and name: <{}>", pathAndName);
+//			
+//				downloadFromAmazonS3Succeed = true;
+//			}
+//			catch (Exception e) {
+//				amazonS3Service.setDisable();
+//				amazonS3Service.setErrorMsg(e.getMessage());
+//				logger.warn("~~~~~ Download file from Amazon S3 failed, Amazon S3 path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage());
+//				downloadFromAmazonS3Succeed = false;
+//			}
+//		}
+//		else {
+//			logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
+//			downloadFromAmazonS3Succeed = false;
+//		}
+//		if (!downloadFromAmazonS3Succeed) {
 			try {
 				logger.info(">>>>> Trying to download file from Dropbox, Dropbox path and name: <{}>", pathAndName);
 				
@@ -335,7 +332,7 @@ public class FileService {
 				logger.error("~~~~~ Download file from Dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
 				throw new OperationException(ResultCode.DOWNLOAD_FILE_FAILED);
 			}
-		}
+//		}
 		return file;
 	}
 
@@ -350,19 +347,19 @@ public class FileService {
 	 * 
 	 * @throws Exception 
 	 */
-	private ResponseEntity<byte[]> downloadFileFromAmazonS3(String pathAndName) throws Exception {
-		ResponseEntity<byte[]> file = null;
-		
-		long startTime = System.currentTimeMillis();
-		logger.info("----> Prepare to download file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
-		
-		file = amazonS3Service.download(pathAndName);
-		
-		long timeSpent = System.currentTimeMillis() - startTime;
-		logger.info("<---- Download file from Amazon S3 done, time-spent: <{} ms>", timeSpent);
-		
-		return file;
-	}
+//	private ResponseEntity<byte[]> downloadFileFromAmazonS3(String pathAndName) throws Exception {
+//		ResponseEntity<byte[]> file = null;
+//		
+//		long startTime = System.currentTimeMillis();
+//		logger.info("----> Prepare to download file from Amazon S3, Amazon S3 path and name: <{}>", pathAndName);
+//		
+//		file = amazonS3Service.download(pathAndName);
+//		
+//		long timeSpent = System.currentTimeMillis() - startTime;
+//		logger.info("<---- Download file from Amazon S3 done, time-spent: <{} ms>", timeSpent);
+//		
+//		return file;
+//	}
 	
 	/**
 	 * <pre>
@@ -399,37 +396,37 @@ public class FileService {
 	public List<ListFileResp> listFiles(String email) {
 		List<ListFileResp> results = new ArrayList<>();
 		
-		boolean listFromAmazonS3Succeed;
-		if (amazonS3Service.isEnable()) {
-			try {
-				logger.info(">>>>> Trying to list file from Amazon S3, Amazon S3 path: <{}>", email);
-			
-				List<S3ObjectSummary> listFiles = amazonS3Service.listFiles(email);
-				for (S3ObjectSummary file : listFiles) {
-					ListFileResp listFileResp = new ListFileResp();
-					listFileResp.setCloudStorage(CloudStorage.AMAZON_S3);
-					listFileResp.setPathAndName(file.getKey());
-					listFileResp.setFileSizeBytes(file.getSize());
-					listFileResp.setLastModified(file.getLastModified());
-					results.add(listFileResp);
-				}
-				
-				logger.info(">>>>> List file from Amazon S3 succeed, Amazon S3 path: <{}>", email);
-			
-				listFromAmazonS3Succeed = true;
-			}
-			catch (Exception e) {
-				amazonS3Service.setDisable();
-				amazonS3Service.setErrorMsg(e.getMessage());
-				logger.warn("~~~~~ List file from Amazon S3 failed, Amazon S3 path: <{}>, error-msg: <{}>", email, e.getMessage());
-				listFromAmazonS3Succeed = false;
-			}
-		}
-		else {
-			logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
-			listFromAmazonS3Succeed = false;
-		}
-		if (!listFromAmazonS3Succeed) {
+//		boolean listFromAmazonS3Succeed;
+//		if (amazonS3Service.isEnable()) {
+//			try {
+//				logger.info(">>>>> Trying to list file from Amazon S3, Amazon S3 path: <{}>", email);
+//			
+//				List<S3ObjectSummary> listFiles = amazonS3Service.listFiles(email);
+//				for (S3ObjectSummary file : listFiles) {
+//					ListFileResp listFileResp = new ListFileResp();
+//					listFileResp.setCloudStorage(CloudStorage.AMAZON_S3);
+//					listFileResp.setPathAndName(file.getKey());
+//					listFileResp.setFileSizeBytes(file.getSize());
+//					listFileResp.setLastModified(file.getLastModified());
+//					results.add(listFileResp);
+//				}
+//				
+//				logger.info(">>>>> List file from Amazon S3 succeed, Amazon S3 path: <{}>", email);
+//			
+//				listFromAmazonS3Succeed = true;
+//			}
+//			catch (Exception e) {
+//				amazonS3Service.setDisable();
+//				amazonS3Service.setErrorMsg(e.getMessage());
+//				logger.warn("~~~~~ List file from Amazon S3 failed, Amazon S3 path: <{}>, error-msg: <{}>", email, e.getMessage());
+//				listFromAmazonS3Succeed = false;
+//			}
+//		}
+//		else {
+//			logger.warn("~~~~~ Amazon S3 service is not available, error-msg: <{}>", amazonS3Service.getErrorMsg());
+//			listFromAmazonS3Succeed = false;
+//		}
+//		if (!listFromAmazonS3Succeed) {
 			try {
 				logger.info(">>>>> Trying to list file from Dropbox, Dropbox path: <{}>", email);
 				
@@ -449,7 +446,7 @@ public class FileService {
 				logger.error("~~~~~ List file from Dropbox failed, Dropbox path: <{}>, error-msg: <{}>", email, e.getMessage(), e);
 				throw new OperationException(ResultCode.LIST_FILE_FAILED);
 			}
-		}
+//		}
 		return results;
 	}
 }

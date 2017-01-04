@@ -118,40 +118,40 @@ public class TestController {
 		return "Response your data: " + data;
 	}
 	
-	/**
-	 * <pre>
-	 * 測試從 Amazon S3 下載檔案
-	 * </pre>
-	 * 
-	 * @param pathAndName 儲存於 Amazon S3 的檔案路徑
-	 * @return
-	 */
-	@RequestMapping(value = "/testAmazonS3GetFile", method = RequestMethod.GET)
-	@ApiOperation(value = "測試從 Amazon S3 取回檔案", response = byte[].class)
-	public ResponseEntity<byte[]> testAmazonS3GetFile(@RequestParam(value = "pathAndName", required = true) String pathAndName) {
-		ResponseEntity<byte[]> downloadedFile;
-		try {
-			downloadedFile = amazonS3Service.download(pathAndName);
-		} catch (Exception e) {
-			logger.error("Try to download file from Amazon S3 with key: <{}> failed", pathAndName, e);
-			return null;
-		}
-		return downloadedFile;
-	}
-	
-	/**
-	 * <pre>
-	 * 測試列出 Amazon S3 bucket 下所有目錄及檔案
-	 * </pre>
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/testAmazonS3ListBucketFiles", method = RequestMethod.GET)
-	@ApiOperation(value = "測試從 Amazon S3 list 出 bucekt 下所有檔案資訊")
-	public @ResponseBody List<S3ObjectSummary> testAmazonS3ListBucketFiles() {
-		List<S3ObjectSummary> list = amazonS3Service.listBucketFiles();
-		return list;
-	}
+//	/**
+//	 * <pre>
+//	 * 測試從 Amazon S3 下載檔案
+//	 * </pre>
+//	 * 
+//	 * @param pathAndName 儲存於 Amazon S3 的檔案路徑
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/testAmazonS3GetFile", method = RequestMethod.GET)
+//	@ApiOperation(value = "測試從 Amazon S3 取回檔案", response = byte[].class)
+//	public ResponseEntity<byte[]> testAmazonS3GetFile(@RequestParam(value = "pathAndName", required = true) String pathAndName) {
+//		ResponseEntity<byte[]> downloadedFile;
+//		try {
+//			downloadedFile = amazonS3Service.download(pathAndName);
+//		} catch (Exception e) {
+//			logger.error("Try to download file from Amazon S3 with key: <{}> failed", pathAndName, e);
+//			return null;
+//		}
+//		return downloadedFile;
+//	}
+//	
+//	/**
+//	 * <pre>
+//	 * 測試列出 Amazon S3 bucket 下所有目錄及檔案
+//	 * </pre>
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/testAmazonS3ListBucketFiles", method = RequestMethod.GET)
+//	@ApiOperation(value = "測試從 Amazon S3 list 出 bucekt 下所有檔案資訊")
+//	public @ResponseBody List<S3ObjectSummary> testAmazonS3ListBucketFiles() {
+//		List<S3ObjectSummary> list = amazonS3Service.listBucketFiles();
+//		return list;
+//	}
 	
 	/**
 	 * <pre>
