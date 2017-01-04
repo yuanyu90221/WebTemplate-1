@@ -47,7 +47,7 @@ public class DropboxService {
 	 * 取得 Dropbox 帳號資訊
 	 * </pre>
 	 * 
-	 * @return
+	 * @return String Dropbox 帳號資訊
 	 */
 	public String getAccountInformation() {
 		StringBuilder buffer = new StringBuilder();
@@ -78,6 +78,7 @@ public class DropboxService {
 	 * 
 	 * @param multipartFile 欲上傳的檔案
 	 * @param pathAndName 欲儲存於 Dropbox 的路徑
+	 * 
 	 * @throws UploadErrorException
 	 * @throws DbxException
 	 * @throws IOException
@@ -96,6 +97,7 @@ public class DropboxService {
 	 * 
 	 * @param inputStream file 取得的 inputStream
 	 * @param pathAndName 欲儲存於 Dropbox 的路徑
+	 * 
 	 * @throws UploadErrorException
 	 * @throws DbxException
 	 * @throws IOException
@@ -110,6 +112,16 @@ public class DropboxService {
 		dropboxClient.files().uploadBuilder(pathAndName).uploadAndFinish(inputStream);
 	}
 	
+	/**
+	 * <pre>
+	 * 判斷指定的檔案路徑是否已存在
+	 * </pre>
+	 * 
+	 * @param pathAndName 儲存於 Dropbox 的路徑
+	 * @return boolean 是否已存在
+	 * @throws ListFolderErrorException
+	 * @throws DbxException
+	 */
 	private boolean alreadyContains(String pathAndName) throws ListFolderErrorException, DbxException {
 		int lastIndexOf = pathAndName.lastIndexOf("/");
 		String folderPath = pathAndName.substring(0, lastIndexOf);
@@ -130,6 +142,16 @@ public class DropboxService {
 		return false;
 	}
 	
+	/**
+	 * <pre>
+	 * 判斷目錄是否已存在 Dropbox
+	 * </pre>
+	 * 
+	 * @param folderName 儲存於 Dropbox 的目錄名稱
+	 * @return boolean 是否已存在
+	 * @throws ListFolderErrorException
+	 * @throws DbxException
+	 */
 	private boolean foundFolder(String folderName) throws ListFolderErrorException, DbxException {
 		ListFolderResult result = dropboxClient.files().listFolder("");
 		for (Metadata metadata : result.getEntries()) {
@@ -141,6 +163,15 @@ public class DropboxService {
 		return false;
 	}
 	
+	/**
+	 * <pre>
+	 * 刪除儲存於 Dropbox 的檔案
+	 * </pre>
+	 * 
+	 * @param pathAndName 儲存於 Dropbox 的路徑
+	 * @throws DeleteErrorException
+	 * @throws DbxException
+	 */
 	public void delete(String pathAndName) throws DeleteErrorException, DbxException {
 		if (!pathAndName.startsWith("/")) {
 			pathAndName = "/" + pathAndName;	
@@ -148,6 +179,15 @@ public class DropboxService {
 		dropboxClient.files().delete(pathAndName);
 	}
 
+	/**
+	 * <pre>
+	 * 從 Dropbox 下載檔案
+	 * </pre>
+	 * 
+	 * @param pathAndName 儲存於 Dropbox 的路徑
+	 * @return ResponseEntity<byte[]> 檔案
+	 * @throws Exception
+	 */
 	public ResponseEntity<byte[]> download(String pathAndName) throws Exception {
 		if (!pathAndName.startsWith("/")) {
 			pathAndName = "/" + pathAndName;	
@@ -169,6 +209,15 @@ public class DropboxService {
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
 	}
 
+	/**
+	 * <pre>
+	 * 列出指定路徑 Dropbox 下所有檔案
+	 * </pre>
+	 * 
+	 * @param path Dropbox 的某的路徑
+	 * @return List<FileMetadata> 檔案資訊
+	 * @throws Exception
+	 */
 	public List<FileMetadata> listFiles(String path) throws Exception {
 		List<FileMetadata> fileMetadatas = new ArrayList<>();
 		
