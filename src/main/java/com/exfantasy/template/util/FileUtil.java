@@ -1,32 +1,43 @@
 package com.exfantasy.template.util;
 
+import java.net.URLConnection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 /**
+ * <pre>
  * 根據副檔名組成對應的 HttpHeaders
+ * 
+ * 參考: <a href="http://websystique.com/springmvc/spring-mvc-4-file-download-example/">spring-mvc-4-file-download-example</a>
+ * </pre>
  * 
  * @author tommy.feng
  *
  */
 public class FileUtil {
+	
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
 	public static HttpHeaders getHttpHeaderByFileName(String pathAndName, byte[] bytes) {
 		String fileName = pathAndName.substring(pathAndName.lastIndexOf("/") + 1, pathAndName.length());
-		String extFileName = pathAndName.substring(pathAndName.lastIndexOf(".") + 1, pathAndName.length());
 		
-		// http://stackoverflow.com/questions/5690228/spring-mvc-how-to-return-image-in-responsebody
 		HttpHeaders httpHeaders = new HttpHeaders();
 
-		if (extFileName.compareToIgnoreCase("jpg") == 0 || extFileName.compareToIgnoreCase("jpeg") == 0) {
-			httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-	        httpHeaders.setContentLength(bytes.length);
+		String sMediaType = URLConnection.guessContentTypeFromName(fileName);
+		if (sMediaType == null) {
+			logger.warn("MediaType is not detectable, will take default");
+			sMediaType = "application/octet-stream";
 		}
-		else if (extFileName.compareToIgnoreCase("pdf") == 0) {
-			httpHeaders.setContentType(MediaType.parseMediaType("application/pdf"));
-			httpHeaders.setContentDispositionFormData(fileName, fileName);
-			httpHeaders.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-		}
+		MediaType mediaType = MediaType.parseMediaType(sMediaType);
+		
+		logger.info("The file MediaType: <{}>", mediaType);
+		
+		httpHeaders.setContentType(mediaType);
+		httpHeaders.setContentDispositionFormData("file", fileName);
+        httpHeaders.setContentLength(bytes.length);
 
 		return httpHeaders;
 	}
