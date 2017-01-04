@@ -58,7 +58,8 @@ public class AmazonS3Service {
 	@Value("${aws.s3.bucket}")
 	private String bucket;
 	
-	private boolean isEnable = true;
+	// FIXME 先關掉, 不然要付 15w 的錢
+	private boolean isEnable = false;
 	
 	private String errorMsg;
 
