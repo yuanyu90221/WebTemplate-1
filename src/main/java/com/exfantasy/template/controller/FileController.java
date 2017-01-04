@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.file.FileService;
 import com.exfantasy.template.services.session.SessionService;
@@ -51,7 +52,7 @@ public class FileController {
 			return new RespCommon(ResultCode.SUCCESS, "Upload file to " + cloudStorage + " succeed");
 		}
 		else {
-			return new RespCommon(ResultCode.FILE_IS_EMPTY);
+			throw new OperationException(ResultCode.FILE_IS_EMPTY);
 		}
 	}
 	

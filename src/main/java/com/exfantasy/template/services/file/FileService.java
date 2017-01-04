@@ -85,7 +85,7 @@ public class FileService {
 				
 			} catch (Exception e) {
 				logger.error("~~~~~ Upload file to Dropbox failed, original file name: <{}>, Dropbox path and name: <{}>, error-msg: <{}>", originalFileName, pathAndName, e.getMessage(), e);
-				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED);
+				throw new OperationException(ResultCode.UPLOAD_FILE_FAILED, e.getMessage());
 			}
 //		}
     	return cloudStorage;
@@ -154,7 +154,7 @@ public class FileService {
 
 			} catch (Exception e) {
 				logger.error("~~~~~ Delete file from dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
-				throw new OperationException(ResultCode.DELETE_FILE_FAILED);
+				throw new OperationException(ResultCode.DELETE_FILE_FAILED, e.getMessage());
 			}
 //		}
 		return cloudStorage;
@@ -330,7 +330,7 @@ public class FileService {
 				
 			} catch (Exception e) {
 				logger.error("~~~~~ Download file from Dropbox failed, Dropbox path and name: <{}>, error-msg: <{}>", pathAndName, e.getMessage(), e);
-				throw new OperationException(ResultCode.DOWNLOAD_FILE_FAILED);
+				throw new OperationException(ResultCode.DOWNLOAD_FILE_FAILED, e.getMessage());
 			}
 //		}
 		return file;
@@ -444,7 +444,7 @@ public class FileService {
 				
 			} catch (Exception e) {
 				logger.error("~~~~~ List file from Dropbox failed, Dropbox path: <{}>, error-msg: <{}>", email, e.getMessage(), e);
-				throw new OperationException(ResultCode.LIST_FILE_FAILED);
+				throw new OperationException(ResultCode.LIST_FILE_FAILED, e.getMessage());
 			}
 //		}
 		return results;
