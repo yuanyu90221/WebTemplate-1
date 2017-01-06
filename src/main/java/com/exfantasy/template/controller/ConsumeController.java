@@ -115,9 +115,9 @@ public class ConsumeController {
 	 */
 	@RequestMapping(value = "/del_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "刪除記帳資料", notes = "刪除記帳資料", response = RespCommon.class)
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "consumeVo", value = "刪除記帳資料需填入", required = true, dataType = "ConsumeVo")
-	})
+//	@ApiImplicitParams({
+//		@ApiImplicitParam(name = "consumeVos", value = "刪除記帳資料需填入", required = true, dataType = "ConsumeVo")
+//	})
 	public @ResponseBody RespCommon delConsume(@Validated @RequestBody final List<ConsumeVo> consumeVos, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
