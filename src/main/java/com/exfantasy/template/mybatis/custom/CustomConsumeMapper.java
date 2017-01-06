@@ -2,6 +2,7 @@ package com.exfantasy.template.mybatis.custom;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
@@ -48,4 +49,14 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 		"</script>"
 	})
 	int batchUpdateAlreadtSent(List<Consume> consumesToUpdateAlreadySent);
+	
+	@Delete({
+		"<script>",
+		"<foreach collection='list' item='lotteryNo' separator=';'>",
+		"delete from consume ",
+		"where lottery_no = #{lotteryNo,jdbcType=VARCHAR}",
+		"</foreach>",
+		"</script>"
+	})
+	int batchDeleteByLotteryNo(List<String> lotteryNos);
 }

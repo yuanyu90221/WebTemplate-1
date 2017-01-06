@@ -118,7 +118,7 @@ public class ConsumeController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "consumeVo", value = "刪除記帳資料需填入", required = true, dataType = "ConsumeVo")
 	})
-	public @ResponseBody RespCommon delConsume(@Validated @RequestBody final ConsumeVo consumeVo, BindingResult result) {
+	public @ResponseBody RespCommon delConsume(@Validated @RequestBody final List<ConsumeVo> consumeVos, BindingResult result) {
 		if (result.hasErrors()) {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
@@ -126,7 +126,8 @@ public class ConsumeController {
 		
 		User user = sessionService.getLoginUser();
 		
-		consumeService.delConsume(user, consumeVo);
+		consumeService.delConsumes(user, consumeVos);
+
 		return new RespCommon(ResultCode.SUCCESS, "Update consume data succeed");
 	}
 	

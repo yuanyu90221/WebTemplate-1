@@ -88,12 +88,13 @@ public class ConsumeService {
 	 * </pre>
 	 * 
 	 * @param user
-	 * @param consumeVo
+	 * @param consumeVos
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-	public void delConsume(User user, ConsumeVo consumeVo) {
-		Consume consume = convertConsumVoToModel(user, consumeVo);
-		consumeMapper.deleteByPrimaryKey(consume.getLotteryNo());
+	public void delConsumes(User user, List<ConsumeVo> consumeVos) {
+		List<String> lotteryNos = new ArrayList<>();
+		consumeVos.forEach(vo -> lotteryNos.add(vo.getLotteryNo()));
+		consumeMapper.batchDeleteByLotteryNo(lotteryNos);
 	}
 
 	/**
