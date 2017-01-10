@@ -171,14 +171,14 @@ public class ConsumeController {
 	}
 	
 	@RequestMapping(value = "/get_latest_reward_numbers", method = RequestMethod.GET)
-	@ApiOperation(value = "取得最新發票開獎號碼", notes = "取得最新發票開獎號碼", response = RespReward.class)
+	@ApiOperation(value = "取得最新發票開獎號碼", notes = "取得最新發票開獎號碼", responseContainer = "List", response = RespReward.class)
 	public @ResponseBody List<RespReward> getLatestRewardNumbers() {
 		List<RespReward> latestRewardNumbers = consumeService.getLatestRewardNumbers();
 		return latestRewardNumbers;
 	}
 	
 	@RequestMapping(value = "/get_typhoon_vacation", method = RequestMethod.GET)
-	@ApiOperation(value = "取得最新颱風假資訊", notes = "取得最新颱風假資訊", response = TyphoonVacationInfo.class)
+	@ApiOperation(value = "取得最新颱風假資訊", notes = "取得最新颱風假資訊", responseContainer = "List", response = TyphoonVacationInfo.class)
 	public @ResponseBody List<TyphoonVacationInfo> getTyphoonVacation() {
 		List<TyphoonVacationInfo> typhoonVacation = consumeService.getTyphoonVacation();
 		return typhoonVacation;

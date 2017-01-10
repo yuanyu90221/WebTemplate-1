@@ -96,7 +96,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/get_user_roles_by_email", method = RequestMethod.GET)
-	@ApiOperation(value = "使用 email 查詢用戶所擁有角色", notes = "使用 email 查詢用戶所擁有的角色", response = UserRole.class)
+	@ApiOperation(value = "使用 email 查詢用戶所擁有角色", notes = "使用 email 查詢用戶所擁有的角色", responseContainer = "List", response = UserRole.class)
 	public @ResponseBody List<UserRole> queryUserRolesByEmail(@RequestParam(value = "email", required = true) String email) {
 		return userService.queryUserRolesByEmail(email);
 	}

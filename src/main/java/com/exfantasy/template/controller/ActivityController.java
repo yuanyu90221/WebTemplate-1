@@ -94,7 +94,7 @@ public class ActivityController {
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.Activity}</code> 活動資訊
 	 */
 	@RequestMapping(value = "/get_created_activities", method = RequestMethod.GET)
-	@ApiOperation(value = "查詢使用者所建立的活動", notes = "查詢使用者所建立的活動", response = Activity.class)
+	@ApiOperation(value = "查詢使用者所建立的活動", notes = "查詢使用者所建立的活動", responseContainer = "List", response = Activity.class)
 	public @ResponseBody List<Activity> getCreatedActivities() {
 		User user = sessionService.getLoginUser();
 		
@@ -111,7 +111,7 @@ public class ActivityController {
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.Activity}</code> 活動資訊
 	 */
 	@RequestMapping(value = "/get_joined_activities", method = RequestMethod.GET)
-	@ApiOperation(value = "查詢使用者參與的所有的活動", notes = "查詢使用者參與的所有的活動", response = Activity.class)
+	@ApiOperation(value = "查詢使用者參與的所有的活動", notes = "查詢使用者參與的所有的活動", responseContainer = "List", response = Activity.class)
 	public @ResponseBody List<Activity> getJoinedActivities() {
 		User user = sessionService.getLoginUser();
 		
@@ -129,7 +129,7 @@ public class ActivityController {
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 使用者資訊
 	 */
 	@RequestMapping(value = "/get_joined_users/{activityId}", method = RequestMethod.GET)
-	@ApiOperation(value = "查詢活動的所有參與者", notes = "查詢活動的所有參與者", response = User.class)
+	@ApiOperation(value = "查詢活動的所有參與者", notes = "查詢活動的所有參與者", responseContainer = "List", response = User.class)
 	public @ResponseBody List<User> getJoinedUsers(@ApiParam("欲查詢的活動 ID") @PathVariable("activityId") Integer activityId) {
 		List<User> joinedUsers = activityService.getJoinedUsers(activityId);
 		
@@ -172,7 +172,7 @@ public class ActivityController {
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.ActivityMessages}</code> 活動的所有留言
 	 */
 	@RequestMapping(value = "/get_activity_messages/{activityId}", method = RequestMethod.GET)
-	@ApiOperation(value = "查詢活動的所有留言", notes = "查詢活動的所有留言", response = ActivityMessagesResp.class)
+	@ApiOperation(value = "查詢活動的所有留言", notes = "查詢活動的所有留言", responseContainer = "List", response = ActivityMessagesResp.class)
 	public @ResponseBody List<ActivityMessagesResp> getActivityMessages(@ApiParam("欲查詢的活動 ID") @PathVariable("activityId") Integer activityId) {
 		List<ActivityMessagesResp> activityMessages = activityService.getActivityMessages(activityId);
 		return activityMessages;

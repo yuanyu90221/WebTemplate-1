@@ -57,7 +57,7 @@ public class FileController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@ApiOperation(value = "檔案列表", notes = "列出雲端空間的檔案", response = ListFileResp.class)
+	@ApiOperation(value = "檔案列表", notes = "列出雲端空間的檔案", responseContainer = "List", response = ListFileResp.class)
 	public @ResponseBody List<ListFileResp> listFiles() {
 		User user = sessionService.getLoginUser();
 		return fileService.listFiles(user.getEmail());
