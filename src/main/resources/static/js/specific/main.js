@@ -1,3 +1,6 @@
+var destinationAlertMsg = '/user/alert';
+var destinationSurprise = '/user/surprise';
+
 /**
  * Init operations
  */
@@ -23,22 +26,23 @@ function createWebSocketConnection() {
 
 	// Subscribe the '/notify' channel
 	stompClient.connect({}, function(frame) {
-		stompClient.subscribe('/user/queue/notify', function(notification) {
+		 
+		stompClient.subscribe(destinationAlertMsg, function(notification) {
 			// Call the notify function when receive a notification
-			gotNotify(JSON.parse(notification.body).message);
+			gotMessageFromAlertmsg(JSON.parse(notification.body).message);
 		});
 		
-		stompClient.subscribe('/user/surprise', function(notification) {
+		stompClient.subscribe(destinationSurprise, function(notification) {
 			// Call the notify function when receive a notification
-			gotSurprise(JSON.parse(notification.body).message);
+			gotMessageFromSurprise(JSON.parse(notification.body).message);
 		});
 	});
 }
 
-function gotNotify(message) {
-	alert('Got message: <' + message + '> from /user/queue/notify');
+function gotMessageFromAlertmsg(message) {
+	alert('Got message: <' + message + '> from <' + destinationAlertMsg + '>');
 }
 
-function gotSurprise(message) {
-	alert('Got message: <' + message + '> from /user/surprise');
+function gotMessageFromSurprise(message) {
+	alert('Got message: <' + message + '> from <' + destinationSurprise + '>');
 }

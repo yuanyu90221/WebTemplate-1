@@ -12,11 +12,11 @@ public class WebNotifyService {
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 	
-	public void notify(String email, NotificationMsg msg) {
-		messagingTemplate.convertAndSendToUser(email, "/queue/notify", msg);
+	public void sendAlertMsg(String email, NotificationMsg msg) {
+		messagingTemplate.convertAndSendToUser(email, "/alert", msg);
 	}
 	
-	public void sendSurprise(String email, NotificationMsg msg) {
+	public void sendSurpriseMsg(String email, NotificationMsg msg) {
 		messagingTemplate.convertAndSendToUser(email, "/surprise", msg);
 	}
 }

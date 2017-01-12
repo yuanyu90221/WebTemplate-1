@@ -168,31 +168,31 @@ public class TestController {
 	
 	/**
 	 * <pre>
-	 * 測試發送 Notify
+	 * 測試發送 Notify 訊息到 /alert
 	 * </pre>
 	 */
-	@RequestMapping(value = "/testNotify", method = RequestMethod.POST)
-	@ApiOperation(value = "測試發送 Notify 訊息", notes = "測試發送 Notify 訊息", response = RespCommon.class)
-	public @ResponseBody RespCommon testNotify(
+	@RequestMapping(value = "/testSendAlertMsg", method = RequestMethod.POST)
+	@ApiOperation(value = "測試發送 Notify 訊息到 alert", notes = "測試發送 Notify 訊息到 alert", response = RespCommon.class)
+	public @ResponseBody RespCommon testSendAlertMsg(
 			@RequestParam(value = "email", required = true) String email,
 			@RequestParam(value = "message", required = true) String message) {
 		NotificationMsg msg = new NotificationMsg(message);
-		webNotifyService.notify(email, msg);
+		webNotifyService.sendAlertMsg(email, msg);
 		return new RespCommon(ResultCode.SUCCESS);
 	}
 	
 	/**
 	 * <pre>
-	 * 測試發送 Notify 到 surprise
+	 * 測試發送 Notify 訊息到 /surprise
 	 * </pre>
 	 */
-	@RequestMapping(value = "/testSurprise", method = RequestMethod.POST)
+	@RequestMapping(value = "/testSendSurpriseMsg", method = RequestMethod.POST)
 	@ApiOperation(value = "測試發送 Notify 訊息到 surprise", notes = "測試發送 Notify 訊息到 surprise", response = RespCommon.class)
-	public @ResponseBody RespCommon testSurprise(
+	public @ResponseBody RespCommon testSendSurpriseMsg(
 			@RequestParam(value = "email", required = true) String email,
 			@RequestParam(value = "message", required = true) String message) {
 		NotificationMsg msg = new NotificationMsg(message);
-		webNotifyService.sendSurprise(email, msg);
+		webNotifyService.sendSurpriseMsg(email, msg);
 		return new RespCommon(ResultCode.SUCCESS);
 	}
 }
