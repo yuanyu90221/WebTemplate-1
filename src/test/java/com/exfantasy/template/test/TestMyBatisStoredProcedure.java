@@ -2,8 +2,6 @@ package com.exfantasy.template.test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +26,18 @@ public class TestMyBatisStoredProcedure {
 	private CustomConsumeMapper consumeMapper;
 	
 	@Test
-	public void test_1_callSP() throws Exception {
+	public void test_1_SP_findConsumesByUid() throws Exception {
 		List<Consume> consumes = consumeMapper.findConsumesByUid(1);
 
-		assertThat(consumes.size()).isEqualTo(2);
-
 		// 成功查出來了
-		System.out.println("test_1_callSP -> " + consumes);
+		System.out.println("test_1_SP_findConsumesByUid, data-size -> " + consumes.size());
+	}
+	
+	@Test
+	public void test_2_SP_findConsumeByLotteryNo() throws Exception {
+		String lotteryNo = "25323189";
+		Consume consume = consumeMapper.findConsumeByLotteryNo(lotteryNo);
+		System.out.println("test_2_SP_findConsumeByLotteryNo -> " + consume);
 		
-		// FIXME 但值還沒塞入
 	}
 }

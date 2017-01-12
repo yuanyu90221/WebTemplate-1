@@ -6,12 +6,17 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.mapping.StatementType;
+import org.apache.ibatis.type.JdbcType;
 
 import com.exfantasy.template.mybatis.mapper.ConsumeMapper;
 import com.exfantasy.template.mybatis.model.Consume;
+import com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler;
 
 @Mapper
 public interface CustomConsumeMapper extends ConsumeMapper {
@@ -72,5 +77,39 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 				"}"
 	)
 	@Options(statementType = StatementType.CALLABLE) 
+	@ResultType(Consume.class)
+	@Results({
+        @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR, id=true),
+        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
+        @Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
+        @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
+        @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
+        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
+        @Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+    })
 	List<Consume> findConsumesByUid(@Param("uid") Integer uid);
+	
+	@Select(
+		value = "{" + 
+					"call FindConsumesByLotteryNo(" + 
+						"#{lotteryNo, mode=IN, jdbcType=VARCHAR}" + 
+					")" + 
+				"}"
+	)
+	@Options(statementType = StatementType.CALLABLE) 
+	@ResultType(Consume.class)
+	@Results({
+        @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR, id=true),
+        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
+        @Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
+        @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
+        @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
+        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
+        @Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+    })
+	Consume findConsumeByLotteryNo(@Param("lotteryNo") String lotteryNo);
 }
