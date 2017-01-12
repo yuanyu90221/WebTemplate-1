@@ -1,18 +1,15 @@
 package com.exfantasy.template.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.dropbox.core.DbxException;
-import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.ListFolderErrorException;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -27,14 +24,11 @@ import com.exfantasy.template.Application;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDropbox {
 
+	@Autowired
 	private DbxClientV2 client;
 	
-	public TestDropbox(String accessToken) {
-		DbxRequestConfig config = DbxRequestConfig.newBuilder("TommyTest").build();
-		client = new DbxClientV2(config, accessToken);
-	}
-
-	private void start() throws DbxException, IOException {
+	@Test
+	public void start() throws ListFolderErrorException, DbxException {
 		getAllFileOfSpecificdFolder("/tommy.yeh1112@gmail.com");
 		
 		System.out.print("\n\n");
@@ -107,14 +101,5 @@ public class TestDropbox {
 
 		    result = client.files().listFolderContinue(result.getCursor());
 		}
-	}
-
-	public static void main(String[] args) throws DbxException, IOException {
-		if (args.length != 1) {
-			System.err.println("Please give a Program aruguments as DropBox access token");
-			System.exit(1);
-		}
-		String accessToken = args[0];
-		new TestDropbox(accessToken).start();
 	}
 }
