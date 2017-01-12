@@ -1,6 +1,15 @@
-package test;
+package com.exfantasy.template.test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+
+import org.junit.FixMethodOrder;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
@@ -8,8 +17,16 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.ListFolderErrorException;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
+import com.exfantasy.template.Application;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(
+	classes = Application.class,
+	webEnvironment = WebEnvironment.RANDOM_PORT
+)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDropbox {
+
 	private DbxClientV2 client;
 	
 	public TestDropbox(String accessToken) {

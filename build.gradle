@@ -86,6 +86,7 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-jdbc"
 	compile "org.springframework.boot:spring-boot-starter-security"
 	compile "org.springframework.boot:spring-boot-starter-mail"
+	compile "org.springframework.boot:spring-boot-starter-test"
 
 	// --------- MyBatis ---------
 	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootVersion}"
