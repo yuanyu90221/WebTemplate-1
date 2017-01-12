@@ -55,8 +55,7 @@ public class TestController {
 	 * <pre>
 	 * 測試權限用
 	 * 
-	 * 參考:
-	 * 	<a href="http://blog.csdn.net/tzdwsy/article/details/50738043">使用 Spring Security 設定權限</a>
+	 * 參考: <a href="http://blog.csdn.net/tzdwsy/article/details/50738043">使用 Spring Security 設定權限</a>
 	 * </pre>
 	 * 
 	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 統一回應格式
