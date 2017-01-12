@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.services.dropbox.DropboxService;
@@ -175,11 +173,26 @@ public class TestController {
 	 */
 	@RequestMapping(value = "/testNotify", method = RequestMethod.POST)
 	@ApiOperation(value = "測試發送 Notify 訊息", notes = "測試發送 Notify 訊息", response = RespCommon.class)
-	public @ResponseBody RespCommon sendNotifyMsg(
+	public @ResponseBody RespCommon testNotify(
 			@RequestParam(value = "email", required = true) String email,
 			@RequestParam(value = "message", required = true) String message) {
 		NotificationMsg msg = new NotificationMsg(message);
 		webNotifyService.notify(email, msg);
+		return new RespCommon(ResultCode.SUCCESS);
+	}
+	
+	/**
+	 * <pre>
+	 * 測試發送 Notify 到 surprise
+	 * </pre>
+	 */
+	@RequestMapping(value = "/testSurprise", method = RequestMethod.POST)
+	@ApiOperation(value = "測試發送 Notify 訊息到 surprise", notes = "測試發送 Notify 訊息到 surprise", response = RespCommon.class)
+	public @ResponseBody RespCommon testSurprise(
+			@RequestParam(value = "email", required = true) String email,
+			@RequestParam(value = "message", required = true) String message) {
+		NotificationMsg msg = new NotificationMsg(message);
+		webNotifyService.sendSurprise(email, msg);
 		return new RespCommon(ResultCode.SUCCESS);
 	}
 }

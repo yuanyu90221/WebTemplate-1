@@ -15,4 +15,8 @@ public class WebNotifyService {
 	public void notify(String email, NotificationMsg msg) {
 		messagingTemplate.convertAndSendToUser(email, "/queue/notify", msg);
 	}
+	
+	public void sendSurprise(String email, NotificationMsg msg) {
+		messagingTemplate.convertAndSendToUser(email, "/surprise", msg);
+	}
 }

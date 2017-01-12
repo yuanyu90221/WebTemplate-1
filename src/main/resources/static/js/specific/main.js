@@ -21,15 +21,24 @@ function createWebSocketConnection() {
 	var socket = new SockJS('/ws');
 	var stompClient = Stomp.over(socket);
 
-	// Subscribe the '/notify' channell
+	// Subscribe the '/notify' channel
 	stompClient.connect({}, function(frame) {
 		stompClient.subscribe('/user/queue/notify', function(notification) {
 			// Call the notify function when receive a notification
 			gotNotify(JSON.parse(notification.body).message);
 		});
+		
+		stompClient.subscribe('/user/surprise', function(notification) {
+			// Call the notify function when receive a notification
+			gotSurprise(JSON.parse(notification.body).message);
+		});
 	});
 }
 
 function gotNotify(message) {
-	alert(message);
+	alert('Got message: <' + message + '> from /user/queue/notify');
+}
+
+function gotSurprise(message) {
+	alert('Got message: <' + message + '> from /user/surprise');
 }
