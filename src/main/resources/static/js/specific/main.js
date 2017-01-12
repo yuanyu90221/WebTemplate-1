@@ -24,7 +24,7 @@ function createWebSocketConnection() {
 	var socket = new SockJS('/ws');
 	var stompClient = Stomp.over(socket);
 
-	// Subscribe the '/notify' channel
+	// Subscribe the '/alert' and '/surprise' channel
 	stompClient.connect({}, function(frame) {
 		 
 		stompClient.subscribe(destinationAlertMsg, function(notification) {

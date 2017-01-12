@@ -6,7 +6,11 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 /**
+ * <pre>
  * Enable and configure Stomp over WebSocket.
+ * 
+ * 參考: <a href="https://github.com/netgloo/spring-boot-samples/tree/master/spring-boot-web-socket-user-notifications">Spring Boot Web Socket User Notifications</a>
+ * </pre>
  */
 @Configuration
 @EnableWebSocketMessageBroker
