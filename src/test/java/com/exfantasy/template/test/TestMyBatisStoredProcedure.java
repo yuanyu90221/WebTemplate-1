@@ -1,5 +1,7 @@
 package com.exfantasy.template.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.junit.FixMethodOrder;
@@ -28,8 +30,6 @@ public class TestMyBatisStoredProcedure {
 	@Test
 	public void test_1_SP_findConsumesByUid() throws Exception {
 		List<Consume> consumes = consumeMapper.findConsumesByUid(1);
-
-		// 成功查出來了
 		System.out.println("test_1_SP_findConsumesByUid, data-size -> " + consumes.size());
 	}
 	
@@ -37,7 +37,7 @@ public class TestMyBatisStoredProcedure {
 	public void test_2_SP_findConsumeByLotteryNo() throws Exception {
 		String lotteryNo = "25323189";
 		Consume consume = consumeMapper.findConsumeByLotteryNo(lotteryNo);
+		assertThat(consume.isAlreadySent()).isTrue();
 		System.out.println("test_2_SP_findConsumeByLotteryNo -> " + consume);
-		
 	}
 }
