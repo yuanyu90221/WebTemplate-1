@@ -9,11 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.ListFolderErrorException;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
+import com.dropbox.core.v2.users.FullAccount;
 import com.exfantasy.template.Application;
 
 @RunWith(SpringRunner.class)
@@ -28,20 +27,26 @@ public class TestDropbox {
 	private DbxClientV2 client;
 	
 	@Test
-	public void start() throws ListFolderErrorException, DbxException {
-		getAllFileOfSpecificdFolder("/tommy.yeh1112@gmail.com");
+	public void test_1_showAccountInfomation() throws Exception {
+		System.out.println("===== Try to get Dropbox account information =====");
 		
-		System.out.print("\n\n");
+		FullAccount account = client.users().getCurrentAccount();
 		
-		getAllFoldersAndFiles();
-		
-		System.out.print("\n\n");
-		
-		getContentsOfRootFolders();
+		System.out.printf("Account Id: <%s>\n", account.getAccountId());
+		System.out.printf("Account type: <%s>\n", account.getAccountType());
+		System.out.printf("Country: <%s>\n", account.getCountry());
+		System.out.printf("Email: <%s>\n", account.getEmail());
+		System.out.printf("Locale: <%s>\n", account.getLocale());
+		System.out.printf("Account name: <%s>\n", account.getName().getDisplayName());
+		System.out.printf("ProfilePhotoUrl: <%s>\n", account.getProfilePhotoUrl());
+		System.out.printf("ReferralLink: <%s>\n", account.getReferralLink());
 	}
-
-	private void getAllFileOfSpecificdFolder(String folder) throws ListFolderErrorException, DbxException {
-		System.out.println("===== Try to get all files of specificed folder  =====");
+	
+	@Test
+	public void test_2_getAllFileOfSpecificdFolder() throws Exception {
+		final String folder = "/tommy.yeh1112@gmail.com";
+		
+		System.out.println("===== Try to get all files of folder: <" + folder + ">  =====");
 		
 		ListFolderResult result = client.files().listFolder(folder);
 		while (true) {
@@ -50,7 +55,7 @@ public class TestDropbox {
 		    	System.out.println("ParentSharedFolderId: " + metadata.getParentSharedFolderId());
 		    	System.out.println("PathDisplay: " + metadata.getPathDisplay());
 		        System.out.println("PathLower: " + metadata.getPathLower());
-		        System.out.println("-   -   -   -   -   -   -   -   -   -");
+		        System.out.println("-   -   -   -   -   -   -   -   -   -   -   -   -   -");
 			}
 			
 			if (!result.getHasMore()) {
@@ -61,7 +66,8 @@ public class TestDropbox {
 		}
 	}
 
-	private void getAllFoldersAndFiles() throws ListFolderErrorException, DbxException {
+	@Test
+	public void test_3_getAllFoldersAndFiles() throws Exception {
 		System.out.println("===== Try to get all folders and files =====");
 		
 		ListFolderResult result = client.files().listFolderBuilder("").withRecursive(true).start();
@@ -71,7 +77,7 @@ public class TestDropbox {
 		    	System.out.println("ParentSharedFolderId: " + metadata.getParentSharedFolderId());
 		    	System.out.println("PathDisplay: " + metadata.getPathDisplay());
 		        System.out.println("PathLower: " + metadata.getPathLower());
-		        System.out.println("-   -   -   -   -   -   -   -   -   -");
+		        System.out.println("-   -   -   -   -   -   -   -   -   -   -   -   -   -");
 			}
 			
 			if (!result.getHasMore()) {
@@ -82,7 +88,8 @@ public class TestDropbox {
 		}
 	}
 
-	private void getContentsOfRootFolders() throws ListFolderErrorException, DbxException {
+	@Test
+	public void test_4_getContentsOfRootFolders() throws Exception {
 		System.out.println("===== Try to get contents of root folders =====");
 			
 		ListFolderResult result = client.files().listFolder("");
@@ -92,7 +99,7 @@ public class TestDropbox {
 		    	System.out.println("ParentSharedFolderId: " + metadata.getParentSharedFolderId());
 		    	System.out.println("PathDisplay: " + metadata.getPathDisplay());
 		        System.out.println("PathLower: " + metadata.getPathLower());
-		        System.out.println("-   -   -   -   -   -   -   -   -   -");
+		        System.out.println("-   -   -   -   -   -   -   -   -   -   -   -   -   -");
 		    }
 
 		    if (!result.getHasMore()) {
