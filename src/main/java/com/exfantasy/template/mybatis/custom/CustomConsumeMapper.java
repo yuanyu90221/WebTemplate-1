@@ -4,7 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.mapping.StatementType;
 
 import com.exfantasy.template.mybatis.mapper.ConsumeMapper;
 import com.exfantasy.template.mybatis.model.Consume;
@@ -59,4 +63,14 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 		"</script>"
 	})
 	int batchDeleteByLotteryNo(List<String> lotteryNos);
+	
+	@Select(
+		value = "{" + 
+					"call FindConsumesByUid(" + 
+						"#{uid, mode=IN, jdbcType=INTEGER}" + 
+					")" + 
+				"}"
+	)
+	@Options(statementType = StatementType.CALLABLE) 
+	List<Consume> findConsumesByUid(@Param("uid") Integer uid);
 }

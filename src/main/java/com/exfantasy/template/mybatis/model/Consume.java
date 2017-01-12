@@ -141,4 +141,14 @@ public class Consume {
         result = prime * result + (isAlreadySent() ? 1231 : 1237);
         return result;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Consume [lotteryNo=").append(lotteryNo).append(", userId=").append(userId)
+				.append(", consumeDate=").append(consumeDate).append(", type=").append(type).append(", prodName=")
+				.append(prodName).append(", amount=").append(amount).append(", prize=").append(prize).append(", got=")
+				.append(got).append(", alreadySent=").append(alreadySent).append("]");
+		return builder.toString();
+	}
 }
