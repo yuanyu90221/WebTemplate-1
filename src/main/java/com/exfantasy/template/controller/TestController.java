@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.mail.MailService;
+import com.exfantasy.template.services.notification.WebNotifyService;
+import com.exfantasy.template.vo.notification.NotificationMsg;
 import com.exfantasy.template.vo.response.RespCommon;
 
 import io.swagger.annotations.Api;
@@ -45,6 +49,9 @@ public class TestController {
 	
 	@Autowired
 	private DropboxService dropboxService;
+	
+	@Autowired
+	private WebNotifyService webNotifyService;
 	
 	/**
 	 * <pre>
@@ -159,5 +166,20 @@ public class TestController {
 	@ApiOperation(value = "測試取出 Dropbox 帳號資訊")
 	public @ResponseBody String testDropboxGetAccountInformation() {
 		return dropboxService.getAccountInformation();
+	}
+	
+	/**
+	 * <pre>
+	 * 測試發送 Notify
+	 * </pre>
+	 */
+	@RequestMapping(value = "/testNotify", method = RequestMethod.POST)
+	@ApiOperation(value = "測試發送 Notify 訊息", notes = "測試發送 Notify 訊息", response = RespCommon.class)
+	public @ResponseBody RespCommon sendNotifyMsg(
+			@RequestParam(value = "email", required = true) String email,
+			@RequestParam(value = "message", required = true) String message) {
+		NotificationMsg msg = new NotificationMsg(message);
+		webNotifyService.notify(email, msg);
+		return new RespCommon(ResultCode.SUCCESS);
 	}
 }
