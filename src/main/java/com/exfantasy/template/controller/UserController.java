@@ -1,6 +1,9 @@
 package com.exfantasy.template.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -136,9 +139,23 @@ public class UserController {
 	@RequestMapping(value = "/forgot_password", method = RequestMethod.POST)
 	@ApiOperation(value = "忘記密碼", notes = "由系統產生新密碼並發信給使用者當時註冊的 email", response = RespCommon.class)
 	public @ResponseBody RespCommon forgotPassword(
-		@RequestParam(value = "email", required = true) String email) {
-		userService.forgotPassword(email);
-		return new RespCommon(ResultCode.SUCCESS, "Send forget password mail succeed");
+		@RequestParam(value = "email", required = true) String email, 
+		HttpServletResponse response) throws IOException {
+
+		try {
+			userService.forgotPassword(email);
+			
+			// redirect to login page with parameter: reset_succeed
+			response.sendRedirect("/login?reset_succeed");
+
+			return new RespCommon(ResultCode.SUCCESS, "Send forget password mail succeed");
+		}
+		catch (OperationException ex) {
+			// redirect to login page with parameter: reset_succeed
+			response.sendRedirect("/login?reset_failed");
+			
+			return new RespCommon(ex);
+		}
 	}
 	
 	/**

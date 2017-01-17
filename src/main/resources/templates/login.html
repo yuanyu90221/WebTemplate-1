@@ -55,11 +55,6 @@
 			<div th:if="${param.logout != null}" class="alert alert-success" role="alert">
 				You have been logged out.
 			</div>
-			
-			<!-- 有可能是因為 Spring Security 擋掉 -->
-			<div th:if="${param.testing != null}" class="alert alert-success" role="alert">
-				Testing.
-			</div>
 		</div>
 	</div>
 
@@ -103,6 +98,16 @@
 											</div>
 										</fieldset>
 									</form>
+								</div>
+								
+								<div th:if="${param.reset_succeed != null}" class="alert alert-success" role="alert">
+									Reset your password succeed, please check your email.
+								</div>
+								
+								<div th:if="${param.reset_failed != null}" class="alert alert-danger" role="alert">
+									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									<span class="sr-only">Error:</span>
+									Cannot find registration information by email you input.
 								</div>
 							</div>
 						</div>

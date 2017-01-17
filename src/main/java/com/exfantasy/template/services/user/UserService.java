@@ -130,7 +130,7 @@ public class UserService {
 	public void forgotPassword(String email) {
 		User user = queryUserByEmail(email);
 		if (user == null) {
-			throw new OperationException(ResultCode.CANNOT_FIND_REGISTERATION_INFO);
+			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
 		}
 		String randomPassword = RandomUtil.getRandomCode(6);
 		
