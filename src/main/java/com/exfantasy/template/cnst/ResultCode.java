@@ -32,7 +32,7 @@ public enum ResultCode {
 	DUPLICATE_KEY(3001, "Data already existed"),
 	
 	/** Code: 4444, Message: 無權限操作 */
-	ACCESS_DENIED(4444, ""),
+	ACCESS_DENIED(4444, "Access is denied"),
 	
 	/** Code: 5001, Message: 此活動不存在 */
 	ACTIVITY_NOT_EXISTED(5001, "The activity is not existed"),

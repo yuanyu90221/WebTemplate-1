@@ -40,7 +40,7 @@ public class GenericExceptionHandler {
 	@ResponseBody
 	public RespCommon handleAccessDeniedException(AccessDeniedException ex) {
 		logger.error("AccessDeniedException raised", ex);
-		return new RespCommon(ResultCode.ACCESS_DENIED, ex.getMessage());
+		return new RespCommon(ResultCode.ACCESS_DENIED);
 	}
 	
 	@ExceptionHandler(DuplicateKeyException.class)

@@ -74,12 +74,6 @@ public class UserService {
      */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public void register(RegisterVo registerVo) {
-    	User existedUser = queryUserByEmail(registerVo.getEmail());
-    	if (existedUser != null) {
-    		logger.warn("----- Email already in used: <{}> -----", registerVo.getEmail());
-    		throw new OperationException(ResultCode.EMAIL_ALREADY_IN_USED);
-    	}
-    	
     	User user = new User();
     	user.setEmail(registerVo.getEmail());
     	user.setPassword(Password.encrypt(registerVo.getPassword()));
@@ -124,14 +118,12 @@ public class UserService {
      * 忘記密碼
      * </pre>
      * 
-     * @param email 當時註冊的 email
+     * @param user 用 email 查詢到的用戶
      */
     @CacheEvict(cacheNames = "users", allEntries = true)
-	public void forgotPassword(String email) {
-		User user = queryUserByEmail(email);
-		if (user == null) {
-			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
-		}
+	public void forgotPassword(User user) {
+    	String email = user.getEmail();
+    	
 		String randomPassword = RandomUtil.getRandomCode(6);
 		
 		// 1. 將新產生的密碼寄信出去
@@ -256,5 +248,20 @@ public class UserService {
 	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> profileImage = fileService.getProfileImage();
 		return profileImage;
+	}
+
+	/**
+	 * <pre>
+	 * 停用使用者
+	 * </pre>
+	 */
+	@CacheEvict(cacheNames = "users", allEntries = true)
+	public void disableUser(User user) {
+		user.setEnabled(false);
+
+		UserExample example = new UserExample();
+		example.createCriteria().andUserIdEqualTo(user.getUserId());
+
+		userMapper.updateByExampleSelective(user, example);
 	}
 }

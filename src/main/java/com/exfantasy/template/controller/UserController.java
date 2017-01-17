@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserRole;
@@ -47,6 +51,8 @@ import io.swagger.annotations.ApiOperation;
 @Api("UserController - 使用者相關 API")
 public class UserController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
 	private UserService userService;
 	
@@ -60,7 +66,8 @@ public class UserController {
 	 * 
 	 * @param registerVo 前端發過來的資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.RegisterVo}</code>
 	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * 
+	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
 	 */
 	@RequestMapping(value = "/do_register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "用戶註冊", notes = "給用戶輸入資料新增帳號用", response = RespCommon.class)
@@ -72,7 +79,15 @@ public class UserController {
 			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
+		
+		User existedUser = queryUserByEmail(registerVo.getEmail());
+    	if (existedUser != null) {
+    		logger.warn("----- Email already in used: <{}> -----", registerVo.getEmail());
+    		throw new OperationException(ResultCode.EMAIL_ALREADY_IN_USED);
+    	}
+
 		userService.register(registerVo);
+
 		return new RespCommon(ResultCode.SUCCESS, "Register succeed");
 	}
 	
@@ -82,6 +97,7 @@ public class UserController {
 	 * </pre>
 	 * 
 	 * @param email 用戶當初註冊的 email
+	 * 
 	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 用戶資訊 
 	 */
 	@RequestMapping(value = "/get_user_by_email", method = RequestMethod.GET)
@@ -106,10 +122,35 @@ public class UserController {
 	
 	/**
 	 * <pre>
+	 * 停用使用者
+	 * </pre>
+	 * 
+	 * @param email 用戶當初註冊的 email
+	 *
+	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 */
+	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')")
+	@RequestMapping(value = "/disable_user", method = RequestMethod.PUT)
+	@ApiOperation(value = "停用使用者", notes = "停用使用者")
+	public @ResponseBody RespCommon disableUser(
+		@RequestParam(value = "email", required = true) String email) {
+		
+		User user = userService.queryUserByEmail(email);
+		if (user == null) {
+			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
+		}
+		
+		userService.disableUser(user);
+
+		return new RespCommon(ResultCode.SUCCESS, "Delete user with email: " + email + " succeed");
+	}
+
+	/**
+	 * <pre>
 	 * 取得登入者的資訊
 	 * </pre>
 	 * 
-	 * @return {@link com.exfantasy.template.mybatis.model.User}
+	 * @return 登入者資訊, 參考物件: {@link com.exfantasy.template.mybatis.model.User}
 	 */
 	@RequestMapping(value = "/get_my_information", method = RequestMethod.GET)
 	@ApiOperation(value = "取得我(登入者)的資訊", notes = "查詢我(登入者)的詳細資料", response = User.class)
@@ -121,6 +162,11 @@ public class UserController {
 	 * <pre>
 	 * 修改密碼
 	 * </pre>
+	 * 
+	 * @param oldPassword 現有密碼
+	 * @param newPassword 欲修改成的密碼
+	 * 
+	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
 	 */
 	@RequestMapping(value = "/change_password", method = RequestMethod.POST)
 	@ApiOperation(value = "修改密碼", notes = "修改現有密碼", response = RespCommon.class)
@@ -135,15 +181,24 @@ public class UserController {
 	 * <pre>
 	 * 忘記密碼
 	 * </pre>
+	 * 
+	 * @param email 用戶當初註冊的 email
+	 * 
+	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
 	 */
 	@RequestMapping(value = "/forgot_password", method = RequestMethod.POST)
 	@ApiOperation(value = "忘記密碼", notes = "由系統產生新密碼並發信給使用者當時註冊的 email", response = RespCommon.class)
 	public @ResponseBody RespCommon forgotPassword(
 		@RequestParam(value = "email", required = true) String email, 
 		HttpServletResponse response) throws IOException {
+		
+		User user = userService.queryUserByEmail(email);
+		if (user == null) {
+			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
+		}
 
 		try {
-			userService.forgotPassword(email);
+			userService.forgotPassword(user);
 			
 			// redirect to login page with parameter: reset_succeed
 			response.sendRedirect("/login?reset_succeed");
@@ -165,7 +220,7 @@ public class UserController {
 	 * 
 	 * @param multipartFile
 	 * 
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
 	 */
 	@RequestMapping(value = "/upload_profile_image", method = RequestMethod.POST)
 	@ApiOperation(value = "上傳大頭貼", notes = "上傳大頭照", response = RespCommon.class)
@@ -184,7 +239,7 @@ public class UserController {
 	 * 刪除大頭照
 	 * </pre>
 	 * 
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
 	 */
 	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
 	@ApiOperation(value = "刪除大頭貼", notes = "刪除已上傳的大頭照", response = RespCommon.class)
