@@ -38,13 +38,15 @@ public class MyUserDetailsService implements UserDetailsService {
 		User user = userService.queryUserByEmail(email);
 		if (user == null) {
 			logger.warn("~~~~~ Cannot find mapping user by email: <{}> ~~~~~", email);
-			throw new UsernameNotFoundException("Cannot find user");
-		} 
-		else {
-			List<UserRole> roles = userService.queryUserRoles(user);
-			List<GrantedAuthority> gas = createRoles(roles);
-			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, gas);
+			throw new UsernameNotFoundException("Cannot find user, email: " + email);
 		}
+		if (user.isEnabled() == false) {
+			logger.warn("~~~~~ The user is disabled, email: <{}> ~~~~~", email);
+			throw new UsernameNotFoundException("The user is disabled, email: " + email);
+		}
+		List<UserRole> roles = userService.queryUserRoles(user);
+		List<GrantedAuthority> gas = createRoles(roles);
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, gas);
 	}
 	
 	private List<GrantedAuthority> createRoles(List<UserRole> roles) {

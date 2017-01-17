@@ -80,7 +80,7 @@ public class UserController {
 			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
 		}
 		
-		User existedUser = queryUserByEmail(registerVo.getEmail());
+		User existedUser = userService.queryUserByEmail(registerVo.getEmail());
     	if (existedUser != null) {
     		logger.warn("----- Email already in used: <{}> -----", registerVo.getEmail());
     		throw new OperationException(ResultCode.EMAIL_ALREADY_IN_USED);
@@ -117,7 +117,26 @@ public class UserController {
 	@RequestMapping(value = "/get_user_roles_by_email", method = RequestMethod.GET)
 	@ApiOperation(value = "使用 email 查詢用戶所擁有角色", notes = "使用 email 查詢用戶所擁有的角色", responseContainer = "List", response = UserRole.class)
 	public @ResponseBody List<UserRole> queryUserRolesByEmail(@RequestParam(value = "email", required = true) String email) {
-		return userService.queryUserRolesByEmail(email);
+		User user = userService.queryUserByEmail(email);
+		if (user == null) {
+			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
+		}
+		return userService.queryUserRoles(user);
+	}
+	
+	/**
+	 * <pre>
+	 * 取得目前所有使用者
+	 * </pre>
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')")
+	@RequestMapping(value = "/get_all_users", method = RequestMethod.GET)
+	@ApiOperation(value = "取得所有使用者", notes = "取得所有使用者")
+	public @ResponseBody List<User> getAllUsers() {
+		List<User> allUsers = userService.queryAllUsers();
+		return allUsers;
 	}
 	
 	/**
@@ -142,7 +161,7 @@ public class UserController {
 		
 		userService.disableUser(user);
 
-		return new RespCommon(ResultCode.SUCCESS, "Delete user with email: " + email + " succeed");
+		return new RespCommon(ResultCode.SUCCESS, "Disable user with email: " + email + " succeed");
 	}
 
 	/**

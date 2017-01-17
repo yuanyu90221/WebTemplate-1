@@ -104,6 +104,8 @@ public class UserService {
     @CacheEvict(cacheNames = "users", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changePassword(User loginUser, String oldPassword, String newPassword) {
+    	logger.info(">>>>> In UserService, loginUser: {}, change new password: {}", loginUser, newPassword);
+    	
 		String currentPassword = loginUser.getPassword();
 		if (!Password.encoder.matches(oldPassword, currentPassword)) {
 			throw new OperationException(ResultCode.PLS_CONFIRM_ORIG_PASSWORD);
@@ -161,28 +163,12 @@ public class UserService {
 	 * 查詢使用者所擁有的角色
 	 * </pre>
 	 * 
-	 * @param email
-	 * @return
-	 */
-    @Cacheable(cacheNames = "userRolesByEmail", key = "#email")
-	public List<UserRole> queryUserRolesByEmail(String email) {
-		User user = queryUserByEmail(email);
-		if (user == null) {
-			return null;
-		}
-		return queryUserRoles(user);
-	}
-	
-	/**
-	 * <pre>
-	 * 查詢使用者所擁有的角色
-	 * </pre>
-	 * 
 	 * @param user
 	 * @return
 	 */
-    @Cacheable(cacheNames = "userRolesByUserId", key = "#user.getUserId()")
+    @Cacheable(cacheNames = "userRoles", key = "#user.getUserId()")
 	public List<UserRole> queryUserRoles(User user) {
+    	logger.info(">>>>> In UserService userRolesByUserId");
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
 		List<UserRole> roles = userRoleMapper.selectByExample(example);
@@ -214,6 +200,7 @@ public class UserService {
     @CacheEvict(cacheNames = "users", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserByReplace(User user) {
+    	logger.info(">>>>> In UserService updateUserByReplace, user: {}", user);
         return userMapper.updateByPrimaryKey(user);
     }
     
@@ -226,6 +213,8 @@ public class UserService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void disableUser(User user) {
 		user.setEnabled(false);
+		
+		logger.info(">>>>> In UserService disableUser, user: {}", user);
 	
 		UserExample example = new UserExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
@@ -269,5 +258,18 @@ public class UserService {
 	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> profileImage = fileService.getProfileImage();
 		return profileImage;
+	}
+
+	/**
+	 * <pre>
+	 * 取得目前所有使用者
+	 * </pre>
+	 * 
+	 * @return
+	 */
+	public List<User> queryAllUsers() {
+		logger.info(">>>>> In UserService queryAllUsers");
+		List<User> allUsers = userMapper.selectByExample(null);
+		return allUsers;
 	}
 }
