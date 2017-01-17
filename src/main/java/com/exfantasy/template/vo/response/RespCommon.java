@@ -24,7 +24,7 @@ public class RespCommon {
 
 	public RespCommon(ResultCode resultCode, Object data) {
 		this.resultCode = resultCode;
-		this.data = resultCode.getMessage() + ", error-msg: " + data;
+		this.data = resultCode.getMessage() + ", msg: " + data;
 	}
 	
 	public RespCommon(ResultCode resultCode) {
