@@ -37,19 +37,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenticationProvider myAuthenticationProvider;
     
-    @Autowired
+    @SuppressWarnings("unused")
+	@Autowired
     private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
         	.authorizeRequests()
-            	.antMatchers("/", "/home", "/examples").permitAll() // 允許未經過登入可存取的路徑
+            	.antMatchers("/", "/home").permitAll() // 允許未經過登入可存取的路徑
             	.antMatchers("/test/**").permitAll() // 允許未經過登入測試程式
-            	.antMatchers("/register").permitAll() // 允許未經過登入存取註冊頁面
+            	.antMatchers("/register*").permitAll() // 允許未經過登入存取註冊頁面, 且網址後面可帶參數
             	.antMatchers("/user/do_register").permitAll() // 允許未經過登入透過 api 註冊
             	.antMatchers("/user/forgot_password").permitAll() // 允許未經過登入可透過 api 處理忘記密碼
-            	.antMatchers("/login*").permitAll() // 允許登入網址後面帶參數
+            	.antMatchers("/login*").permitAll() // 允許未經過登入存取登入頁面, 且網址後面可帶參數
             	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
             .and()
             	.formLogin()
