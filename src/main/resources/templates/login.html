@@ -55,6 +55,11 @@
 			<div th:if="${param.logout != null}" class="alert alert-success" role="alert">
 				You have been logged out.
 			</div>
+			
+			<!-- 有可能是因為 Spring Security 擋掉 -->
+			<div th:if="${param.testing != null}" class="alert alert-success" role="alert">
+				Testing.
+			</div>
 		</div>
 	</div>
 
