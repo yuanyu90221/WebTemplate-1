@@ -2,8 +2,6 @@ package com.exfantasy.template.controller;
 
 import javax.mail.MessagingException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,8 +34,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/test")
 @Api(value = "TestController - 測試相關 API")
 public class TestController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	
 	@Autowired
 	private MailService mailService;
