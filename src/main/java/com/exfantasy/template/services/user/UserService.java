@@ -164,7 +164,7 @@ public class UserService {
 	 * @param email
 	 * @return
 	 */
-    @Cacheable(cacheNames = "users", key = "#email")
+    @Cacheable(cacheNames = "userRolesByEmail", key = "#email")
 	public List<UserRole> queryUserRolesByEmail(String email) {
 		User user = queryUserByEmail(email);
 		if (user == null) {
@@ -181,7 +181,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-    @Cacheable(cacheNames = "users", key = "#user.getUserId()")
+    @Cacheable(cacheNames = "userRolesByUserId", key = "#user.getUserId()")
 	public List<UserRole> queryUserRoles(User user) {
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
@@ -218,6 +218,22 @@ public class UserService {
     }
     
     /**
+	 * <pre>
+	 * 停用使用者
+	 * </pre>
+	 */
+	@CacheEvict(cacheNames = "users", allEntries = true)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
+	public void disableUser(User user) {
+		user.setEnabled(false);
+	
+		UserExample example = new UserExample();
+		example.createCriteria().andUserIdEqualTo(user.getUserId());
+	
+		userMapper.updateByExampleSelective(user, example);
+	}
+
+	/**
      * <pre>
      * 上傳大頭照到雲端空間
      * </pre>
@@ -253,21 +269,5 @@ public class UserService {
 	public ResponseEntity<byte[]> getProfileImage() {
 		ResponseEntity<byte[]> profileImage = fileService.getProfileImage();
 		return profileImage;
-	}
-
-	/**
-	 * <pre>
-	 * 停用使用者
-	 * </pre>
-	 */
-	@CacheEvict(cacheNames = "users", allEntries = true)
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-	public void disableUser(User user) {
-		user.setEnabled(false);
-
-		UserExample example = new UserExample();
-		example.createCriteria().andUserIdEqualTo(user.getUserId());
-
-		userMapper.updateByExampleSelective(user, example);
 	}
 }
