@@ -1,5 +1,10 @@
 package com.exfantasy.template.security.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +17,6 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.services.user.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <pre>
  * Spring Security 需要的 service
@@ -25,6 +27,9 @@ import java.util.List;
  */
 @Service("MyUserDetailsImpl")
 public class MyUserDetailsService implements UserDetailsService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+	
 	@Autowired
 	private UserService userService;
 
@@ -32,6 +37,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userService.queryUserByEmail(email);
 		if (user == null) {
+			logger.warn("~~~~~ Cannot find mapping user by email: <{}> ~~~~~", email);
 			throw new UsernameNotFoundException("Cannot find user");
 		} 
 		else {
