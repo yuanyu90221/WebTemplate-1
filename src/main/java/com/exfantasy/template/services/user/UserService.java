@@ -72,6 +72,7 @@ public class UserService {
      * 
      * @param registerVo
      */
+    @CacheEvict(cacheNames = "users", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public void register(RegisterVo registerVo) {
     	User user = new User();
@@ -100,6 +101,7 @@ public class UserService {
      * @param oldPassword 輸入舊密碼驗證
      * @param newPassword 欲設定的新密碼
      */
+    @CacheEvict(cacheNames = "users", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changePassword(User loginUser, String oldPassword, String newPassword) {
 		String currentPassword = loginUser.getPassword();
@@ -121,6 +123,7 @@ public class UserService {
      * @param user 用 email 查詢到的用戶
      */
     @CacheEvict(cacheNames = "users", allEntries = true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void forgotPassword(User user) {
     	String email = user.getEmail();
     	
@@ -161,7 +164,7 @@ public class UserService {
 	 * @param email
 	 * @return
 	 */
-    @Cacheable(cacheNames = "userRolesByEmail", key = "#email")
+    @Cacheable(cacheNames = "users", key = "#email")
 	public List<UserRole> queryUserRolesByEmail(String email) {
 		User user = queryUserByEmail(email);
 		if (user == null) {
@@ -178,7 +181,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-    @Cacheable(cacheNames = "userRolesById", key = "#user.getUserId()")
+    @Cacheable(cacheNames = "users", key = "#user.getUserId()")
 	public List<UserRole> queryUserRoles(User user) {
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
@@ -194,6 +197,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
+    @CacheEvict(cacheNames = "users", allEntries = true)
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserSelective(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
@@ -207,6 +211,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
+    @CacheEvict(cacheNames = "users", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserByReplace(User user) {
         return userMapper.updateByPrimaryKey(user);
@@ -256,6 +261,7 @@ public class UserService {
 	 * </pre>
 	 */
 	@CacheEvict(cacheNames = "users", allEntries = true)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void disableUser(User user) {
 		user.setEnabled(false);
 
