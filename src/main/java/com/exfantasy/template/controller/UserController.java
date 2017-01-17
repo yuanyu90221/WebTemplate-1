@@ -133,7 +133,7 @@ public class UserController {
 	 * 忘記密碼
 	 * </pre>
 	 */
-	@RequestMapping(value = "/forgot_password", method = RequestMethod.GET)
+	@RequestMapping(value = "/forgot_password", method = RequestMethod.POST)
 	@ApiOperation(value = "忘記密碼", notes = "由系統產生新密碼並發信給使用者當時註冊的 email", response = RespCommon.class)
 	public @ResponseBody RespCommon forgotPassword(
 		@RequestParam(value = "email", required = true) String email) {

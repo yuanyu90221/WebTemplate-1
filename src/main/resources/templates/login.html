@@ -1,47 +1,113 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Together</title>
+<title>Together</title>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-	<!-- Bootstrap -->
-	<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
 
-	<!-- Specific -->
-	<link href="/css/style/specific/login.css" rel="stylesheet" />
-	<script src="/js/lib/jquery/jquery-3.1.0.min.js"></script>
-	<script src="/js/lib/bootstrap/bootstrap.min.js"></script>
+<!-- Specific -->
+<link href="/css/style/specific/login.css" rel="stylesheet" />
+<script src="/js/lib/jquery/jquery-3.1.0.min.js"></script>
+<script src="/js/lib/bootstrap/bootstrap.min.js"></script>
 </head>
 
 <!-- 參考 http://bootsnipp.com/snippets/featured/google-style-login-extended-with-html5-localstorage -->
 <!-- 參考 http://www.concretepage.com/spring-4/spring-4-security-thymeleaf-integration-custom-login-page-and-logout-example-with-csrf-token-using-javaconfig -->
 <!-- 參考 http://www.thymeleaf.org/doc/articles/springsecurity.html -->
 <body>
+
+	<!-- 登入 -->
 	<div class="container">
 		<div class="card card-container">
-			<img id="profile-img" class="profile-img-card" src="/images/login/avatar_2x.png" />
+			<img 
+				id="profile-img" class="profile-img-card"
+				src="/images/login/avatar_2x.png" />
+
 			<p id="profile-name" class="profile-name-card"></p>
+
 			<form class="form-signin" th:action="@{/login}" method="post">
-				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus" /> 
-				<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required" />
-				<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+				<input 
+					type="email" name="email" id="inputEmail"
+					class="form-control" placeholder="Email address" required="required" autofocus="autofocus" /> 
+
+				<input
+					type="password" name="password" id="inputPassword"
+					class="form-control" placeholder="Password" required="required" />
+
+				<button 
+					type="submit" 
+					class="btn btn-lg btn-primary btn-block btn-signin">Sign in</button>
 			</form>
 			<!-- /form -->
-			<a href="#" class="forgot-password"> Forgot the password? </a>
+
 			<div th:if="${param.error}" class="alert alert-danger" role="alert">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>
 				Invalid email and password.
 			</div>
+
 			<div th:if="${param.logout}" class="alert alert-success" role="alert">
-				You have been logged out.</div>
+				You have been logged out.
 			</div>
-	<!-- /card-container -->
+		</div>
+		<!-- /card-container -->
 	</div>
-<!-- /container -->
+
+	<hr />
+
+	<!-- Forgot Password -->
+	<!-- 參考: http://www.designerslib.com/bootstrap-forgot-password-templates/ -->
+	<div class="container">
+		<div class="row">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="text-center">
+								<h3>
+									<i class="fa fa-lock fa-4x"></i>
+								</h3>
+								<h2 class="text-center">Forgot Password?</h2>
+								<p>You can reset your password here.</p>
+								<div class="panel-body">
+									<form class="form" th:action="@{/user/forgot_password}" method="post"> 
+										<fieldset>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="glyphicon glyphicon-envelope color-blue"></i>
+													</span>
+													<input
+														type="email" name="email" id="emailInput" 
+														class="form-control" placeholder="email address"
+														oninvalid="setCustomValidity('Please enter a valid email address!')"
+														onchange="try{setCustomValidity('')}catch(e){}"
+														required="required" />
+												</div>
+											</div>
+											<div class="form-group">
+												<input 
+													type="submit" 
+													class="btn btn-lg btn-primary btn-block"
+													value="Send My Password" />
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
 </body>
 </html>
