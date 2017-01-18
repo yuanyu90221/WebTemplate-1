@@ -25,6 +25,7 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
     	
+    	// 參考: http://stackoverflow.com/questions/26502958/an-explanation-about-overriding-simpleurlauthenticationfailurehandler
     	if (exception.getClass().isAssignableFrom(DisabledException.class)) {
     		response.sendRedirect("/login?user_disabled");
     	}
