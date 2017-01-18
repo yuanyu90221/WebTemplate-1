@@ -47,7 +47,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		List<UserRole> roles = userService.queryUserRoles(user);
 		List<GrantedAuthority> gas = createRoles(roles);
 
-		// 轉換成 Spring 的 User 去做檢核
+		// 轉換成 Spring Security 的 User 去做檢核
 		org.springframework.security.core.userdetails.User detailUser 
 			= new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, gas);
 		
