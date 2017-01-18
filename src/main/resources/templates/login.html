@@ -45,16 +45,26 @@
 					type="submit" 
 					class="btn btn-lg btn-primary btn-block btn-signin">Sign in</button>
 			</form>
-
+			
+			<!-- logout -->
+			<div th:if="${param.logout != null}" class="alert alert-success" role="alert">
+				You have been logged out.
+			</div>
+			
+			<!-- user_disabled -->
+			<div th:if="${param.user_disabled != null}" class="alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only">Error:</span>
+				The account is disabled now, please contact system administrator.
+			</div>
+			
+			<!-- login_failed -->
 			<div th:if="${param.login_failed != null}" class="alert alert-danger" role="alert">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>
 				Invalid email and password.
 			</div>
-
-			<div th:if="${param.logout != null}" class="alert alert-success" role="alert">
-				You have been logged out.
-			</div>
+			
 		</div>
 	</div>
 
@@ -100,10 +110,12 @@
 									</form>
 								</div>
 								
+								<!-- reset_succeed -->
 								<div th:if="${param.reset_succeed != null}" class="alert alert-success" role="alert">
 									Reset your password succeed, please check your email.
 								</div>
 								
+								<!-- reset_failed -->
 								<div th:if="${param.reset_failed != null}" class="alert alert-danger" role="alert">
 									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 									<span class="sr-only">Error:</span>

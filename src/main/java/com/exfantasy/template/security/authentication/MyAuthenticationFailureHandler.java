@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -19,13 +20,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-    //@Autowired
-    //private MessageSource messages;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-//        response.sendError(403, exception.getMessage());
-    	getRedirectStrategy().sendRedirect(request, response, "/login?error");
+    	
+    	if (exception.getClass().isAssignableFrom(DisabledException.class)) {
+    		response.sendRedirect("/login?user_disabled");
+    	}
+    	else {
+    		response.sendRedirect("/login?login_failed");
+    	}
     }
 }

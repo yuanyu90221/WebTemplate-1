@@ -37,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenticationProvider myAuthenticationProvider;
     
-    @SuppressWarnings("unused")
 	@Autowired
     private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
@@ -58,10 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.usernameParameter("email")
             	.passwordParameter("password")
             	.defaultSuccessUrl("/main", true) // 登入成功後導向
-            	// 這邊 mark 掉, JavaFx 無法用 http status code 來判斷登入失敗, 因為會回傳 status code 200 且導向 login.html 帶參數 error
-            	// 但是如果使用, login page 登入頁面收到 403 會無法作用, 再看怎麼辦
-//            	.failureHandler(myAuthenticationFailureHandler)
-            	.failureUrl("/login?login_failed")
+            	.failureHandler(myAuthenticationFailureHandler)
+//            	.failureUrl("/login?login_failed")
             .and()
             	.logout().permitAll() // 這邊 permitAll 不能拿掉, 會有問題!!
             	.logoutSuccessUrl("/login?logout") // 登出成功後導回 login 頁面並帶參數 logout
