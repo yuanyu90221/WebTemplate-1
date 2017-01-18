@@ -58,7 +58,7 @@ public class TestController {
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')") 
 	@RequestMapping(value = "/testAuthorities", method = RequestMethod.GET)
-	@ApiOperation(value = "測試權限用")
+	@ApiOperation(value = "[Admin only] 測試權限用")
 	public @ResponseBody RespCommon testAuthorities() {
 		return new RespCommon(ResultCode.SUCCESS, "Hello admin");
 	}

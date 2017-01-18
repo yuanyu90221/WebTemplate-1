@@ -133,7 +133,7 @@ public class UserController {
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')")
 	@RequestMapping(value = "/get_all_users", method = RequestMethod.GET)
-	@ApiOperation(value = "取得所有使用者", notes = "取得所有使用者")
+	@ApiOperation(value = "[Admin only] 取得所有使用者", notes = "[Admin only] 取得所有使用者")
 	public @ResponseBody List<User> getAllUsers() {
 		List<User> allUsers = userService.queryAllUsers();
 		return allUsers;
@@ -150,8 +150,8 @@ public class UserController {
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')")
 	@RequestMapping(value = "/change_user_enable_status", method = RequestMethod.PUT)
-	@ApiOperation(value = "停用使用者", notes = "停用使用者")
-	public @ResponseBody RespCommon disableUser(
+	@ApiOperation(value = "[Admin only] 停用或啟用使用者", notes = "[Admin only] 停用或啟用使用者")
+	public @ResponseBody RespCommon changeUserEnableStatus(
 		@RequestParam(value = "email", required = true) String email, 
 		@RequestParam(value = "isEnable", required = true) boolean isEnabled) {
 		
