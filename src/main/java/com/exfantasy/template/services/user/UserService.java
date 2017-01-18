@@ -151,10 +151,11 @@ public class UserService {
      */
     @Cacheable(cacheNames = "users", key = "#email")
 	public User queryUserByEmail(String email) {
-    	logger.info(">>>>> In UserService queryUserByEmail");
+    	logger.info(">>>>> In UserService queryUserByEmail, email: <{}>", email);
 		UserExample example = new UserExample();
 		example.createCriteria().andEmailEqualTo(email);
 		List<User> user = userMapper.selectByExample(example);
+		logger.info("<<<<< result: <{}>", user);
 		return user.isEmpty() ? null : user.get(0);
 	}
 	
@@ -168,10 +169,11 @@ public class UserService {
 	 */
     @Cacheable(cacheNames = "userRoles", key = "#user.getUserId()")
 	public List<UserRole> queryUserRoles(User user) {
-    	logger.info(">>>>> In UserService userRolesByUserId");
+    	logger.info(">>>>> In UserService userRolesByUserId, uid: <{}>", user.getUserId());
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
 		List<UserRole> roles = userRoleMapper.selectByExample(example);
+		logger.info("<<<<< result: <{}>", roles);
 		return roles.isEmpty() ? null : roles;
 	}
 
@@ -206,20 +208,22 @@ public class UserService {
     
     /**
 	 * <pre>
-	 * 停用使用者
+	 * 停用或啟用使用者
 	 * </pre>
 	 */
 	@CacheEvict(cacheNames = "users", allEntries = true)
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-	public void disableUser(User user) {
-		user.setEnabled(false);
+	public void changeUserEnableStatus(User user, boolean isEnabled) {
+		user.setEnabled(isEnabled);
 		
-		logger.info(">>>>> In UserService disableUser, user: {}", user);
+		logger.info(">>>>> In UserService changeUserEnableStatus, user: {}, enable status: <{}>", user, isEnabled);
 	
 		UserExample example = new UserExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
 	
 		userMapper.updateByExampleSelective(user, example);
+		
+		logger.info("<<<<< Update succeed");
 	}
 
 	/**

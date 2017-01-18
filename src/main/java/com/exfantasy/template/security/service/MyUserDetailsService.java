@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,8 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private UserService userService;
+	
+	private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -40,13 +43,22 @@ public class MyUserDetailsService implements UserDetailsService {
 			logger.warn("~~~~~ Cannot find mapping user by email: <{}> ~~~~~", email);
 			throw new UsernameNotFoundException("Cannot find user, email: " + email);
 		}
-		if (user.isEnabled() == false) {
-			logger.warn("~~~~~ The user is disabled, email: <{}> ~~~~~", email);
-			throw new UsernameNotFoundException("The user is disabled, email: " + email);
-		}
+		
 		List<UserRole> roles = userService.queryUserRoles(user);
 		List<GrantedAuthority> gas = createRoles(roles);
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, gas);
+
+		// 轉換成 Spring 的 User 去做檢核
+		org.springframework.security.core.userdetails.User detailUser 
+			= new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, gas);
+		
+		try {
+			detailsChecker.check(detailUser);
+		} catch (Exception e) {
+			logger.warn("Check account status failed, email: <{}>, isEnabled: <{}>, msg: <{}>", user.getEmail(), user.isEnabled(), e.getMessage());
+			throw e;
+		}
+		
+		return detailUser;
 	}
 	
 	private List<GrantedAuthority> createRoles(List<UserRole> roles) {

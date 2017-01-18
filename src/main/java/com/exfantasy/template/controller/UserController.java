@@ -141,7 +141,7 @@ public class UserController {
 	
 	/**
 	 * <pre>
-	 * 停用使用者
+	 * 停用或啟用使用者
 	 * </pre>
 	 * 
 	 * @param email 用戶當初註冊的 email
@@ -149,19 +149,20 @@ public class UserController {
 	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')")
-	@RequestMapping(value = "/disable_user", method = RequestMethod.PUT)
+	@RequestMapping(value = "/change_user_enable_status", method = RequestMethod.PUT)
 	@ApiOperation(value = "停用使用者", notes = "停用使用者")
 	public @ResponseBody RespCommon disableUser(
-		@RequestParam(value = "email", required = true) String email) {
+		@RequestParam(value = "email", required = true) String email, 
+		@RequestParam(value = "isEnable", required = true) boolean isEnabled) {
 		
 		User user = userService.queryUserByEmail(email);
 		if (user == null) {
 			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
 		}
 		
-		userService.disableUser(user);
+		userService.changeUserEnableStatus(user, isEnabled);
 
-		return new RespCommon(ResultCode.SUCCESS, "Disable user with email: " + email + " succeed");
+		return new RespCommon(ResultCode.SUCCESS, "Change user enable status with email: <" + email + "> to <" + isEnabled + "> succeed");
 	}
 
 	/**
