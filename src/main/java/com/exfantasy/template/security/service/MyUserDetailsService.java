@@ -26,7 +26,7 @@ import com.exfantasy.template.services.user.UserService;
  * @author tommy.feng
  *
  */
-@Service("MyUserDetailsImpl")
+@Service
 public class MyUserDetailsService implements UserDetailsService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
@@ -45,11 +45,10 @@ public class MyUserDetailsService implements UserDetailsService {
 		}
 		
 		List<UserRole> roles = userService.queryUserRoles(user);
-		List<GrantedAuthority> gas = createRoles(roles);
+		List<GrantedAuthority> gas = convertUserRoleToSpringSecurityGrantedAuthority(roles);
 
 		// 轉換成 Spring Security 的 User 去做檢核
-		org.springframework.security.core.userdetails.User detailUser 
-			= new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, gas);
+		org.springframework.security.core.userdetails.User detailUser = convertUserToSpringSecurityUser(user, gas);
 		
 		try {
 			detailsChecker.check(detailUser);
@@ -61,11 +60,26 @@ public class MyUserDetailsService implements UserDetailsService {
 		return detailUser;
 	}
 	
-	private List<GrantedAuthority> createRoles(List<UserRole> roles) {
+	private List<GrantedAuthority> convertUserRoleToSpringSecurityGrantedAuthority(List<UserRole> roles) {
 		List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 		for (UserRole role : roles) {
 			gas.add(new SimpleGrantedAuthority(role.getRole()));
 		}
 		return gas;
 	}
+
+	private org.springframework.security.core.userdetails.User convertUserToSpringSecurityUser(User user, List<GrantedAuthority> gas) {
+		String username = user.getEmail(); 
+		String password = user.getPassword();
+		boolean enabled = user.isEnabled();
+		boolean accountNonExpired = true;
+		boolean credentialsNonExpired = true; 
+		boolean accountNonLocked = true;
+		List<? extends GrantedAuthority> authorities = gas;
+		
+		org.springframework.security.core.userdetails.User detailUser 
+			= new org.springframework.security.core.userdetails.User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		return detailUser;
+	}
+	
 }
