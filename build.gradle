@@ -3,7 +3,7 @@ version = '1.0'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 // 參考: http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-project-gradle.html
 apply plugin: "io.spring.dependency-management"
@@ -34,7 +34,7 @@ ext {
 // ref: https://github.com/manish-in-java/spring-boot-rest/blob/master/build.gradle
 buildscript {
 	ext {
-		springBootVersion = '1.4.1.RELEASE'
+		springBootVersion = '1.4.3.RELEASE'
 	}
 
     repositories {
