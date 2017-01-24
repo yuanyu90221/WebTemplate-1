@@ -129,7 +129,7 @@ public class UserService {
 	public void forgotPassword(User user) {
     	String email = user.getEmail();
     	
-		String randomPassword = RandomUtil.getRandomCode(6);
+		String randomPassword = RandomUtil.getRandomCode(RandomUtil.CodeType.MIXED, 6);
 		
 		// 1. 將新產生的密碼寄信出去
 		mailService.sendForgotPasswordMail(email, randomPassword);
