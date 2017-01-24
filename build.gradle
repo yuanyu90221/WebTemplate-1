@@ -2,11 +2,10 @@ version = '1.0'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 // 參考: http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-project-gradle.html
-apply plugin: "io.spring.dependency-management"
+apply plugin: 'io.spring.dependency-management'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
