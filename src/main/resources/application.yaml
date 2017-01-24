@@ -30,14 +30,11 @@ spring:
         database: 0 # database name 
         host: ${REDIS_HOST}
         password: ${REDIS_PASSWORD}
-        # 這邊抓環境變數會有轉換問題, 再查怎麼解
+        # 這邊本機抓環境變數會有轉換問題, 放到 Heroku 不會有問題
         port: ${REDIS_PORT}
          
         # Local
         # port: 6379
-
-        # Heroku
-        # port: 23529
         
 # -------- Mail Config --------
 mail:
