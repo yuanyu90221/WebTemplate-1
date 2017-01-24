@@ -44,7 +44,7 @@ public class MyUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Cannot find user, email: " + email);
 		}
 		
-		List<UserRole> roles = userService.queryUserRoles(user);
+		List<UserRole> roles = userService.queryUserRoles(user.getUserId());
 		List<GrantedAuthority> gas = convertUserRoleToSpringSecurityGrantedAuthority(roles);
 
 		// 轉換成 Spring Security 的 User 去做檢核

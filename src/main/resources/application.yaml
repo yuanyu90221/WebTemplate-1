@@ -24,6 +24,20 @@ spring:
         multipart:
             max-file-size: 10MB
             max_request-size: 10MB
+          
+    # http://wiselyman.iteye.com/blog/2184884  
+    redis:
+        database: 0 # database name 
+        host: ${REDIS_HOST}
+        password: ${REDIS_PASSWORD}
+        # 這邊抓環境變數會有轉換問題, 再查怎麼解
+        port: ${REDIS_PORT}
+         
+        # Local
+        # port: 6379
+
+        # Heroku
+        # port: 23529
         
 # -------- Mail Config --------
 mail:

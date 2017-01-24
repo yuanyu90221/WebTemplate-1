@@ -121,7 +121,7 @@ public class UserController {
 		if (user == null) {
 			throw new OperationException(ResultCode.CANNOT_FIND_REGISTRATION_INFO);
 		}
-		return userService.queryUserRoles(user);
+		return userService.queryUserRoles(user.getUserId());
 	}
 	
 	/**

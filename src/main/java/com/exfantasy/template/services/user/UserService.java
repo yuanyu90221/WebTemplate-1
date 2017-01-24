@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.exfantasy.template.cnst.CacheName;
 import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
@@ -72,7 +73,6 @@ public class UserService {
      * 
      * @param registerVo
      */
-    @CacheEvict(cacheNames = "users", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public void register(RegisterVo registerVo) {
     	User user = new User();
@@ -101,7 +101,7 @@ public class UserService {
      * @param oldPassword 輸入舊密碼驗證
      * @param newPassword 欲設定的新密碼
      */
-    @CacheEvict(cacheNames = "users", allEntries = true)
+    @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changePassword(User loginUser, String oldPassword, String newPassword) {
     	logger.info(">>>>> In UserService, loginUser: {}, change new password: {}", loginUser, newPassword);
@@ -124,7 +124,7 @@ public class UserService {
      * 
      * @param user 用 email 查詢到的用戶
      */
-    @CacheEvict(cacheNames = "users", allEntries = true)
+    @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void forgotPassword(User user) {
     	String email = user.getEmail();
@@ -149,7 +149,7 @@ public class UserService {
      * @param email
      * @return
      */
-    @Cacheable(cacheNames = "users", key = "#email")
+    @Cacheable(value = CacheName.USER_CACHE, keyGenerator = "wiselyKeyGenerator")
 	public User queryUserByEmail(String email) {
     	logger.info(">>>>> In UserService queryUserByEmail, email: <{}>", email);
 		UserExample example = new UserExample();
@@ -167,11 +167,11 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-    @Cacheable(cacheNames = "userRoles", key = "#user.getUserId()")
-	public List<UserRole> queryUserRoles(User user) {
-    	logger.info(">>>>> In UserService userRolesByUserId, uid: <{}>", user.getUserId());
+    @Cacheable(value = CacheName.USER_ROLE_CACHE, keyGenerator = "wiselyKeyGenerator")
+	public List<UserRole> queryUserRoles(Integer userId) {
+    	logger.info(">>>>> In UserService userRolesByUserId, uid: <{}>", userId);
 		UserRoleExample example = new UserRoleExample();
-		example.createCriteria().andUserIdEqualTo(user.getUserId());
+		example.createCriteria().andUserIdEqualTo(userId);
 		List<UserRole> roles = userRoleMapper.selectByExample(example);
 		logger.info("<<<<< result: <{}>", roles);
 		return roles.isEmpty() ? null : roles;
@@ -185,7 +185,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-    @CacheEvict(cacheNames = "users", allEntries = true)
+    @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserSelective(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
@@ -199,7 +199,7 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-    @CacheEvict(cacheNames = "users", allEntries = true)
+    @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserByReplace(User user) {
     	logger.info(">>>>> In UserService updateUserByReplace, user: {}", user);
@@ -211,7 +211,7 @@ public class UserService {
 	 * 停用或啟用使用者
 	 * </pre>
 	 */
-	@CacheEvict(cacheNames = "users", allEntries = true)
+    @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changeUserEnableStatus(User user, boolean isEnabled) {
 		user.setEnabled(isEnabled);

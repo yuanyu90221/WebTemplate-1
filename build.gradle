@@ -84,7 +84,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
 	compile "org.springframework.boot:spring-boot-starter-security"
 	compile "org.springframework.boot:spring-boot-starter-jdbc"
-	// compile "org.springframework.boot:spring-boot-starter-redis" // 等研究出來怎麼用在開
+	compile "org.springframework.boot:spring-boot-starter-redis"
 	compile "org.springframework.boot:spring-boot-starter-mail"
 	compile "org.springframework.boot:spring-boot-starter-websocket"
 	compile "org.springframework.boot:spring-boot-starter-test"
