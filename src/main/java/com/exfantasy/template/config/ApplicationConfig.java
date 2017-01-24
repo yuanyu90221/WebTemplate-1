@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * 整個 Application 的設定
  * 
  * 1. @EnableScheduling: 允許 scheduling
- * 2. @EnableCaching: 允許 caching
  * </pre>
  * 
  * @author tommy.feng
