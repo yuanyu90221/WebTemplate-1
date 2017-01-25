@@ -149,7 +149,8 @@ public class UserService {
      * @param email
      * @return
      */
-    @Cacheable(value = CacheName.USER_CACHE, keyGenerator = "wiselyKeyGenerator")
+//    @Cacheable(value = CacheName.USER_CACHE, keyGenerator = "classMethodKeyGenerator")
+    @Cacheable(value = CacheName.USER_CACHE, key = "#email")
 	public User queryUserByEmail(String email) {
     	logger.info(">>>>> In UserService queryUserByEmail, email: <{}>", email);
 		UserExample example = new UserExample();
@@ -167,7 +168,8 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-    @Cacheable(value = CacheName.USER_ROLE_CACHE, keyGenerator = "wiselyKeyGenerator")
+//    @Cacheable(value = CacheName.USER_ROLE_CACHE, keyGenerator = "classMethodKeyGenerator")
+    @Cacheable(value = CacheName.USER_ROLE_CACHE, key = "#userId")
 	public List<UserRole> queryUserRoles(Integer userId) {
     	logger.info(">>>>> In UserService userRolesByUserId, uid: <{}>", userId);
 		UserRoleExample example = new UserRoleExample();

@@ -1,8 +1,7 @@
 package com.exfantasy.template.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.lang.reflect.Method;
+
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -13,9 +12,12 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
-import java.lang.reflect.Method;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * <a href="http://wiselyman.iteye.com/blog/2184884">參考網站</a>
@@ -28,7 +30,7 @@ import java.lang.reflect.Method;
 public class RedisConfig extends CachingConfigurerSupport {
 
 	@Bean
-	public KeyGenerator wiselyKeyGenerator() {
+	public KeyGenerator classMethodKeyGenerator() {
 		return new KeyGenerator() {
 			@Override
 			public Object generate(Object target, Method method, Object... params) {
@@ -52,13 +54,23 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
 		StringRedisTemplate template = new StringRedisTemplate(factory);
+
+		template.setKeySerializer(new GenericToStringSerializer<Object>(Object.class));
+		
+		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = getRedisTemplateValueSerializer();
+		template.setValueSerializer(jackson2JsonRedisSerializer);
+
+		template.afterPropertiesSet();
+
+		return template;
+	}
+
+	private Jackson2JsonRedisSerializer<Object> getRedisTemplateValueSerializer() {
 		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
 		ObjectMapper om = new ObjectMapper();
 		om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
 		om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 		jackson2JsonRedisSerializer.setObjectMapper(om);
-		template.setValueSerializer(jackson2JsonRedisSerializer);
-		template.afterPropertiesSet();
-		return template;
+		return jackson2JsonRedisSerializer;
 	}
 }
