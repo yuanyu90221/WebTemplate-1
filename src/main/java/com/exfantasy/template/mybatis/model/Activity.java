@@ -142,4 +142,23 @@ public class Activity {
         result = prime * result + ((getAttendeeNum() == null) ? 0 : getAttendeeNum().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", activityId=").append(activityId);
+        sb.append(", createUserId=").append(createUserId);
+        sb.append(", createDate=").append(createDate);
+        sb.append(", title=").append(title);
+        sb.append(", description=").append(description);
+        sb.append(", startDatetime=").append(startDatetime);
+        sb.append(", latitude=").append(latitude);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", attendeeNum=").append(attendeeNum);
+        sb.append("]");
+        return sb.toString();
+    }
 }

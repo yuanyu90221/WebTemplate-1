@@ -89,4 +89,19 @@ public class ActivityMessages {
         result = prime * result + ((getMsg() == null) ? 0 : getMsg().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", msgId=").append(msgId);
+        sb.append(", activityId=").append(activityId);
+        sb.append(", createUserId=").append(createUserId);
+        sb.append(", createDatetime=").append(createDatetime);
+        sb.append(", msg=").append(msg);
+        sb.append("]");
+        return sb.toString();
+    }
 }

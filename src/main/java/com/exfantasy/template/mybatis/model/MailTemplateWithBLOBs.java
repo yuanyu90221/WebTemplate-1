@@ -81,4 +81,18 @@ public class MailTemplateWithBLOBs extends MailTemplate {
         result = prime * result + ((getTail() == null) ? 0 : getTail().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", header=").append(header);
+        sb.append(", bodyHeader=").append(bodyHeader);
+        sb.append(", bodyTail=").append(bodyTail);
+        sb.append(", tail=").append(tail);
+        sb.append("]");
+        return sb.toString();
+    }
 }

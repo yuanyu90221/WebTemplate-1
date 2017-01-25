@@ -128,4 +128,22 @@ public class User {
         result = prime * result + ((getLastSigninTime() == null) ? 0 : getLastSigninTime().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", userId=").append(userId);
+        sb.append(", email=").append(email);
+        sb.append(", password=").append(password);
+        sb.append(", mobileNo=").append(mobileNo);
+        sb.append(", lineId=").append(lineId);
+        sb.append(", enabled=").append(enabled);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", lastSigninTime=").append(lastSigninTime);
+        sb.append("]");
+        return sb.toString();
+    }
 }

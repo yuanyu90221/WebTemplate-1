@@ -142,13 +142,22 @@ public class Consume {
         return result;
     }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Consume [lotteryNo=").append(lotteryNo).append(", userId=").append(userId)
-				.append(", consumeDate=").append(consumeDate).append(", type=").append(type).append(", prodName=")
-				.append(prodName).append(", amount=").append(amount).append(", prize=").append(prize).append(", got=")
-				.append(got).append(", alreadySent=").append(alreadySent).append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", lotteryNo=").append(lotteryNo);
+        sb.append(", userId=").append(userId);
+        sb.append(", consumeDate=").append(consumeDate);
+        sb.append(", type=").append(type);
+        sb.append(", prodName=").append(prodName);
+        sb.append(", amount=").append(amount);
+        sb.append(", prize=").append(prize);
+        sb.append(", got=").append(got);
+        sb.append(", alreadySent=").append(alreadySent);
+        sb.append("]");
+        return sb.toString();
+    }
 }

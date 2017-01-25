@@ -27,6 +27,11 @@
     		<property name="annotation-string" value="@ApiModelProperty(notes = &quot;&quot;, required = true)" />
 		</plugin>
 		
+		<!-- 每個 model 新增 toString method -->
+		<!-- 參考: http://www.mybatis.org/generator/reference/plugins.html -->
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+		</plugin>
+		
 		<!-- 防止生成的程式有很多難看的註解 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />

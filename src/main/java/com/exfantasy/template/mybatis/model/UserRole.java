@@ -49,4 +49,16 @@ public class UserRole {
         result = prime * result + ((getRole() == null) ? 0 : getRole().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", userId=").append(userId);
+        sb.append(", role=").append(role);
+        sb.append("]");
+        return sb.toString();
+    }
 }

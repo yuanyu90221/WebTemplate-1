@@ -62,4 +62,17 @@ public class ReceiptReward {
         result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", section=").append(section);
+        sb.append(", rewardType=").append(rewardType);
+        sb.append(", number=").append(number);
+        sb.append("]");
+        return sb.toString();
+    }
 }

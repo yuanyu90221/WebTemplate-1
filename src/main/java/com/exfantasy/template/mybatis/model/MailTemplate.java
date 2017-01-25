@@ -62,4 +62,17 @@ public class MailTemplate {
         result = prime * result + ((getSubject() == null) ? 0 : getSubject().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", templateId=").append(templateId);
+        sb.append(", type=").append(type);
+        sb.append(", subject=").append(subject);
+        sb.append("]");
+        return sb.toString();
+    }
 }
