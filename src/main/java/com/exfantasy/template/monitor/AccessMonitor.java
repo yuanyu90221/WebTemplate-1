@@ -1,12 +1,18 @@
 package com.exfantasy.template.monitor;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,13 +30,38 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class ServiceMonitor {
+public class AccessMonitor {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ServiceMonitor.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccessMonitor.class);
 	
-	private final String ALL_SERVICE_METHOD = "execution(* com.exfantasy.template.services..*Service.*(..))";
+	@Pointcut("execution(* com.exfantasy.template.controller..*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+	public void controllerMethodPointcut() {}
 	
-	@Before(ALL_SERVICE_METHOD)
+	@Pointcut("execution(* com.exfantasy.template.services..*Service.*(..))")
+	public void serviceMethodPointcut() {}
+	
+	/**
+	 * 參考: <a href="http://blog.csdn.net/clementad/article/details/52035199">spring boot 使用spring AOP實現攔截器</a>
+	 */
+	@Around("controllerMethodPointcut()")
+	public void logAccessControllerBefore(ProceedingJoinPoint pjp) {
+		long beginTime = System.currentTimeMillis();
+		
+		MethodSignature signature = (MethodSignature) pjp.getSignature();
+		// class
+		String className = signature.getDeclaringTypeName();
+		// method name
+		String methodName = signature.getMethod().getName();
+		
+		Set<Object> allParams = new LinkedHashSet<>();
+		
+		// TODO
+		String logStr = "";
+		
+		logger.info(">>>>> Prepare to access: {}", logStr);
+	}
+	
+	@Before("serviceMethodPointcut()")
 	public void logAccessServiceBefore(JoinPoint joinPoint) {
 		Signature signature = joinPoint.getSignature();
 		// class
@@ -45,8 +76,7 @@ public class ServiceMonitor {
 		logger.info("----> Prepare to access: {}", logStr);
 	}
 	
-	
-	@AfterReturning(pointcut = ALL_SERVICE_METHOD, returning = "ret")
+	@AfterReturning(pointcut = "serviceMethodPointcut()", returning = "ret")
 	public void logAccessServiceAfterReturning(JoinPoint joinPoint, Object ret) {
 		Signature signature = joinPoint.getSignature();
 		// class
