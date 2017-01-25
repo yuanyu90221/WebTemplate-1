@@ -136,7 +136,7 @@ public class UserService {
 		// 2. 更新 user 的密碼
 		user.setPassword(Password.encrypt(randomPassword));
 		userMapper.updateByPrimaryKeySelective(user);
-		logger.info("Update user which email: <{}> with new password sueeccd", email);
+		logger.info("Update user which email: <{}> with new password succeed", email);
 	}
 
 	/**
