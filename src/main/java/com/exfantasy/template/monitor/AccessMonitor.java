@@ -50,7 +50,7 @@ public class AccessMonitor {
 	 * </pre>
 	 */
 	@Around("controllerMethodPointcut()")
-	public void logAccessControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
+	public Object logAccessControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
 		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;
         HttpServletRequest request = sra.getRequest();
@@ -110,6 +110,7 @@ public class AccessMonitor {
 
 			throw t;
 		}
+		return result;
 	}
 	
 	@Before("serviceMethodPointcut()")
