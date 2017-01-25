@@ -104,8 +104,6 @@ public class UserService {
     @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changePassword(User loginUser, String oldPassword, String newPassword) {
-    	logger.info(">>>>> In UserService, loginUser: {}, change new password: {}", loginUser, newPassword);
-    	
 		String currentPassword = loginUser.getPassword();
 		if (!Password.encoder.matches(oldPassword, currentPassword)) {
 			throw new OperationException(ResultCode.PLS_CONFIRM_ORIG_PASSWORD);
@@ -133,12 +131,12 @@ public class UserService {
 		
 		// 1. 將新產生的密碼寄信出去
 		mailService.sendForgotPasswordMail(email, randomPassword);
-		logger.info(">>>>> Send forgot password mail to email address: <{}> succeed", email);
+		logger.info("Send forgot password mail to email address: <{}> succeed", email);
 
 		// 2. 更新 user 的密碼
 		user.setPassword(Password.encrypt(randomPassword));
 		userMapper.updateByPrimaryKeySelective(user);
-		logger.info(">>>>> Update user which email: <{}> with new password sueeccd", email);
+		logger.info("Update user which email: <{}> with new password sueeccd", email);
 	}
 
 	/**
@@ -152,11 +150,9 @@ public class UserService {
 //    @Cacheable(value = CacheName.USER_CACHE, keyGenerator = "classMethodKeyGenerator")
     @Cacheable(value = CacheName.USER_CACHE, key = "#email")
 	public User queryUserByEmail(String email) {
-    	logger.info(">>>>> In UserService queryUserByEmail, email: <{}>", email);
 		UserExample example = new UserExample();
 		example.createCriteria().andEmailEqualTo(email);
 		List<User> user = userMapper.selectByExample(example);
-		logger.info("<<<<< result: <{}>", user);
 		return user.isEmpty() ? null : user.get(0);
 	}
 	
@@ -171,11 +167,9 @@ public class UserService {
 //    @Cacheable(value = CacheName.USER_ROLE_CACHE, keyGenerator = "classMethodKeyGenerator")
     @Cacheable(value = CacheName.USER_ROLE_CACHE, key = "#userId")
 	public List<UserRole> queryUserRoles(Integer userId) {
-    	logger.info(">>>>> In UserService userRolesByUserId, uid: <{}>", userId);
 		UserRoleExample example = new UserRoleExample();
 		example.createCriteria().andUserIdEqualTo(userId);
 		List<UserRole> roles = userRoleMapper.selectByExample(example);
-		logger.info("<<<<< result: <{}>", roles);
 		return roles.isEmpty() ? null : roles;
 	}
 
@@ -204,7 +198,6 @@ public class UserService {
     @CacheEvict(value = CacheName.USER_CACHE, allEntries = true)
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public int updateUserByReplace(User user) {
-    	logger.info(">>>>> In UserService updateUserByReplace, user: {}", user);
         return userMapper.updateByPrimaryKey(user);
     }
     
@@ -217,15 +210,11 @@ public class UserService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changeUserEnableStatus(User user, boolean isEnabled) {
 		user.setEnabled(isEnabled);
-		
-		logger.info(">>>>> In UserService changeUserEnableStatus, user: {}, enable status: <{}>", user, isEnabled);
 	
 		UserExample example = new UserExample();
 		example.createCriteria().andUserIdEqualTo(user.getUserId());
 	
 		userMapper.updateByExampleSelective(user, example);
-		
-		logger.info("<<<<< Update succeed");
 	}
 
 	/**
@@ -274,7 +263,6 @@ public class UserService {
 	 * @return
 	 */
 	public List<User> queryAllUsers() {
-		logger.info(">>>>> In UserService queryAllUsers");
 		List<User> allUsers = userMapper.selectByExample(null);
 		return allUsers;
 	}
