@@ -1,7 +1,5 @@
 package com.exfantasy.template.services.session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,8 +10,6 @@ import com.exfantasy.template.services.user.UserService;
 
 @Service
 public class SessionService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(SessionService.class);
 	
 	@Autowired
 	private UserService userService;
@@ -29,7 +25,6 @@ public class SessionService {
      * @return
      */
     public User getLoginUser() {
-    	logger.info(">>>>> In SessionService getLoginUser()");
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User user = userService.queryUserByEmail(email);

@@ -44,4 +44,11 @@ public class RespCommon {
 	public Object getData() {
 		return data;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RespCommon [resultCode=").append(resultCode).append(", data=").append(data).append("]");
+		return builder.toString();
+	}
 }
