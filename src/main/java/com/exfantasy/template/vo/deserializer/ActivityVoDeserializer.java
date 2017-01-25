@@ -30,7 +30,7 @@ public class ActivityVoDeserializer extends JsonDeserializer<ActivityVo> {
 	    
 	    final String title = node.get("title") != null ? node.get("title").asText() : null;
 	    final String description = node.get("description") != null ? node.get("description").asText() : null;
-	    String sStartDatetime = node.get("startDatetime") != null ? node.get("startDatetime").asText() : null;
+	    final String sStartDatetime = node.get("startDatetime") != null ? node.get("startDatetime").asText() : null;
 	    Date startDatetime = null;
 	    if (sStartDatetime != null) {
 			try {
