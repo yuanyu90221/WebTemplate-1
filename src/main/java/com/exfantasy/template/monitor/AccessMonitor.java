@@ -2,6 +2,8 @@ package com.exfantasy.template.monitor;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -13,6 +15,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * <pre>
@@ -38,11 +43,25 @@ public class AccessMonitor {
 	public void serviceMethodPointcut() {}
 	
 	/**
+	 * <pre>
 	 * 參考: <a href="http://blog.csdn.net/clementad/article/details/52035199">spring boot 使用spring AOP實現攔截器</a>
+	 * 
+	 * TODO 參考: <a href="http://blog.csdn.net/jiaobuchong/article/details/50420379">Spring-boot 配置Aop获取controller里的request中的参数以及其返回值</a>
+	 * </pre>
 	 */
 	@Around("controllerMethodPointcut()")
 	public void logAccessControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
-		long startTime = System.currentTimeMillis();
+		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+        HttpServletRequest request = sra.getRequest();
+        
+        @SuppressWarnings("unused")
+		String url = request.getRequestURL().toString();
+        String method = request.getMethod();
+        String uri = request.getRequestURI();
+        String params = request.getQueryString();
+        
+        logger.info("~~~~> Received request, method: <{}>, uri: <{}>, params: <{}>", method, uri, params);
 		
 		Signature signature = pjp.getSignature();
 		// class
@@ -73,15 +92,22 @@ public class AccessMonitor {
 		
 		logger.info(">>>>> Prepare to access: {}", logStr);
 		
-		Object result = null;
+		long startTime = -1;
 		long timeSpent = -1;
+		Object result = null;
 		try {
+			startTime = System.currentTimeMillis();
+
 			result = pjp.proceed();
+
 			timeSpent = System.currentTimeMillis() - startTime;
+
 			logger.info("<<<<< Access: {} done, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
 		} catch (Throwable t) {
 			timeSpent = System.currentTimeMillis() - startTime;
+
 			logger.error("<<<<< Access: {} failed, exception raised: <{}>, time-spent: <{} ms>", logStr, t, timeSpent);
+
 			throw t;
 		}
 	}
