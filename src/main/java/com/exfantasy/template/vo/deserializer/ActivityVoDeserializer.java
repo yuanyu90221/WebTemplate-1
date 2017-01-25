@@ -41,7 +41,7 @@ public class ActivityVoDeserializer extends JsonDeserializer<ActivityVo> {
 	    }
 	    final BigDecimal latitude = node.get("latitude") != null ? new BigDecimal(node.get("latitude").asText()) : null;
 	    final BigDecimal longitude = node.get("longitude") != null ? new BigDecimal(node.get("longitude").asText()) : null;
-	    final int attendeeNum = node.get("attendeeNum") != null ? node.get("attendeeNum").asInt() : null;
+	    final Integer attendeeNum = node.get("attendeeNum") != null ? node.get("attendeeNum").asInt() : null;
 		
 		return new ActivityVo(title, description, startDatetime, latitude, longitude, attendeeNum);
 	}
