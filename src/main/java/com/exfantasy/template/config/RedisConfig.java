@@ -55,6 +55,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
 		StringRedisTemplate template = new StringRedisTemplate(factory);
 
+		// ref: http://stackoverflow.com/questions/39324717/spring-boot-caching-with-redis-key-have-xac-xed-x00-x05t-x00-x06
 		template.setKeySerializer(new GenericToStringSerializer<Object>(Object.class));
 		
 		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = getRedisTemplateValueSerializer();
