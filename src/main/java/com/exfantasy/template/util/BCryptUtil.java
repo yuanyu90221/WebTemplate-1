@@ -16,8 +16,8 @@ public class BCryptUtil {
 	/**
 	 * 將明碼編碼
 	 * 
-	 * @param rawPassword
-	 * @return
+	 * @param rawPassword 明碼
+	 * @return 明碼經過編碼
 	 */
 	public static String encrypt(String rawPassword) {
 		String salt = BCrypt.gensalt(workload);
