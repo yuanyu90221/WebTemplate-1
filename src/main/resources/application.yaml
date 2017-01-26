@@ -23,7 +23,7 @@ spring:
     http:
         multipart:
             max-file-size: 10MB
-            max_request-size: 10MB
+            max-request-size: 10MB
           
     # http://wiselyman.iteye.com/blog/2184884  
     redis:
@@ -34,6 +34,7 @@ spring:
         
     # https://github.com/spring-projects/spring-boot/blob/master/spring-boot-samples/spring-boot-sample-activemq/src/main/resources/application.properties
     activemq:
+        broker-url: vm://localhost?broker.persistent=false
         in-memory: true
         pool:
             enabled: false
