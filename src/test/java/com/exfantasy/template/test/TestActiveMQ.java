@@ -31,9 +31,9 @@ public class TestActiveMQ {
 	private Producer producer;
 	
 	@Test
-	public void sendSimpleMessage() throws InterruptedException {
-		this.producer.send("Test message");
+	public void testSendMsgToQAndCaptureSystemOut() throws InterruptedException {
+		producer.send("Test message");
 		Thread.sleep(1000L);
-		assertThat(this.outputCapture.toString().contains("Test message")).isTrue();
+		assertThat(outputCapture.toString().contains("Received message: <Test message>")).isTrue();
 	}
 }
