@@ -5,9 +5,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * <pre>
- * 整個 Application 的設定
- * 
- * 1. @EnableScheduling: 允許 scheduling
+ * Scheduler 的設定
  * </pre>
  * 
  * @author tommy.feng
@@ -15,6 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @Configuration
 @EnableScheduling
-public class ApplicationConfig {
+public class SchedulerConfig {
 
 }
