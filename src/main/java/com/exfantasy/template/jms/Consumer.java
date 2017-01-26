@@ -12,7 +12,7 @@ public class Consumer {
 	private static final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
 	@JmsListener(destination = QueueName.TESTING_Q)
-	public void receiveQueue(String text) {
+	public void receiveFromTestingQueue(String text) {
 		logger.info("Received message: <{}> from queue: <{}>", text, QueueName.TESTING_Q);
 	}
 }

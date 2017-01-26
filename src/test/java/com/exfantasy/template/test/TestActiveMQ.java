@@ -32,7 +32,7 @@ public class TestActiveMQ {
 	
 	@Test
 	public void testSendMsgToQAndCaptureSystemOut() throws InterruptedException {
-		producer.send("Test message");
+		producer.sendToTestingQ("Test message");
 		Thread.sleep(1000L);
 		assertThat(outputCapture.toString().contains("Received message: <Test message>")).isTrue();
 	}

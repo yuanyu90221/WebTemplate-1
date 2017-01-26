@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.Role;
 import com.exfantasy.template.services.dropbox.DropboxService;
+import com.exfantasy.template.services.jms.JmsService;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.services.notification.WebNotifyService;
 import com.exfantasy.template.vo.notification.NotificationMsg;
@@ -46,6 +47,9 @@ public class TestController {
 	
 	@Autowired
 	private WebNotifyService webNotifyService;
+	
+	@Autowired
+	private JmsService jmsService;
 	
 	/**
 	 * <pre>
@@ -190,4 +194,18 @@ public class TestController {
 		webNotifyService.sendSurpriseMsg(email, msg);
 		return new RespCommon(ResultCode.SUCCESS);
 	}
+	
+	/**
+	 * <pre>
+	 * 測試發送訊息到 TestingQ
+	 * </pre>
+	 */
+	@RequestMapping(value = "/testSendMsgToTestingQ", method = RequestMethod.POST)
+	@ApiOperation(value = "測試發送訊息到 TestingQ", notes = "測試發送訊息到 TestingQ", response = RespCommon.class)
+	public @ResponseBody RespCommon testSendMsgToTestingQ(
+			@RequestParam(value = "message", required = true) String message) {
+		jmsService.sendMessageToTestingQ(message);
+		return new RespCommon(ResultCode.SUCCESS);
+	}
+	
 }

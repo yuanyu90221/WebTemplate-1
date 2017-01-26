@@ -20,9 +20,9 @@ public class Producer {
 	@Autowired
 	private Queue testingQ;
 
-	public void send(String msg) {
-		this.jmsMessageTemplate.convertAndSend(this.testingQ, msg);
-		logger.info("Send msg: <{}> to {} succeed", msg, QueueName.TESTING_Q);
+	public void sendToTestingQ(String msg) {
+		jmsMessageTemplate.convertAndSend(this.testingQ, msg);
+		logger.info("Send msg: <{}> to queue: <{}> succeed", msg, QueueName.TESTING_Q);
 	}
 
 }
