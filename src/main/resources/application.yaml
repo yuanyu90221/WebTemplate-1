@@ -32,9 +32,8 @@ spring:
         password: ${REDIS_PASSWORD}
         port: ${REDIS_PORT}
         
-    # https://github.com/spring-projects/spring-boot/blob/master/spring-boot-samples/spring-boot-sample-activemq/src/main/resources/application.properties
     activemq:
-        broker-url: vm://localhost?broker.persistent=false
+        #broker-url: vm://localhost?broker.persistent=false
         in-memory: true
         pool:
             enabled: false
