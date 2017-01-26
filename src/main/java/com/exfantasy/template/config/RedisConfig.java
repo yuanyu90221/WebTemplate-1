@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @Configuration
-//@EnableCaching
+@EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
 	@Bean
