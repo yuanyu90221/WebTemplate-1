@@ -20,7 +20,11 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * <a href="http://wiselyman.iteye.com/blog/2184884">參考網站</a>
+ * <pre>
+ * Redis cache 設定
+ * 
+ * 參考: <a href="http://wiselyman.iteye.com/blog/2184884">Spring Boot使用redis做數據緩存</a>
+ * </pre>
  * 
  * @author tommy.feng
  *

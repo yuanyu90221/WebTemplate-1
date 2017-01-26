@@ -9,6 +9,16 @@ import org.springframework.jms.annotation.EnableJms;
 
 import com.exfantasy.template.cnst.QueueName;
 
+/**
+ * <pre>
+ * ActiveMQ 設定
+ * 
+ * PS: 要新增 Queue 可參考 method: testingQ
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Configuration
 @EnableJms
 public class JmsConfig {
