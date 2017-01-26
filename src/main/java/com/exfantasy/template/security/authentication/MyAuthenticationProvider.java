@@ -16,9 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
-import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.security.service.LoginAttemptService;
 import com.exfantasy.template.security.service.MyUserDetailsService;
+import com.exfantasy.template.util.BCryptUtil;
 
 /**
  * <pre>
@@ -54,7 +54,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 			logger.warn("~~~~~ Cannot find mapping user by email: <{}> ~~~~~", username);
 			throw new BadCredentialsException("Username not found.");
 		}
-		if (!Password.encoder.matches(password, user.getPassword())) {
+		if (!BCryptUtil.isPasswordMatched(password, user.getPassword())) {
 			logger.warn("~~~~~ Input password: <{}> not match password: <{}> ~~~~~", password, user.getPassword());
 			throw new BadCredentialsException("Wrong password.");
 		}

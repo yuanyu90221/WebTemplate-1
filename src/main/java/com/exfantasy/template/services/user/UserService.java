@@ -26,9 +26,9 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
-import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.services.file.FileService;
 import com.exfantasy.template.services.mail.MailService;
+import com.exfantasy.template.util.BCryptUtil;
 import com.exfantasy.template.util.RandomUtil;
 import com.exfantasy.template.vo.request.RegisterVo;
 
@@ -77,7 +77,7 @@ public class UserService {
     public void register(RegisterVo registerVo) {
     	User user = new User();
     	user.setEmail(registerVo.getEmail());
-    	user.setPassword(Password.encrypt(registerVo.getPassword()));
+    	user.setPassword(BCryptUtil.encrypt(registerVo.getPassword()));
     	user.setMobileNo(registerVo.getMobileNo());
     	user.setLineId(registerVo.getLineId());
     	user.setEnabled(true);
@@ -105,13 +105,13 @@ public class UserService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void changePassword(User loginUser, String oldPassword, String newPassword) {
 		String currentPassword = loginUser.getPassword();
-		if (!Password.encoder.matches(oldPassword, currentPassword)) {
+		if (!BCryptUtil.isPasswordMatched(oldPassword, currentPassword)) {
 			throw new OperationException(ResultCode.PLS_CONFIRM_ORIG_PASSWORD);
 		}
 		if (oldPassword.equals(newPassword)) {
 			throw new OperationException(ResultCode.PLS_CONFIRM_NEW_PASSWORD_NOT_SAME_AS_OLD_PASSWORD);
 		}
-		loginUser.setPassword(Password.encrypt(newPassword));
+		loginUser.setPassword(BCryptUtil.encrypt(newPassword));
 		userMapper.updateByPrimaryKeySelective(loginUser);
 	}
 
@@ -134,7 +134,7 @@ public class UserService {
 		logger.info("Send forgot password mail to email address: <{}> succeed", email);
 
 		// 2. 更新 user 的密碼
-		user.setPassword(Password.encrypt(randomPassword));
+		user.setPassword(BCryptUtil.encrypt(randomPassword));
 		userMapper.updateByPrimaryKeySelective(user);
 		logger.info("Update user which email: <{}> with new password succeed", email);
 	}
