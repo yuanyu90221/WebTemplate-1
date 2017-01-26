@@ -34,6 +34,7 @@ spring:
         
     activemq:
         #broker-url: vm://localhost?broker.persistent=false
+        #embedded broker
         in-memory: true
         pool:
             enabled: false
