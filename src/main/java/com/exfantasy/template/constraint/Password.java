@@ -14,9 +14,9 @@ import javax.validation.Payload;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy=Password.PasswordValidator.class)
+@Constraint(validatedBy = Password.PasswordValidator.class)
 public @interface Password {
-	
+
 	String message() default "";
 
 	Class<?>[] groups() default {};
@@ -25,22 +25,23 @@ public @interface Password {
 
 	public class PasswordValidator implements ConstraintValidator<Password, String> {
 		private final long minLength = 6;
-    	private final long maxLength = 12;
-    	
-    	private final Pattern VALID_PASSWORD_REGEX = Pattern.compile(
-    			"^(?!.*[^a-zA-Z0-9])(?=.*\\d)(?=.*[a-zA-Z]).{"+minLength+","+maxLength+"}$",
-    			Pattern.CASE_INSENSITIVE);
-    	
-    	public void initialize(Password arg0) {
+		private final long maxLength = 12;
 
-    	}
+		private final Pattern VALID_PASSWORD_REGEX = Pattern.compile(
+				"^(?!.*[^a-zA-Z0-9])(?=.*\\d)(?=.*[a-zA-Z]).{" + minLength + "," + maxLength + "}$",
+				Pattern.CASE_INSENSITIVE);
 
-    	public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-    		if (password == null) {
-    			return false;
-    		}
-    		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
-    		return matcher.find();
-    	}
+		@Override
+		public void initialize(Password constraintAnnotation) {
+		}
+
+		@Override
+		public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
+			if (password == null) {
+				return false;
+			}
+			Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
+			return matcher.find();
+		}
 	}
 }

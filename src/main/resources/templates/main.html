@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Together</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel ="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+
+	<!-- JavaScript JQuery -->
+	<script src="js/lib/jquery/jquery-3.1.0.min.js"></script>
+
+	<!-- JavaScript Bootstrap -->
+	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
+
+	<!-- JavaScript WebSocket -->
+	<script src="js/lib/websocket/sockjs-0.3.4.min.js"></script>
+	<script src="js/lib/websocket/stomp.min.js"></script>
+
+	<!-- JavaScript Specific -->
+	<script src="js/specific/main.js"></script>
+	
+	<!-- CSS Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- CSS font-awesome -->
+	<link href="css/font-awesome.min.css" rel="stylesheet" />
+	
+	<!-- CSS Specific -->
+	<link href="css/style/specific/main.css" rel="stylesheet" />
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li id="first_page_nav"><a href="#">main page</a></li>
+					<li id="import_file_nav"><a href="#">function 1</a></li>
+					<li id="recovery_file_nav"><a href="#">function 2</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li id="userEdit_nav" th:inline="text"><a href="#"><span class="glyphicon glyphicon-user"></span>&#x20;[[${#httpServletRequest.remoteUser}]]</a></li>
+					<li id="logout_nav"><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span>&#x20;Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	  
+	<div class="container-fluid text-center main-block">
+		<div class="row content">
+			<div class="col-sm-2 sidenav">
+				<p><a href="#">Pcap1</a></p>
+				<p><a href="#">Pcap2</a></p>
+				<p><a href="#">Pcap3</a></p>
+			</div>
+			<div class="col-sm-8 text-left">
+				<div id="content">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<footer class="container-fluid text-center footer-block">
+		<p>Copyright&copy; 2016 Exfantasy, All Rights Reserved.</p>
+	</footer>
+
+</body>
+</html>

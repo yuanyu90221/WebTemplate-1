@@ -8,12 +8,21 @@ import org.springframework.stereotype.Component;
 
 import com.exfantasy.template.security.service.LoginAttemptService;
 
+/**
+ * <pre>
+ * Spring Security 驗證失敗 Listener
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Component
 public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 
     @Autowired
     private LoginAttemptService loginAttemptService;
 
+    @Override
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent e) {
         WebAuthenticationDetails auth = (WebAuthenticationDetails) e.getAuthentication().getDetails();
         loginAttemptService.loginFailed(auth.getRemoteAddress());

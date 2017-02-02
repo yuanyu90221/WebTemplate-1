@@ -4,15 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+/**
+ * <pre>
+ * 客製化設定, 此處設定可參照 application.yaml
+ * 
+ * PS: 取 config 設定值寫法有兩種, 也可以參考 MailConfig 的寫法
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
+@Configuration
 @ConfigurationProperties(prefix = "custom")
 public class CustomConfig {
+	/**
+	 * 系統管理者名單
+	 */
 	private List<String> admins = new ArrayList<String>();
-
+	/**
+	 * 最高允許嘗試登入次數
+	 */
 	private int loginMaxAttempt;
-	
+	/**
+	 * 鎖定 IP 時間(分鐘)
+	 */
 	private int blockTimeMins;
 	
 	public void setAdmins(List<String> admins) {
@@ -23,7 +40,12 @@ public class CustomConfig {
         return this.admins;
     }
     
-    public void setLoginMaxAttempt(int loginMaxAttempt) {
+    public boolean isAdminEmail(String email) {
+		List<String> admins = getAdmins();
+		return admins.contains(email);
+	}
+
+	public void setLoginMaxAttempt(int loginMaxAttempt) {
     	this.loginMaxAttempt = loginMaxAttempt;
     }
     

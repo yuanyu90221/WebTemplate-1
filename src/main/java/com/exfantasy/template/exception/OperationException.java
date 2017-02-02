@@ -1,7 +1,15 @@
 package com.exfantasy.template.exception;
 
-import com.exfantasy.template.constant.ResultCode;
+import com.exfantasy.template.cnst.ResultCode;
 
+/**
+ * <pre>
+ * 自訂操作系統產生的例外
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 public class OperationException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -11,12 +19,12 @@ public class OperationException extends RuntimeException {
 	
 	public OperationException(ResultCode resultCode) {
 		this.resultCode = resultCode;
-		this.errorMessage = resultCode.getErrorMsg();
+		this.errorMessage = resultCode.getMessage();
 	}
 
 	public OperationException(ResultCode resultCode, String errorMessage) {
 		this.resultCode = resultCode;
-		this.errorMessage = errorMessage;
+		this.errorMessage = resultCode.getMessage() + ", error-msg: " + errorMessage;
 	}
 
 	public ResultCode getErrorCode() {
@@ -25,5 +33,13 @@ public class OperationException extends RuntimeException {
 
 	public String getErrorMessage() {
 		return errorMessage;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("error-code: ").append(resultCode).append(", ")
+			  .append("error-msg: ").append(errorMessage);
+		return buffer.toString();
 	}
 }

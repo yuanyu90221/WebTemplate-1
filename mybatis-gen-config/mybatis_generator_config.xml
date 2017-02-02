@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry location="D:/mysql-connector-java-6.0.5.jar" />
+
+	<context id="test_mybatis_generator" targetRuntime="MyBatis3">
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		
+		<!-- 使用外面的 plugin, https://github.com/dcendents/mybatis-generator-plugins -->
+		<!-- 
+		<plugin type="com.github.dcendents.mybatis.generator.plugin.annotation.AddClassAnnotationsPlugin">
+    		<property name="annotationClass" value="org.apache.ibatis.annotations.Mapper" />
+    		<property name="annotationString" value="@Mapper" />
+		</plugin>
+		-->
+		
+		<!-- 外面的不好用, 改用自己寫的, 參考上面的寫法 -->
+		<!-- 在每個 Mapper class 上加上 @Mapper -->
+		<plugin type="util.plugin.AddMapperAnnotationPlugin">
+    		<property name="import-class" value="org.apache.ibatis.annotations.Mapper" />
+    		<property name="annotation-string" value="@Mapper" />
+		</plugin>
+
+		<!-- 在每個 Model 的每個 fields 上加上 annotation -->		
+		<plugin type="util.plugin.AddModelFieldsAnnotationPlugin">
+			<property name="import-class" value="io.swagger.annotations.ApiModelProperty" />
+    		<property name="annotation-string" value="@ApiModelProperty(notes = &quot;&quot;, required = true)" />
+		</plugin>
+		
+		<!-- 每個 model 新增 toString method -->
+		<!-- 參考: http://www.mybatis.org/generator/reference/plugins.html -->
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+		</plugin>
+		
+		<!-- 防止生成的程式有很多難看的註解 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+		
+		<jdbcConnection 
+			driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8" 
+			userId="tommy"
+			password="7Kcr4iv3" />
+
+		<!-- [IMPORTANT] targetProject 似乎一定得寫絕對路徑, trace source code 後的結果, 有換環境記得調整 -->
+		<javaModelGenerator 
+			targetPackage="com.exfantasy.template.mybatis.model"
+			targetProject="D:/TommyWs/WebTemplate/src/main/java">
+
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 這個只有當 javaClientGenerator 為 XML 時才有會有 -->
+		<sqlMapGenerator 
+			targetPackage="sqlmappers" 
+			targetProject="D:/TommyWs/WebTemplate/src/main/resources">
+
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- type 可以有很多種, 參考 http://www.mybatis.org/generator/configreference/javaClientGenerator.html# -->
+		<javaClientGenerator 
+			type="ANNOTATEDMAPPER"
+			targetPackage="com.exfantasy.template.mybatis.mapper" 
+			targetProject="D:/TommyWs/WebTemplate/src/main/java">
+
+      		<property name="enableSubPackages" value="true" />
+    	</javaClientGenerator>
+		
+		<!-- Table: user -->
+		<table schema="testing" tableName="user" domainObjectName="User"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+			
+			<!-- insert 時取得最後一筆 autoincreament 的值, identity 要設成 true, 請參考下面網址 -->
+			<!-- http://www.mybatis.org/generator/configreference/generatedKey.html -->
+			<generatedKey column="user_id" sqlStatement="MySql" identity="true" />
+			
+			<!-- 使欄位會根據 typeHandler 來處理 DB 的值 -->
+			<columnOverride column="enabled" javaType="boolean" typeHandler="com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler" />
+		</table>
+		
+		<!-- Table: user_roles -->
+		<table schema="testing" tableName="user_roles" domainObjectName="UserRole"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		
+		<!-- Table: consume -->
+		<table schema="testing" tableName="consume" domainObjectName="Consume"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+			
+			<!-- 使欄位會根據 typeHandler 來處理 DB 的值 -->
+			<columnOverride column="already_sent" javaType="boolean" typeHandler="com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler" />
+		</table>
+		
+		<!-- Table: receipt_reward -->
+		<table schema="testing" tableName="receipt_reward" domainObjectName="ReceiptReward"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		
+		<!-- Table: mail_template -->
+		<table schema="testing" tableName="mail_template" domainObjectName="MailTemplate" 
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		
+		<!-- Table: activities -->
+		<table schema="testing" tableName="activities" domainObjectName="Activity" 
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+			
+			<generatedKey column="activity_id" sqlStatement="MySql" identity="true" />
+		</table>
+		
+		<!-- Table: join_activities -->
+		<table schema="testing" tableName="join_activities" 
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		
+		<!-- Table: activity_messages -->
+		<table schema="testing" tableName="activity_messages" domainObjectName="ActivityMessages"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+			
+			<generatedKey column="msg_id" sqlStatement="MySql" identity="true" />
+		</table>
+	</context>
+</generatorConfiguration>

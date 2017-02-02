@@ -1,0 +1,6 @@
+Amazon S3 bucket
+
+帳號: exfantasy7wolves
+密碼: 常用那個
+
+參考: https://devcenter.heroku.com/articles/s3

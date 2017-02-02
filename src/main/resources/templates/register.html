@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Together</title>
+	<link rel ="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- Specific -->
+	<link href="css/style/specific/register.css" rel="stylesheet" type="text/css" />
+	
+	<!-- Website Font style -->
+	<link href="css/font-awesome.min.css" rel="stylesheet" />
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<!-- 參考 http://bootsnipp.com/snippets/featured/register-page -->
+	<div class="container">
+		<div class="row main">
+			<div class="panel-heading">
+				<div class="panel-title text-center">
+					<h1 class="title">註冊資訊</h1>
+					<hr />
+				</div>
+			</div>
+
+			<div class="main-login main-center">
+				<form class="form-horizontal" id="registerForm" method="post">
+					<!-- 成功訊息 -->
+					<div class="alert alert-success" role="alert" align="center" style="display: none" id="successMessage"></div>
+					<!-- 錯誤訊息 -->
+					<div class="alert alert-danger"  role="alert" align="center" style="display: none" id="errorMessage"></div>
+				
+					<!-- Email -->
+					<div class="form-group">
+						<label for="email" class="cols-sm-2 control-label">Email</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-envelope fa" aria-hidden="true"></i>
+								</span>
+								<input type="text" class="form-control" name="email" id="email" placeholder="請輸入您的 Email" />
+							</div>
+						</div>
+					</div>
+					
+					<!-- 手機號碼 -->
+					<div class="form-group">
+						<label for="mobileNo" class="cols-sm-2 control-label">手機號碼</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-phone fa" aria-hidden="true"></i>
+								</span>
+								<input type="text" class="form-control" name="mobileNo" id="mobileNo" placeholder="請輸入您的手機號碼" />
+							</div>
+						</div>
+					</div>
+					
+					<!-- Line ID -->
+					<div class="form-group">
+						<label for="lindId" class="cols-sm-2 control-label">LINE ID</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-phone fa" aria-hidden="true"></i>
+								</span>
+								<input type="text" class="form-control" name="lineId" id="lineId" placeholder="請輸入您的 LINE ID" />
+							</div>
+						</div>
+					</div>
+
+					<!-- 登入密碼 -->
+					<div class="form-group">
+						<label for="password" class="cols-sm-2 control-label">登入密碼</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+								</span>
+								<input type="password" class="form-control" name="password" id="password" placeholder="請輸入您的登入密碼" />
+							</div>
+						</div>
+					</div>
+					
+					<!-- 確認密碼 -->
+					<div class="form-group">
+						<label for="confirmPassword" class="cols-sm-2 control-label">密碼確認</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+								</span>
+								<input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="請再次輸入您的登入密碼" />
+							</div>
+						</div>
+					</div>
+
+					<!-- 註冊按鈕 -->
+					<div class="form-group">
+						<button type="button" class="btn btn-primary btn-lg btn-block login-button" id="registerBtn">註冊</button>
+					</div>
+
+					<!-- 回登入頁面 -->
+					<div class="login-register">
+						<a th:href="@{/}">登入</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/lib/jquery/jquery-3.1.0.min.js"></script>
+	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
+	<script src="js/specific/register.js"></script>
+</body>
+</html>

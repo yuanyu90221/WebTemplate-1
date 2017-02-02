@@ -13,6 +13,14 @@ import org.springframework.stereotype.Component;
 import com.exfantasy.template.security.service.LoginAttemptService;
 import com.exfantasy.template.services.user.UserService;
 
+/**
+ * <pre>
+ * Spring Security 驗證成功 Listener
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Component
 public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
 
@@ -22,6 +30,7 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
     @Autowired
     private UserService userService;
 
+    @Override
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
     	Authentication auth = e.getAuthentication();
     	User user = (User) auth.getPrincipal();
@@ -35,6 +44,6 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
         com.exfantasy.template.mybatis.model.User myUser = userService.queryUserByEmail(email);
         
         myUser.setLastSigninTime(new Date(System.currentTimeMillis()));
-        userService.updateSelective(myUser);
+        userService.updateUserSelective(myUser);
     }
 }

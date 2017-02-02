@@ -1,15 +1,61 @@
+# -------- Datasource Config --------
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
     datasource:
-        url: jdbc:mysql://127.0.0.1:3306/testing?characterEncoding=utf8
-        username: tommy
-        password: 7Kcr4iv3
-        connection-test-query: "SELECT 1"
+        url: ${DB_URL}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+
+        # Connection Setting
+        # Ref: http://stackoverflow.com/questions/30451470/connection-to-db-dies-after-424-in-spring-boot-jpa-hibernate
+        # Ref: https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
+        max-active: 10
+        max-idle: 5
+        min-idle: 2
+        initial-size: 5
+        removeAbandoned: true
         test-while-idle: true
-        test-on-borrow: false
-        
-mybatis:
-    mapperLocations: classpath*:**/sqlmappers/*.xml
+        test-on-borrow: true
+        validation-query: "SELECT 1"
+        connection-test-query: "SELECT 1"
     
+    # http://stackoverflow.com/questions/37540028/how-to-set-the-max-size-of-upload-file
+    http:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 10MB
+          
+    # http://wiselyman.iteye.com/blog/2184884  
+    redis:
+        database: 0 # database name 
+        host: ${REDIS_HOST}
+        password: ${REDIS_PASSWORD}
+        port: ${REDIS_PORT}
+        
+    activemq:
+        #broker-url: vm://localhost?broker.persistent=false
+        #embedded broker
+        in-memory: true
+        pool:
+            enabled: false
+        
+# -------- Mail Config --------
+mail:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    
+# -------- Amazon S3 Config --------
+#aws:
+#    s3:
+#        bucket: ${S3_BUCKET}
+#        accessKey: ${S3_ACCESS_KEY}
+#        secretKey: ${S3_SECRET_KEY}
+        
+# -------- Dropbox Access Token --------
+dropbox:
+    accessToken: ${DROPBOX_ACCESS_TOKEN}
+
+# -------- Custom Config --------    
 custom:
     admins:
         - tommy.yeh1112@gmail.com
