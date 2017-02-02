@@ -226,7 +226,7 @@ public class UserController {
 			return new RespCommon(ResultCode.SUCCESS, "Send forget password mail succeed");
 		}
 		catch (OperationException ex) {
-			// redirect to login page with parameter: reset_succeed
+			// redirect to login page with parameter: reset_failed
 			response.sendRedirect("/login?reset_failed");
 			
 			return new RespCommon(ex);
